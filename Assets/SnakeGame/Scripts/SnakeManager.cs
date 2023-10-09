@@ -33,6 +33,8 @@ public class SnakeManager : MonoBehaviour
     // For now, we start facing/moving to the right (like the google snake game lol)
     private Vector2Int facingDirection = new Vector2Int(1, 0);
 
+    private bool tryingToTurn;
+
     private void Awake()
     {
         if (instance != null && instance != this) Destroy(gameObject);
@@ -131,12 +133,14 @@ public class SnakeManager : MonoBehaviour
             vertical = 0;
         }
 
-        if (!new Vector2Int(horizontal, vertical).Equals(-lastFacingDirection))
+        if (!new Vector2Int(horizontal, vertical).Equals(-lastFacingDirection) && !tryingToTurn)
         {
             facingDirection = new Vector2Int(horizontal, vertical);
         }
+
         if (!lastFacingDirection.Equals(facingDirection))
         {
+            tryingToTurn = true;
             Camera.main.transform.DOPunchScale(Vector3.one * -0.025f, 0.10f, 1);
 
             SoundType s;
@@ -248,6 +252,7 @@ public class SnakeManager : MonoBehaviour
                 snakeSections[snakePartIndices[i].x][snakePartIndices[i].y] = sectionToModify;
             }
         }
+        tryingToTurn = false;
     }
 
     private bool TurningRight(Vector2Int pointingToPrevious, Vector2Int pointingToNext)
