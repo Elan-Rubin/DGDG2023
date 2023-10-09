@@ -38,6 +38,7 @@ public class SnakeManager : MonoBehaviour
         if (instance != null && instance != this) Destroy(gameObject);
         else instance = this;
     }
+
     void Start()
     {
         // Fill up arrays with Blank values
@@ -233,13 +234,29 @@ public class SnakeManager : MonoBehaviour
                 }
                 else
                 {
-                    sectionToModify.part = SnakePart.Corner;
+                    if (TurningRight(pointingToPreviousPart, pointingToNextPart))
+                    {
+                        sectionToModify.part = SnakePart.Corner;
+                    }
+                    else
+                    {
+                        sectionToModify.part = SnakePart.InverseCorner;
+                    }
                 }
                 // Use the difference between this part and the part before it (closer to the head) to determine the direction
                 sectionToModify.direction = (Direction)PartDirectionIndexFromVector2(pointingToPreviousPart);
                 snakeSections[snakePartIndices[i].x][snakePartIndices[i].y] = sectionToModify;
             }
         }
+    }
+
+    private bool TurningRight(Vector2Int pointingToPrevious, Vector2Int pointingToNext)
+    {
+        if ((pointingToPrevious.x < 0 && pointingToNext.y > 0) || (pointingToPrevious.x > 0 && pointingToNext.y < 0) || (pointingToPrevious.y > 0 && pointingToNext.x > 0) || (pointingToPrevious.y < 0 && pointingToNext.x < 0))
+        {
+            return true;
+        }
+        return false;
     }
 
     private int PartDirectionIndexFromVector2(Vector2Int dir)
@@ -340,6 +357,7 @@ enum SnakePart
     Straight,
     Corner,
     Tail,
+    InverseCorner,
     Blank
 }
 
