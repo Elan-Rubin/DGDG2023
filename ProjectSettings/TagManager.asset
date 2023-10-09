@@ -41,3 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: SnakeBackground
+    uniqueID: 885388311
+    locked: 0
+  - name: SnakeForeground
+    uniqueID: 3884376397
+    locked: 0
