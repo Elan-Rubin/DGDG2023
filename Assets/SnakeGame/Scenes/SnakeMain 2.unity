@@ -260,10 +260,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 793dcc6a176c64db39e41a2b3360332f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveAmount: 0
-  length: 0
-  direction: {x: 0, y: 0}
-  sections: []
 --- !u!1 &2095024570
 GameObject:
   m_ObjectHideFlags: 0
