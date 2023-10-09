@@ -113,6 +113,8 @@ public class SnakeManager : MonoBehaviour
 
     private void GetInput()
     {
+        Vector2Int lastFacingDirection = facingDirection;
+
         int horizontal = Mathf.CeilToInt(Input.GetAxisRaw("Horizontal"));
         int vertical = Mathf.CeilToInt(Input.GetAxisRaw("Vertical"));
 
@@ -126,7 +128,10 @@ public class SnakeManager : MonoBehaviour
             vertical = 0;
         }
 
-        facingDirection = new Vector2Int(horizontal, vertical);
+        if (new Vector2Int(horizontal, vertical) != -lastFacingDirection)
+        {
+            facingDirection = new Vector2Int(horizontal, vertical);
+        }
     }
 
     private bool CanMoveSnake()
@@ -201,7 +206,18 @@ public class SnakeManager : MonoBehaviour
                     pointingToNextPart = snakePartIndices[i + 1] - snakePartIndices[i];
 
                 // Figure out which part it should be
-                sectionToModify.part = (i == snakePartIndices.Count - 1) ? SnakePart.Tail : (SnakePart)FindPartType(snakePartIndices[i], pointingToPreviousPart, pointingToNextPart);
+                if (i == snakePartIndices.Count - 1)
+                {
+                    sectionToModify.part = SnakePart.Tail;
+                }
+                else if (FindPartType(snakePartIndices[i], snakePartIndices[i] + pointingToPreviousPart, snakePartIndices[i] + pointingToNextPart) == 1)
+                {
+                    sectionToModify.part = SnakePart.Straight;
+                }
+                else
+                {
+                    sectionToModify.part = SnakePart.Corner;
+                }
                 // Use the difference between this part and the part before it (closer to the head) to determine the direction
                 sectionToModify.direction = (Direction)PartDirectionIndexFromVector2(pointingToPreviousPart);
                 snakeSections[snakePartIndices[i].x][snakePartIndices[i].y] = sectionToModify;
@@ -236,10 +252,10 @@ public class SnakeManager : MonoBehaviour
         return 0;
     }
 
-    private int FindPartType(Vector2Int currentPos, Vector2Int pointingToPreviousPart, Vector2Int pointingToNextPart)
+    private int FindPartType(Vector2Int currentPos, Vector2Int previousPartPosition, Vector2Int nextPartPosition)
     {
-        bool allYsDifferent = currentPos.y != pointingToPreviousPart.y && currentPos.y != pointingToNextPart.y;
-        bool allXsDifferent = currentPos.x != pointingToPreviousPart.x && currentPos.x != pointingToNextPart.x;
+        bool allYsDifferent = currentPos.y != previousPartPosition.y && currentPos.y != nextPartPosition.y;
+        bool allXsDifferent = currentPos.x != previousPartPosition.x && currentPos.x != nextPartPosition.x;
 
         // Return Straight if the Xs or Ys are all different (and thus in a line), otherwise Corner
         return allXsDifferent || allYsDifferent ? 1 : 2;
