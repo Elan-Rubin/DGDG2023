@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using DG.Tweening;
 
 public class SnakeManager : MonoBehaviour
 {
@@ -128,9 +130,23 @@ public class SnakeManager : MonoBehaviour
             vertical = 0;
         }
 
-        if (new Vector2Int(horizontal, vertical) != -lastFacingDirection)
+        if (!new Vector2Int(horizontal, vertical).Equals(-lastFacingDirection))
         {
             facingDirection = new Vector2Int(horizontal, vertical);
+        }
+        if (!lastFacingDirection.Equals(facingDirection))
+        {
+            Camera.main.transform.DOPunchScale(Vector3.one * -0.025f, 0.10f, 1);
+
+            SoundType s;
+            switch (facingDirection)
+            {
+                case Vector2Int v when v.Equals(Vector2Int.up): s = SoundType.SnakeTurnN; break;
+                case Vector2Int v when v.Equals(Vector2Int.right): s = SoundType.SnakeTurnE; break;
+                case Vector2Int v when v.Equals(Vector2Int.down): s = SoundType.SnakeTurnS; break;
+                default: s = SoundType.SnakeTurnW; break;
+            }
+            SoundManager.Instance.PlaySoundEffect(s);
         }
     }
 
@@ -139,6 +155,7 @@ public class SnakeManager : MonoBehaviour
         // TODO: Return whether or not the snake can move, if it can't, player loses
         Vector2Int nextPosition = snakePartIndices[0] + facingDirection;
         bool wouldBeInBounds = nextPosition.x < tileCount && nextPosition.y < tileCount;
+        wouldBeInBounds = wouldBeInBounds && nextPosition.x >= 0 && nextPosition.y >= 0;
 
         bool wouldNotCollideWithSelf = true;
         foreach (Vector2Int snakePartPos in snakePartIndices)
@@ -297,6 +314,7 @@ public class SnakeManager : MonoBehaviour
     private void GameOver()
     {
         SoundManager.Instance.PlaySoundEffect(SoundType.SnakeDie);
+        Camera.main.transform.DOShakePosition(0.15f, 0.5f, 50);
         // TODO: Show the player their score
         CancelInvoke();
         Debug.Log("GAME OVER");
