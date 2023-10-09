@@ -31,7 +31,6 @@ public class SnakeManager : MonoBehaviour
     // For now, we start facing/moving to the right (like the google snake game lol)
     private Vector2Int facingDirection = new Vector2Int(1, 0);
 
-
     private void Awake()
     {
         if (instance != null && instance != this) Destroy(gameObject);
@@ -133,7 +132,20 @@ public class SnakeManager : MonoBehaviour
     private bool CanMoveSnake()
     {
         // TODO: Return whether or not the snake can move, if it can't, player loses
-        return true;
+        Vector2Int nextPosition = snakePartIndices[0] + facingDirection;
+        bool wouldBeInBounds = nextPosition.x < tileCount && nextPosition.y < tileCount;
+
+        bool wouldNotCollideWithSelf = true;
+        foreach (Vector2Int snakePartPos in snakePartIndices)
+        {
+            if (snakePartPos == nextPosition)
+            {
+                wouldNotCollideWithSelf = false;
+                break;
+            }
+        }
+
+        return wouldBeInBounds && wouldNotCollideWithSelf;
     }
 
     private void MoveSnake()
@@ -269,6 +281,7 @@ public class SnakeManager : MonoBehaviour
     private void GameOver()
     {
         // TODO: Show the player their score
+        CancelInvoke();
         Debug.Log("GAME OVER");
     }
 }
