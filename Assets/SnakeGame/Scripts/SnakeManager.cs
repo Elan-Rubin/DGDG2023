@@ -280,6 +280,7 @@ public class SnakeManager : MonoBehaviour
 
     private void GameOver()
     {
+        SoundManager.Instance.PlaySoundEffect(SoundType.SnakeDie);
         // TODO: Show the player their score
         CancelInvoke();
         Debug.Log("GAME OVER");
