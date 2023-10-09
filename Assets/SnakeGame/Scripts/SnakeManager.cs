@@ -24,12 +24,13 @@ public class SnakeManager : MonoBehaviour
     // Outside list is parts, inside list is directions
     // HeadN, HeadE, HeadS, HeadW
     // MiddleN, etc
-    [SerializeField] public List<List<Sprite>> spritesList = new List<List<Sprite>>();
+    [SerializeField] private List<SpriteList> spritesList;
 
-    // A list of the snake parts from head to tail, the Vector2 holds where in the world they are
+    // A list of the snake parts from head to tail, the Vector2 holds where in the snakeRenderers they are
     private List<Vector2Int> snakePartIndices = new List<Vector2Int>();
     // For now, we start facing/moving to the right (like the google snake game lol)
     private Vector2Int facingDirection = new Vector2Int(1, 0);
+
 
     private void Awake()
     {
@@ -38,8 +39,13 @@ public class SnakeManager : MonoBehaviour
     }
     void Start()
     {
+        // Fill the world with empty sprite renderers
         CreateObjectRenderers();
-        InvokeRepeating("MoveSnake", 0, snakeMoveInterval);
+        // Add in the snake
+        snakePartIndices.Add(new Vector2Int(5, 1));
+        snakePartIndices.Add(new Vector2Int(5, 0));
+        // Move the snake every moveInterval seconds
+        InvokeRepeating("TryMoveSnake", 0, snakeMoveInterval);
     }
 
     private void CreateObjectRenderers()
@@ -64,17 +70,31 @@ public class SnakeManager : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
+        GetInput();
+    }
+
+    private void TryMoveSnake()
+    {
+        // If we can move the snake, move it and render it
         if (CanMoveSnake())
         {
-            MoveSnake();
+            //MoveSnake();
             RenderSnake();
         }
+        // Otherwise, the player loses
         else
         {
             GameOver();
         }
+    }
+
+    private void GetInput()
+    {
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+        facingDirection = new Vector2Int(horizontal > 0 ? 1 : -1, vertical > 0 ? 1 : -1);
     }
 
     private bool CanMoveSnake()
@@ -194,13 +214,21 @@ public class SnakeManager : MonoBehaviour
 
     private void RenderSnakeSection(int x, int y)
     {
-        snakeRenderers[x][y].sprite = spritesList[(int)snakeSections[x][y].part][(int)snakeSections[x][y].direction];
+        snakeRenderers[x][y].sprite = spritesList[(int)snakeSections[x][y].part].spritesList[(int)snakeSections[x][y].direction];
     }
 
     private void GameOver()
     {
         // TODO: Show the player their score
+        Debug.Log("GAME OVER");
     }
+}
+
+[System.Serializable]
+public class SpriteList
+{
+    [SerializeField]
+    public List<Sprite> spritesList;
 }
 
 struct SnakeSection

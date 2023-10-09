@@ -172,6 +172,27 @@ MonoBehaviour:
   tileSize: 1
   worldHolder: {fileID: 557224897}
   tilePrefab: {fileID: 5332912358303306358, guid: 3dc1ff80d6208488b8f9121c701882b2, type: 3}
+  spritesList:
+  - spritesList:
+    - {fileID: 1611497307, guid: 50ff3bb8a03354f9f9dcddd1599059c5, type: 3}
+    - {fileID: 1723301209, guid: 50ff3bb8a03354f9f9dcddd1599059c5, type: 3}
+    - {fileID: -1670086468, guid: 50ff3bb8a03354f9f9dcddd1599059c5, type: 3}
+    - {fileID: -470438450, guid: 50ff3bb8a03354f9f9dcddd1599059c5, type: 3}
+  - spritesList:
+    - {fileID: 1534373407, guid: 50ff3bb8a03354f9f9dcddd1599059c5, type: 3}
+    - {fileID: 1212016774, guid: 50ff3bb8a03354f9f9dcddd1599059c5, type: 3}
+    - {fileID: 1534373407, guid: 50ff3bb8a03354f9f9dcddd1599059c5, type: 3}
+    - {fileID: 1212016774, guid: 50ff3bb8a03354f9f9dcddd1599059c5, type: 3}
+  - spritesList:
+    - {fileID: -405854755, guid: 50ff3bb8a03354f9f9dcddd1599059c5, type: 3}
+    - {fileID: -1927711263, guid: 50ff3bb8a03354f9f9dcddd1599059c5, type: 3}
+    - {fileID: -758350176, guid: 50ff3bb8a03354f9f9dcddd1599059c5, type: 3}
+    - {fileID: -1202567082, guid: 50ff3bb8a03354f9f9dcddd1599059c5, type: 3}
+  - spritesList:
+    - {fileID: -1317367088, guid: 50ff3bb8a03354f9f9dcddd1599059c5, type: 3}
+    - {fileID: 1730414498, guid: 50ff3bb8a03354f9f9dcddd1599059c5, type: 3}
+    - {fileID: 742664538, guid: 50ff3bb8a03354f9f9dcddd1599059c5, type: 3}
+    - {fileID: 1195397753, guid: 50ff3bb8a03354f9f9dcddd1599059c5, type: 3}
 --- !u!1 &1885533781
 GameObject:
   m_ObjectHideFlags: 0
