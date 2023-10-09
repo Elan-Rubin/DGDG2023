@@ -39,13 +39,31 @@ public class SnakeManager : MonoBehaviour
     }
     void Start()
     {
+        // Fill up arrays with Blank values
+        FillArrays();
         // Fill the world with empty sprite renderers
         CreateObjectRenderers();
         // Add in the snake
-        snakePartIndices.Add(new Vector2Int(5, 1));
-        snakePartIndices.Add(new Vector2Int(5, 0));
+        snakePartIndices.Add(new Vector2Int(1, 5));
+        snakePartIndices.Add(new Vector2Int(0, 5));
         // Move the snake every moveInterval seconds
         InvokeRepeating("TryMoveSnake", 0, snakeMoveInterval);
+    }
+
+    private void FillArrays()
+    {
+        SnakeSection blank = new SnakeSection();
+        blank.direction = Direction.Blank;
+        blank.part = SnakePart.Blank;
+
+        for (int x = 0; x < tileCount; x++)
+        {
+            snakeSections.Add(new List<SnakeSection>());
+            for (int y = 0; y < tileCount; y++)
+            {
+                snakeSections[x].Add(blank);
+            }
+        }
     }
 
     private void CreateObjectRenderers()
@@ -80,7 +98,7 @@ public class SnakeManager : MonoBehaviour
         // If we can move the snake, move it and render it
         if (CanMoveSnake())
         {
-            //MoveSnake();
+            MoveSnake();
             RenderSnake();
         }
         // Otherwise, the player loses
@@ -92,9 +110,20 @@ public class SnakeManager : MonoBehaviour
 
     private void GetInput()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        facingDirection = new Vector2Int(horizontal > 0 ? 1 : -1, vertical > 0 ? 1 : -1);
+        int horizontal = Mathf.CeilToInt(Input.GetAxisRaw("Horizontal"));
+        int vertical = Mathf.CeilToInt(Input.GetAxisRaw("Vertical"));
+
+        if (horizontal == 0 && vertical == 0)
+        {
+            horizontal = facingDirection.x;
+            vertical = facingDirection.y;
+        }
+        else if (horizontal == 1 && vertical == 1)
+        {
+            vertical = 0;
+        }
+
+        facingDirection = new Vector2Int(horizontal, vertical);
     }
 
     private bool CanMoveSnake()
@@ -117,6 +146,7 @@ public class SnakeManager : MonoBehaviour
 
         // Clear out the snakeSections list, we'll be replacing it
         snakeSections.Clear();
+        FillArrays();
 
         Vector2Int partLastPosition = Vector2Int.zero;
         for (int i = 0; i < snakePartIndices.Count - 1; i++)
@@ -130,7 +160,7 @@ public class SnakeManager : MonoBehaviour
                 // Move the head in the facing direction
                 snakePartIndices[i] += facingDirection;
 
-                // Set the value of snakeSections at this snakePartIndex to head
+                // Set the value of snakeSections at this snakePartIndex to head and set direction
                 SnakeSection sectionToModify = snakeSections[snakePartIndices[i].x][snakePartIndices[i].y];
                 sectionToModify.part = SnakePart.Head;
                 sectionToModify.direction = (Direction)PartDirectionIndexFromVector2(facingDirection);
@@ -199,22 +229,35 @@ public class SnakeManager : MonoBehaviour
 
     private void RenderSnake()
     {
+        foreach (List<SpriteRenderer> listOfSR in snakeRenderers)
+        {
+            foreach (SpriteRenderer sr in listOfSR)
+            {
+                sr.enabled = false;
+            }
+        }
+
         int x = 0;
         int y = 0;
         foreach (List<SnakeSection> snakeSectionList in snakeSections)
         {
             foreach (SnakeSection snakeSection in snakeSectionList)
             {
-                RenderSnakeSection(x, y);
+                if (snakeSection.direction != Direction.Blank && snakeSection.part != SnakePart.Blank)
+                {
+                    RenderSnakeSection(snakeSection, x, y);
+                }
                 y++;
             }
+            y = 0;
             x++;
         }
     }
 
-    private void RenderSnakeSection(int x, int y)
+    private void RenderSnakeSection(SnakeSection section, int x, int y)
     {
-        snakeRenderers[x][y].sprite = spritesList[(int)snakeSections[x][y].part].spritesList[(int)snakeSections[x][y].direction];
+        snakeRenderers[x][y].sprite = spritesList[(int)section.part].spritesList[(int)section.direction];
+        snakeRenderers[x][y].enabled = true;
     }
 
     private void GameOver()
@@ -242,7 +285,8 @@ enum SnakePart
     Head,
     Straight,
     Corner,
-    Tail
+    Tail,
+    Blank
 }
 
 enum Direction
@@ -250,5 +294,6 @@ enum Direction
     North,
     East,
     South,
-    West
+    West,
+    Blank
 }
