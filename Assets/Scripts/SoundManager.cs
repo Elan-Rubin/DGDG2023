@@ -57,6 +57,12 @@ public class SoundManager : MonoBehaviour
 [System.Serializable]
 public enum SoundType
 {
+    SnakeTurnN,
+    SnakeTurnE,
+    SnakeTurnS,
+    SnakeTurnW,
+    SnakeEat,
+    SnakeDie,
     Click
 }
 
