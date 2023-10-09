@@ -228,7 +228,7 @@ public class SnakeManager : MonoBehaviour
                 {
                     sectionToModify.part = SnakePart.Tail;
                 }
-                else if (FindPartType(snakePartIndices[i], snakePartIndices[i] + pointingToPreviousPart, snakePartIndices[i] + pointingToNextPart) == 1)
+                else if (ArePartsInLine(snakePartIndices[i], snakePartIndices[i] + pointingToPreviousPart, snakePartIndices[i] + pointingToNextPart))
                 {
                     sectionToModify.part = SnakePart.Straight;
                 }
@@ -286,13 +286,13 @@ public class SnakeManager : MonoBehaviour
         return 0;
     }
 
-    private int FindPartType(Vector2Int currentPos, Vector2Int previousPartPosition, Vector2Int nextPartPosition)
+    private bool ArePartsInLine(Vector2Int currentPos, Vector2Int previousPartPosition, Vector2Int nextPartPosition)
     {
-        bool allYsDifferent = currentPos.y != previousPartPosition.y && currentPos.y != nextPartPosition.y;
-        bool allXsDifferent = currentPos.x != previousPartPosition.x && currentPos.x != nextPartPosition.x;
+        bool allYsDifferent = currentPos.y != previousPartPosition.y && currentPos.y != nextPartPosition.y && previousPartPosition.y != nextPartPosition.y;
+        bool allXsDifferent = currentPos.x != previousPartPosition.x && currentPos.x != nextPartPosition.x && previousPartPosition.x != nextPartPosition.x;
 
         // Return Straight if the Xs or Ys are all different (and thus in a line), otherwise Corner
-        return allXsDifferent || allYsDifferent ? 1 : 2;
+        return allXsDifferent || allYsDifferent;
     }
 
     private void RenderSnake()
