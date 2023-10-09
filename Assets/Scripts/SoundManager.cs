@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEditor;
+using UnityEditor.TerrainTools;
 
 public class SoundManager : MonoBehaviour
 {
@@ -39,14 +41,15 @@ public class SoundManager : MonoBehaviour
     {
         var matchingEffects = soundEffects.Where(s => s.Type.Equals(soundType)).ToList();
         var soundEffect = matchingEffects[Random.Range(0, matchingEffects.Count)];
-        var newSoundEffect = new GameObject($"Sound: {soundType}, {soundEffect.Clip.length}s");
+        var chosenClip = soundEffect.Clips[Random.Range(0, soundEffect.Clips.Count)];
+        var newSoundEffect = new GameObject($"Sound: {soundType}, {chosenClip.length}s");
         newSoundEffect.transform.parent = transform;
-        Destroy(newSoundEffect, soundEffect.Clip.length * 1.5f);
+        Destroy(newSoundEffect, chosenClip.length * 1.5f);
         var source = newSoundEffect.AddComponent<AudioSource>();
-        source.clip = soundEffect.Clip;
+        source.clip = chosenClip;
         source.volume = soundEffect.Volume * volumeMultiplier;
         if (soundEffect.Vary) source.pitch += Random.Range(-0.1f, 0.1f);
-        source.pitch += 0.05f * modifier; //used exclusively for the eating sound effect
+        source.pitch += 0.05f * modifier; 
         source.Play();
     }
 }
@@ -60,9 +63,9 @@ public enum SoundType
 [System.Serializable]
 public struct SoundEffect
 {
-    [SerializeField][HideInInspector] private string name;
+    private string name;
     public SoundType Type;
-    public AudioClip Clip;
+    public List<AudioClip> Clips;
     [Range(0, 1)] public float Volume;
     public bool Vary;
     public void OnValidate() => name = Type.ToString();
