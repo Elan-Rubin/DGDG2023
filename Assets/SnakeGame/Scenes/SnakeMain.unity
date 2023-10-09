@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d37642d1949d6c44eaafd9f2ae4bba95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  snakeMoveInterval: 0.5
+  snakeMoveInterval: 0.2
   tileCount: 10
   tileSize: 1
   worldHolder: {fileID: 557224897}

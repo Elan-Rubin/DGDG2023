@@ -44,6 +44,10 @@ public class SnakeManager : MonoBehaviour
         // Fill the world with empty sprite renderers
         CreateObjectRenderers();
         // Add in the snake
+
+        snakePartIndices.Add(new Vector2Int(4, 5));
+        snakePartIndices.Add(new Vector2Int(3, 5));
+        snakePartIndices.Add(new Vector2Int(2, 5));
         snakePartIndices.Add(new Vector2Int(1, 5));
         snakePartIndices.Add(new Vector2Int(0, 5));
         // Move the snake every moveInterval seconds
@@ -149,7 +153,7 @@ public class SnakeManager : MonoBehaviour
         FillArrays();
 
         Vector2Int partLastPosition = Vector2Int.zero;
-        for (int i = 0; i < snakePartIndices.Count - 1; i++)
+        for (int i = 0; i < snakePartIndices.Count; i++)
         {
             // If this is the first section, this is the head
             if (i == 0)
@@ -180,7 +184,9 @@ public class SnakeManager : MonoBehaviour
                 SnakeSection sectionToModify = snakeSections[snakePartIndices[i].x][snakePartIndices[i].y];
 
                 Vector2Int pointingToPreviousPart = snakePartIndices[i - 1] - snakePartIndices[i];
-                Vector2Int pointingToNextPart = snakePartIndices[i + 1] - snakePartIndices[i];
+                Vector2Int pointingToNextPart = new Vector2Int(0, 0);
+                if (i + 1 < snakePartIndices.Count)
+                    pointingToNextPart = snakePartIndices[i + 1] - snakePartIndices[i];
 
                 // Figure out which part it should be
                 sectionToModify.part = (i == snakePartIndices.Count - 1) ? SnakePart.Tail : (SnakePart)FindPartType(snakePartIndices[i], pointingToPreviousPart, pointingToNextPart);
