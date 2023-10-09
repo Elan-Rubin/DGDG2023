@@ -113,6 +113,8 @@ public class SnakeManager : MonoBehaviour
 
     private void GetInput()
     {
+        Vector2Int lastFacingDirection = facingDirection;
+
         int horizontal = Mathf.CeilToInt(Input.GetAxisRaw("Horizontal"));
         int vertical = Mathf.CeilToInt(Input.GetAxisRaw("Vertical"));
 
@@ -126,7 +128,10 @@ public class SnakeManager : MonoBehaviour
             vertical = 0;
         }
 
-        facingDirection = new Vector2Int(horizontal, vertical);
+        if (new Vector2Int(horizontal, vertical) != -lastFacingDirection)
+        {
+            facingDirection = new Vector2Int(horizontal, vertical);
+        }
     }
 
     private bool CanMoveSnake()
