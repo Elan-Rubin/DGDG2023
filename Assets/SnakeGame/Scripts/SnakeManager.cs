@@ -84,7 +84,7 @@ public class SnakeManager : MonoBehaviour
             for (int y = 0; y < tileCount; y++)
             {
                 GameObject newTile = Instantiate(tilePrefab, worldHolder.transform);
-                newTile.transform.position = worldHolder.transform.position - new Vector3(tileSize * tileCount, tileSize * tileCount, 0)/2 + new Vector3(x * tileSize, y * tileSize, 0);
+                newTile.transform.position = worldHolder.transform.position - new Vector3(tileSize * tileCount, tileSize * tileCount, 0) / 2 + new Vector3(x * tileSize, y * tileSize, 0);
                 newTile.transform.localScale = new Vector2(tileSize, tileSize);
                 snakeRenderers[x][y] = newTile.GetComponent<SpriteRenderer>();
             }
@@ -121,7 +121,7 @@ public class SnakeManager : MonoBehaviour
             horizontal = facingDirection.x;
             vertical = facingDirection.y;
         }
-        else if (horizontal == 1 && vertical == 1)
+        else if (Mathf.Abs(horizontal) == 1 && Mathf.Abs(vertical) == 1)
         {
             vertical = 0;
         }
