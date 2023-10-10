@@ -41,7 +41,7 @@ public class SnakeManager : MonoBehaviour
 
     // How much fruit the player has collected
     int score = 0;
-    private Vector2Int fruitPos = new Vector2Int(5, 8);
+    private Vector2Int fruitPos = new Vector2Int(7, 5);
     // The square the tail of the snake just left, which will be used if a fruit is eaten
     private Vector2Int lastLeftSquare;
 
@@ -60,9 +60,6 @@ public class SnakeManager : MonoBehaviour
         CreateObjectRenderers();
         // Add in the snake
 
-        snakePartIndices.Add(new Vector2Int(4, 5));
-        snakePartIndices.Add(new Vector2Int(3, 5));
-        snakePartIndices.Add(new Vector2Int(2, 5));
         snakePartIndices.Add(new Vector2Int(1, 5));
         snakePartIndices.Add(new Vector2Int(0, 5));
         // Move the snake every moveInterval seconds
