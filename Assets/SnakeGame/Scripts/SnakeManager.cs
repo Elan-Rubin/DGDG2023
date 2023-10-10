@@ -15,13 +15,14 @@ public class SnakeManager : MonoBehaviour
     [Header("Refs")]
     [SerializeField] private GameObject worldHolder;
     [SerializeField] private GameObject tilePrefab;
+    [SerializeField] private GameObject fruit;
 
     [Header("Sprites")]
     // Outside list is parts, inside list is directions
     // HeadN, HeadE, HeadS, HeadW
     // MiddleN, MiddleE, etc
     [SerializeField] private List<SpriteList> spritesList;
-    [SerializeField] private GameObject fruit;
+    [SerializeField] private List<SpriteList> eatAnimation;
 
     private static SnakeManager instance;
     public static SnakeManager Instance { get { return instance; } }
@@ -44,6 +45,8 @@ public class SnakeManager : MonoBehaviour
     private Vector2Int fruitPos = new Vector2Int(7, 5);
     // The square the tail of the snake just left, which will be used if a fruit is eaten
     private Vector2Int lastLeftSquare;
+    bool eating;
+    int frame;
 
 
     private void Awake()
@@ -111,6 +114,8 @@ public class SnakeManager : MonoBehaviour
 
     private void TryMoveSnake()
     {
+        
+
         // If we can move the snake, move it and render it
         if (CanMoveSnake())
         {
@@ -188,6 +193,9 @@ public class SnakeManager : MonoBehaviour
 
     private void MoveSnake()
     {
+        if (eating) frame++;
+        if (frame == 3) eating = false;
+
         // THEORY
         // Head moves forward in the direction we're facing
         // Each body segment moves into where the next body segment is/was
@@ -342,7 +350,7 @@ public class SnakeManager : MonoBehaviour
 
     private void RenderSnakeSection(SnakeSection section, int x, int y)
     {
-        snakeRenderers[x][y].sprite = spritesList[(int)section.part].spritesList[(int)section.direction];
+        snakeRenderers[x][y].sprite = (eating && section.part.Equals(SnakePart.Head)) ? eatAnimation[frame].spritesList[(int)section.direction] : spritesList[(int)section.part].spritesList[(int)section.direction];
         snakeRenderers[x][y].enabled = true;
     }
 
@@ -365,6 +373,8 @@ public class SnakeManager : MonoBehaviour
         // Randomly select one of them
         // Show the fruit there
         SoundManager.Instance.PlaySoundEffect(SoundType.SnakeEat);
+        frame = 0;
+        eating = true;
 
         int x = 0;
         int y = 0;

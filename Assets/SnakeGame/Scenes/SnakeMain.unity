@@ -311,6 +311,7 @@ MonoBehaviour:
   scaleFactor: 1
   worldHolder: {fileID: 557224897}
   tilePrefab: {fileID: 5332912358303306358, guid: 3dc1ff80d6208488b8f9121c701882b2, type: 3}
+  fruit: {fileID: 264123990}
   spritesList:
   - spritesList:
     - {fileID: 1611497307, guid: 50ff3bb8a03354f9f9dcddd1599059c5, type: 3}
@@ -337,7 +338,22 @@ MonoBehaviour:
     - {fileID: -1202567082, guid: 50ff3bb8a03354f9f9dcddd1599059c5, type: 3}
     - {fileID: -1927711263, guid: 50ff3bb8a03354f9f9dcddd1599059c5, type: 3}
     - {fileID: -405854755, guid: 50ff3bb8a03354f9f9dcddd1599059c5, type: 3}
-  fruit: {fileID: 264123990}
+  eatAnimation:
+  - spritesList:
+    - {fileID: -901984440, guid: 31a3266119f287949ae859e462a42ffe, type: 3}
+    - {fileID: -1786172307, guid: 31a3266119f287949ae859e462a42ffe, type: 3}
+    - {fileID: 1993601892, guid: 31a3266119f287949ae859e462a42ffe, type: 3}
+    - {fileID: 98566717, guid: 31a3266119f287949ae859e462a42ffe, type: 3}
+  - spritesList:
+    - {fileID: -31780699, guid: 31a3266119f287949ae859e462a42ffe, type: 3}
+    - {fileID: 748716264, guid: 31a3266119f287949ae859e462a42ffe, type: 3}
+    - {fileID: 635514517, guid: 31a3266119f287949ae859e462a42ffe, type: 3}
+    - {fileID: 1907752719, guid: 31a3266119f287949ae859e462a42ffe, type: 3}
+  - spritesList:
+    - {fileID: 1723898580, guid: 31a3266119f287949ae859e462a42ffe, type: 3}
+    - {fileID: 1530796070, guid: 31a3266119f287949ae859e462a42ffe, type: 3}
+    - {fileID: 1105332722, guid: 31a3266119f287949ae859e462a42ffe, type: 3}
+    - {fileID: -363905012, guid: 31a3266119f287949ae859e462a42ffe, type: 3}
 --- !u!1 &1234791170
 GameObject:
   m_ObjectHideFlags: 0
