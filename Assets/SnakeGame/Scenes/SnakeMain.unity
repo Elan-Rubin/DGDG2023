@@ -308,7 +308,7 @@ MonoBehaviour:
   snakeMoveInterval: 0.2
   tileCount: 10
   tileSize: 1
-  scaleFactor: 1.05
+  scaleFactor: 1
   worldHolder: {fileID: 557224897}
   tilePrefab: {fileID: 5332912358303306358, guid: 3dc1ff80d6208488b8f9121c701882b2, type: 3}
   spritesList:
@@ -713,8 +713,8 @@ MonoBehaviour:
   m_AssetsPPU: 16
   m_RefResolutionX: 256
   m_RefResolutionY: 256
-  m_UpscaleRT: 1
-  m_PixelSnapping: 1
+  m_UpscaleRT: 0
+  m_PixelSnapping: 0
   m_CropFrameX: 1
   m_CropFrameY: 1
   m_StretchFill: 0
