@@ -20,8 +20,7 @@ public class SnakeManager : MonoBehaviour
     // HeadN, HeadE, HeadS, HeadW
     // MiddleN, MiddleE, etc
     [SerializeField] private List<SpriteList> spritesList;
-    [SerializeField] private Sprite fruitSprite;
-
+    [SerializeField] private GameObject fruit;
 
     private static SnakeManager instance;
     public static SnakeManager Instance { get { return instance; } }
@@ -361,11 +360,10 @@ public class SnakeManager : MonoBehaviour
 
     private void RespawnFruit()
     {
-        // TODO: Add fruit collect sound here
-
         // Collect a list of the empty squares
         // Randomly select one of them
         // Show the fruit there
+        SoundManager.Instance.PlaySoundEffect(SoundType.SnakeEat);
 
         int x = 0;
         int y = 0;
@@ -387,12 +385,19 @@ public class SnakeManager : MonoBehaviour
 
         int randSquare = Random.Range(0, emptySquares.Count - 1);
         fruitPos = emptySquares[randSquare];
+        fruit.SetActive(false);
+        fruit.SetActive(true);
     }
 
     private void RenderFruit()
     {
-        snakeRenderers[fruitPos.x][fruitPos.y].sprite = fruitSprite;
-        snakeRenderers[fruitPos.x][fruitPos.y].enabled = true;
+        //snakeRenderers[fruitPos.x][fruitPos.y].sprite = fruitSprite;
+        //snakeRenderers[fruitPos.x][fruitPos.y].enabled = true;
+        fruit.transform.position = snakeRenderers[fruitPos.x][fruitPos.y].transform.position;
+        //var anim = fruit.GetComponent<Animator>();
+        //anim.Play()
+        //fruit.SetActive(false);
+        //fruit.SetActive(true);
     }
 
     private void GameOver()
