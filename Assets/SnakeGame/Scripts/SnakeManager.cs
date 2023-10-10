@@ -243,7 +243,7 @@ public class SnakeManager : MonoBehaviour
                 {
                     sectionToModify.part = SnakePart.Tail;
                 }
-                else if (ArePartsInLine(snakePartIndices[i], snakePartIndices[i] + pointingToPreviousPart, snakePartIndices[i] + pointingToNextPart))
+                else if (ArePartsInLine(snakePartIndices[i], snakePartIndices[i] + pointingToPreviousPart, partLastPosition))
                 {
                     sectionToModify.part = SnakePart.Straight;
                 }
