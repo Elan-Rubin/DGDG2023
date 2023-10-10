@@ -10,9 +10,17 @@ public class SnakeManager : MonoBehaviour
     [SerializeField] private float snakeMoveInterval = 0.5f;
     [SerializeField] private int tileCount = 10; // 10 means a 10x10 world
     [SerializeField] private float tileSize = 1f;
+
     [Header("Refs")]
     [SerializeField] private GameObject worldHolder;
     [SerializeField] private GameObject tilePrefab;
+
+    [Header("Sprites")]
+    // Outside list is parts, inside list is directions
+    // HeadN, HeadE, HeadS, HeadW
+    // MiddleN, MiddleE, etc
+    [SerializeField] private List<SpriteList> spritesList;
+    [SerializeField] private Sprite fruitSprite;
 
 
     private static SnakeManager instance;
@@ -23,17 +31,20 @@ public class SnakeManager : MonoBehaviour
     // The list of where snake sections are in the world
     private List<List<SnakeSection>> snakeSections = new List<List<SnakeSection>>();
 
-    // Outside list is parts, inside list is directions
-    // HeadN, HeadE, HeadS, HeadW
-    // MiddleN, etc
-    [SerializeField] private List<SpriteList> spritesList;
-
     // A list of the snake parts from head to tail, the Vector2 holds where in the snakeRenderers they are
     private List<Vector2Int> snakePartIndices = new List<Vector2Int>();
     // For now, we start facing/moving to the right (like the google snake game lol)
     private Vector2Int facingDirection = new Vector2Int(1, 0);
 
+    // If the player put in an input to turn but didn't actually turn yet (due to move only being updated every so often)
     private bool tryingToTurn;
+
+    // How much fruit the player has collected
+    int score = 0;
+    private Vector2Int fruitPos = new Vector2Int(5, 8);
+    // The square the tail of the snake just left, which will be used if a fruit is eaten
+    private Vector2Int lastLeftSquare;
+
 
     private void Awake()
     {
@@ -108,6 +119,8 @@ public class SnakeManager : MonoBehaviour
         {
             MoveSnake();
             RenderSnake();
+            CheckFruit();
+            RenderFruit();
         }
         // Otherwise, the player loses
         else
@@ -115,6 +128,7 @@ public class SnakeManager : MonoBehaviour
             GameOver();
         }
     }
+
 
     private void GetInput()
     {
@@ -157,10 +171,9 @@ public class SnakeManager : MonoBehaviour
 
     private bool CanMoveSnake()
     {
-        // TODO: Return whether or not the snake can move, if it can't, player loses
+        // Return whether or not the snake can move, if it can't, player loses
         Vector2Int nextPosition = snakePartIndices[0] + facingDirection;
-        bool wouldBeInBounds = nextPosition.x < tileCount && nextPosition.y < tileCount;
-        wouldBeInBounds = wouldBeInBounds && nextPosition.x >= 0 && nextPosition.y >= 0;
+        bool wouldBeInBounds = nextPosition.x < tileCount && nextPosition.y < tileCount && nextPosition.x >= 0 && nextPosition.y >= 0;
 
         bool wouldNotCollideWithSelf = true;
         foreach (Vector2Int snakePartPos in snakePartIndices)
@@ -174,6 +187,7 @@ public class SnakeManager : MonoBehaviour
 
         return wouldBeInBounds && wouldNotCollideWithSelf;
     }
+
 
     private void MoveSnake()
     {
@@ -252,6 +266,7 @@ public class SnakeManager : MonoBehaviour
                 snakeSections[snakePartIndices[i].x][snakePartIndices[i].y] = sectionToModify;
             }
         }
+        lastLeftSquare = partLastPosition;
         tryingToTurn = false;
     }
 
@@ -300,6 +315,7 @@ public class SnakeManager : MonoBehaviour
         return allXsDifferent || allYsDifferent;
     }
 
+
     private void RenderSnake()
     {
         foreach (List<SpriteRenderer> listOfSR in snakeRenderers)
@@ -331,6 +347,55 @@ public class SnakeManager : MonoBehaviour
     {
         snakeRenderers[x][y].sprite = spritesList[(int)section.part].spritesList[(int)section.direction];
         snakeRenderers[x][y].enabled = true;
+    }
+
+
+    private void CheckFruit()
+    {
+        // Check if the heads square is the same as the fruit square
+        if (snakePartIndices[0].Equals(fruitPos))
+        {
+            // If it is, increment score, lengthen snake and RespawnFruit()
+            score++;
+            snakePartIndices.Add(lastLeftSquare);
+            RespawnFruit();
+        }
+    }
+
+    private void RespawnFruit()
+    {
+        // TODO: Add fruit collect sound here
+
+        // Collect a list of the empty squares
+        // Randomly select one of them
+        // Show the fruit there
+
+        int x = 0;
+        int y = 0;
+        List<Vector2Int> emptySquares = new List<Vector2Int>();
+
+        foreach (List<SpriteRenderer> srList in snakeRenderers)
+        {
+            foreach (SpriteRenderer sr in srList)
+            {
+                if (!sr.enabled)
+                {
+                    emptySquares.Add(new Vector2Int(x, y));
+                }
+                y++;
+            }
+            y = 0;
+            x++;
+        }
+
+        int randSquare = Random.Range(0, emptySquares.Count - 1);
+        fruitPos = emptySquares[randSquare];
+    }
+
+    private void RenderFruit()
+    {
+        snakeRenderers[fruitPos.x][fruitPos.y].sprite = fruitSprite;
+        snakeRenderers[fruitPos.x][fruitPos.y].enabled = true;
     }
 
     private void GameOver()

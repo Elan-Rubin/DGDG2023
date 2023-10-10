@@ -198,6 +198,7 @@ MonoBehaviour:
     - {fileID: -1202567082, guid: 50ff3bb8a03354f9f9dcddd1599059c5, type: 3}
     - {fileID: -1927711263, guid: 50ff3bb8a03354f9f9dcddd1599059c5, type: 3}
     - {fileID: -405854755, guid: 50ff3bb8a03354f9f9dcddd1599059c5, type: 3}
+  fruitSprite: {fileID: 21300000, guid: 2ca1078a4a4d3484fbab2a674b2f1f15, type: 3}
 --- !u!1 &1234791170
 GameObject:
   m_ObjectHideFlags: 0
