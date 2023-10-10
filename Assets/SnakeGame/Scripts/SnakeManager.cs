@@ -10,6 +10,7 @@ public class SnakeManager : MonoBehaviour
     [SerializeField] private float snakeMoveInterval = 0.5f;
     [SerializeField] private int tileCount = 10; // 10 means a 10x10 world
     [SerializeField] private float tileSize = 1f;
+    [SerializeField] private float scaleFactor = 1.1f;
 
     [Header("Refs")]
     [SerializeField] private GameObject worldHolder;
@@ -98,7 +99,7 @@ public class SnakeManager : MonoBehaviour
             {
                 GameObject newTile = Instantiate(tilePrefab, worldHolder.transform);
                 newTile.transform.position = worldHolder.transform.position - new Vector3(tileSize * tileCount, tileSize * tileCount, 0) / 2 + new Vector3(x * tileSize, y * tileSize, 0);
-                newTile.transform.localScale = new Vector2(tileSize, tileSize);
+                newTile.transform.localScale = new Vector2(tileSize, tileSize) * scaleFactor;
                 snakeRenderers[x][y] = newTile.GetComponent<SpriteRenderer>();
             }
         }
