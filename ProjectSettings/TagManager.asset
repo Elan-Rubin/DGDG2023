@@ -47,3 +47,9 @@ TagManager:
   - name: SnakeForeground
     uniqueID: 3884376397
     locked: 0
+  - name: Background
+    uniqueID: 453730733
+    locked: 0
+  - name: Foreground
+    uniqueID: 1773660001
+    locked: 0
