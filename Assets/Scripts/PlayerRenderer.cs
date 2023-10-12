@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,7 @@ public class PlayerRenderer : MonoBehaviour
     [HideInInspector] private Vector2 PlayerPosition { get { return playerPosition; } }
     private Vector2 gunPosition;
     [HideInInspector] public Vector2 GunPosition { get { return gunPosition; } }
+    [SerializeField] private GameObject crosshair;
 
     void Start()
     {
@@ -38,5 +40,10 @@ public class PlayerRenderer : MonoBehaviour
 
         gunRenderer.flipY = playerPosition.x > gunPosition.x;
         playerSprite.flipX = CameraManager.Instance.MousePos.x < playerPosition.x;
+    }
+
+    private void FixedUpdate()
+    {
+        crosshair.transform.position = CameraManager.Instance.LaggedMousePos;
     }
 }
