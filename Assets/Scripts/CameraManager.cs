@@ -11,6 +11,7 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private int mouseLagSpeed = 5;
     private static CameraManager instance;
     private Camera mainCamera;
+    private Transform cameraContainer;
     [HideInInspector] public Camera MainCamera { get { return mainCamera; } }
     private Vector2 mousePos;
     [HideInInspector] public Vector2 MousePos { get { return mousePos; } }
@@ -27,6 +28,7 @@ public class CameraManager : MonoBehaviour
     {
         mainCamera = GetComponent<Camera>();
         currentPos = targetPos = transform.position;
+        cameraContainer = transform.parent;
     }
 
     void Update()
@@ -37,6 +39,6 @@ public class CameraManager : MonoBehaviour
     {
         targetPos = Vector2.Lerp(PlayerMovement.Instance.transform.position, mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition), mousePull);
         currentPos = Vector2.Lerp(currentPos, targetPos, 0.01f * movementSpeed);
-        transform.position = new Vector3(currentPos.x, currentPos.y, -10);
+        cameraContainer.position = new Vector3(currentPos.x, currentPos.y, -10);
     }
 }
