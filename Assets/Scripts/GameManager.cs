@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -13,11 +14,10 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        Cursor.visible = false;
     }
 
     void Update()
     {
-        
+        if (Input.GetMouseButtonDown((int)MouseButton.Left)) Cursor.visible = false;
     }
 }
