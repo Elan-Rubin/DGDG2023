@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -40,5 +41,10 @@ public class CameraManager : MonoBehaviour
         targetPos = Vector2.Lerp(PlayerMovement.Instance.transform.position, mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition), mousePull);
         currentPos = Vector2.Lerp(currentPos, targetPos, 0.01f * movementSpeed);
         cameraContainer.position = new Vector3(currentPos.x, currentPos.y, -10);
+    }
+
+    public void ShakeCamera()
+    {
+        transform.DOShakePosition(0.15f, 10f, 50);
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
     [Header("References")]
     private Rigidbody2D rigidBody;
     private static PlayerMovement instance;
+    [SerializeField] private Transform gunTip;
+    [SerializeField] private GameObject bullet;
     public static PlayerMovement Instance { get { return instance; } }
     private void Awake()
     {
@@ -22,7 +25,14 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        
+        if (Input.GetMouseButtonDown(0))
+        {
+            var b = Instantiate(bullet, gunTip.position, Quaternion.identity).GetComponent<Rigidbody2D>();
+            var dif = (CameraManager.Instance.LaggedMousePos - (Vector2)gunTip.position).normalized;
+            //bodyRigid.AddForce(dif * multiplier * Time.deltatime);
+            b.AddForce(dif * 10000);
+            CameraManager.Instance.ShakeCamera();
+        }
     }
     private void FixedUpdate()
     {
