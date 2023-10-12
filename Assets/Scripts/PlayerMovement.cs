@@ -6,9 +6,8 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Variables")]
     [SerializeField] private float movementSpeed;
-    //[Header("References")]
+    [Header("References")]
     private Rigidbody2D rigidBody;
-    //[SerializeField] private 
     private static PlayerMovement instance;
     public static PlayerMovement Instance { get { return instance; } }
     private void Awake()
@@ -23,8 +22,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        var movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        if (movement.magnitude > 1) movement /= movement.magnitude;
         
     }
     private void FixedUpdate()
