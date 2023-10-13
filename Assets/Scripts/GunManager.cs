@@ -30,6 +30,7 @@ public class GunManager : MonoBehaviour
     void Update()
     {
         gunRenderer.flipY = PlayerRenderer.Instance.PlayerPosition.x > gunPosition.x;
+        gunRenderer.sortingOrder = PlayerRenderer.Instance.PlayerPosition.y > gunPosition.y ? 2 : -2;
         gunPosition = gunRenderer.transform.position;
         if (Vector2.Distance(CameraManager.Instance.LaggedMousePos, gunPosition) < 1) return;
         //Vector3 relativePos = CameraManager.Instance.LaggedMousePos - PlayerRenderer.Instance.PlayerPosition;

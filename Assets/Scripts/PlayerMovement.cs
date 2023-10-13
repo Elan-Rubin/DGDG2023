@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
             var b = Instantiate(bullet, GunManager.Instance.GunTip.position, Quaternion.identity).GetComponent<Rigidbody2D>();
             var dif = (CameraManager.Instance.LaggedMousePos - (Vector2)GunManager.Instance.GunTip.position).normalized;
             //bodyRigid.AddForce(dif * multiplier * Time.deltatime);
-            b.AddForce(dif * 1000);
+            b.AddForce(dif * 800);
             CameraManager.Instance.ShakeCamera();
         }
     }
