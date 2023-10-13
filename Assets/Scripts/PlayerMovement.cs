@@ -10,7 +10,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("References")]
     private Rigidbody2D rigidBody;
     private static PlayerMovement instance;
-    [SerializeField] private GameObject bullet;
     public static PlayerMovement Instance { get { return instance; } }
     private void Awake()
     {
@@ -24,14 +23,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            var b = Instantiate(bullet, GunManager.Instance.GunTip.position, Quaternion.identity).GetComponent<Rigidbody2D>();
-            var dif = (CameraManager.Instance.LaggedMousePos - (Vector2)GunManager.Instance.GunTip.position).normalized;
-            //bodyRigid.AddForce(dif * multiplier * Time.deltatime);
-            b.AddForce(dif * 800);
-            CameraManager.Instance.ShakeCamera();
-        }
+        
     }
     private void FixedUpdate()
     {

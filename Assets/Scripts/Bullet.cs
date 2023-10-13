@@ -18,12 +18,12 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        switch (collision.gameObject.tag)
+        switch (collision.gameObject.layer)
         {
-            case "Wall":
+            case 8:
                 DestroyBullet();
                 break;
-            case "Bullet":
+            case 7:
                 Physics2D.IgnoreCollision(collision.collider, collision.otherCollider);
                 break;
         }
