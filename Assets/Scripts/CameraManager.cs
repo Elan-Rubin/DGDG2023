@@ -45,6 +45,6 @@ public class CameraManager : MonoBehaviour
 
     public void ShakeCamera()
     {
-        transform.DOShakePosition(0.15f, 10f, 50);
+        transform.DOShakePosition(0.15f, 0.25f, 50);
     }
 }
