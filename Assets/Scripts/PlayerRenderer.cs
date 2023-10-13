@@ -12,15 +12,12 @@ public class PlayerRenderer : MonoBehaviour
         if (instance != null && instance != this) Destroy(gameObject);
         else instance = this;
     }
-    [SerializeField] private Transform gunRotator;
     //[SerializeField] private float gunRotationSpeed = 90;
-    [SerializeField] private SpriteRenderer gunRenderer;
+    
     private SpriteRenderer playerSprite;
     private Vector2 playerPosition;
-    [HideInInspector] private Vector2 PlayerPosition { get { return playerPosition; } }
-    private Vector2 gunPosition;
-    [HideInInspector] public Vector2 GunPosition { get { return gunPosition; } }
-    [SerializeField] private GameObject crosshair;
+    [HideInInspector] public Vector2 PlayerPosition { get { return playerPosition; } }
+    
 
     void Start()
     {
@@ -30,20 +27,17 @@ public class PlayerRenderer : MonoBehaviour
     void Update()
     {
         playerPosition = transform.position;
-        gunPosition = gunRenderer.transform.position;
 
         /*var target = CameraManager.Instance.MousePos;
         float angle = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg;
         gunRotator.rotation = Quaternion.Euler(new Vector3(0, 0, angle));*/
 
-        gunRotator.right = Vector3.RotateTowards(gunRotator.position, CameraManager.Instance.LaggedMousePos, Mathf.Infinity, Mathf.Infinity); ;
 
-        gunRenderer.flipY = playerPosition.x > gunPosition.x;
         playerSprite.flipX = CameraManager.Instance.MousePos.x < playerPosition.x;
     }
 
     private void FixedUpdate()
     {
-        crosshair.transform.position = CameraManager.Instance.LaggedMousePos;
+
     }
 }

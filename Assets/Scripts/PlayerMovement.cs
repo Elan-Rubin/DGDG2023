@@ -10,7 +10,6 @@ public class PlayerMovement : MonoBehaviour
     [Header("References")]
     private Rigidbody2D rigidBody;
     private static PlayerMovement instance;
-    [SerializeField] private Transform gunTip;
     [SerializeField] private GameObject bullet;
     public static PlayerMovement Instance { get { return instance; } }
     private void Awake()
@@ -27,10 +26,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            var b = Instantiate(bullet, gunTip.position, Quaternion.identity).GetComponent<Rigidbody2D>();
-            var dif = (CameraManager.Instance.LaggedMousePos - (Vector2)gunTip.position).normalized;
+            var b = Instantiate(bullet, GunManager.Instance.GunTip.position, Quaternion.identity).GetComponent<Rigidbody2D>();
+            var dif = (CameraManager.Instance.LaggedMousePos - (Vector2)GunManager.Instance.GunTip.position).normalized;
             //bodyRigid.AddForce(dif * multiplier * Time.deltatime);
-            b.AddForce(dif * 10000);
+            b.AddForce(dif * 1000);
             CameraManager.Instance.ShakeCamera();
         }
     }
@@ -38,6 +37,6 @@ public class PlayerMovement : MonoBehaviour
     {
         var movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         if (movement.magnitude > 1) movement /= movement.magnitude;
-        rigidBody.velocity = movement * movementSpeed;
+        rigidBody.velocity = movement * movementSpeed; 
     }
 }
