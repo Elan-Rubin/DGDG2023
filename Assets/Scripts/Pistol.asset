@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GunName: Pistol
   GunLevel: 1
+  ShootForce: 10
   ReloadTime: 0.1
   Bullet: {fileID: 7544120140449932333, guid: e76d0013d30ff0349bded44c06d5abf7, type: 3}
   Repetitions: 0
@@ -21,6 +22,7 @@ MonoBehaviour:
   BulletsPerShot: 1
   Inaccuracy: 5
   Laser: 1
+  Machinegun: 0
   GunSprite: {fileID: -1927711263, guid: 50ff3bb8a03354f9f9dcddd1599059c5, type: 3}
   GunOffset: {x: 0.55, y: -0.15}
   TipOffset: {x: 0.5, y: 0}

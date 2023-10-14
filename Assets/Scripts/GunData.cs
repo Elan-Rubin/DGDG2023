@@ -24,16 +24,25 @@ public class GunData : ScriptableObject
     [HideInInspector] public int GunLevel { get { return gunLevel; } }*/
     [Header("Information")]
     public string GunName;
+    [Range(1,3)]
     public int GunLevel;
     [Header("Stats")]
+    [Range(0,20)]
+    public int ShootForce;
+    [Range(0,1)]
     public float ReloadTime;
     public GameObject Bullet;
+    [Range(0,2)]
     public int Repetitions;
+    [Range(0,1)]
     public float DelayBetween;
+    [Range(1,10)]
     public int BulletsPerShot;
+    [Range(0,90)]
     public float Inaccuracy;
     [Header("Abilities")]
     public bool Laser;
+    public bool Machinegun;
     [Header("References")]
     public Sprite GunSprite;
     public Vector2 GunOffset;
