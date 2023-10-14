@@ -8,19 +8,21 @@ public class PathfinderEnemy : MonoBehaviour
     [Header("References")]
     [SerializeField] private Tilemap map;
     [SerializeField] private GameObject target;
-    [Header("Performance")]
-    [SerializeField] private int width = 64;
-    [SerializeField] private int height = 64;
-    [SerializeField] private float recalculationDelay = 1f;
     [Header("Enemy")]
     [SerializeField] private float desiredDistanceToTarget = 1f;
     [SerializeField] private float speed = 1f;
     // The pathfinder only recalculates the path every X seconds
     [SerializeField] private bool pathfindWhenTargetOutOfSight = true;
     [SerializeField] private bool chargeWhenTargetInSight = false;
+    [Header("Performance")]
+    [SerializeField] private int width = 64;
+    [SerializeField] private int height = 64;
+    [SerializeField] private float recalculationDelay = 1f;
+    [SerializeField] private float raycastDelay = 1f;
 
     private Vector3Int lastTargetCell;
     private Vector3Int lastPathCell;
+    private bool targetVisible;
 
     private Rigidbody2D rb;
 
@@ -34,6 +36,8 @@ public class PathfinderEnemy : MonoBehaviour
         pathCalculator = new PathCalculator(width, height, map);
         SetupGridFromTilemap();
         InvokeRepeating("CalculatePath", 0f, recalculationDelay);
+        if (chargeWhenTargetInSight)
+            InvokeRepeating("IsTargetVisible", 0f, raycastDelay);
     }
 
     // Update is called once per frame
@@ -45,12 +49,13 @@ public class PathfinderEnemy : MonoBehaviour
         if (Vector3.Distance(transform.position, target.transform.position) < desiredDistanceToTarget)
             rb.velocity = Vector3.zero;
         // If we can see the player and we're supposed to charge when we see the player
-        else if (chargeWhenTargetInSight && rayToTarget.collider == null || rayToTarget.collider.gameObject.CompareTag("Player"))
+        else if (chargeWhenTargetInSight && targetVisible)
         {
+            Debug.Log("Charging");
             rb.velocity = (target.transform.position - transform.position).normalized * speed;
         }
         // Otherwise, pathfind
-        else
+        else if (pathfindWhenTargetOutOfSight)
         {
             if (pathCalculator.IsPathReady())
             {
@@ -75,6 +80,12 @@ public class PathfinderEnemy : MonoBehaviour
             }
             FollowPath();
         }
+    }
+
+    private void IsTargetVisible()
+    {
+        RaycastHit2D rayToTarget = Physics2D.Raycast(transform.position, target.transform.position - transform.position);
+        targetVisible = (rayToTarget.collider == null || rayToTarget.collider.gameObject.CompareTag("Player"));
     }
 
     private void CalculatePath()
