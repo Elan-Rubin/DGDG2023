@@ -219,14 +219,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 1365659973}
   target: {fileID: 976618489}
+  desiredDistanceToTarget: 0.75
+  speed: 5
+  pathfindWhenTargetOutOfSight: 1
+  chargeWhenTargetInSight: 1
   width: 64
   height: 24
   recalculationDelay: 0.1
   raycastDelay: 1
-  desiredDistanceToTarget: 0.75
-  speed: 5
-  pathfindWhenTargetOutOfSight: 1
-  chargeWhenTargetInSight: 0
 --- !u!212 &286530737
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -390,14 +390,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 1365659973}
   target: {fileID: 976618489}
+  desiredDistanceToTarget: 0.75
+  speed: 5
+  pathfindWhenTargetOutOfSight: 1
+  chargeWhenTargetInSight: 1
   width: 64
   height: 24
   recalculationDelay: 0.1
   raycastDelay: 1
-  desiredDistanceToTarget: 0.75
-  speed: 5
-  pathfindWhenTargetOutOfSight: 1
-  chargeWhenTargetInSight: 0
 --- !u!212 &605659031
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -561,14 +561,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 1365659973}
   target: {fileID: 976618489}
+  desiredDistanceToTarget: 0.75
+  speed: 5
+  pathfindWhenTargetOutOfSight: 1
+  chargeWhenTargetInSight: 1
   width: 64
   height: 24
   recalculationDelay: 0.1
   raycastDelay: 1
-  desiredDistanceToTarget: 0.75
-  speed: 5
-  pathfindWhenTargetOutOfSight: 1
-  chargeWhenTargetInSight: 0
 --- !u!212 &843181336
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -986,14 +986,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 1365659973}
   target: {fileID: 976618489}
+  desiredDistanceToTarget: 0.75
+  speed: 5
+  pathfindWhenTargetOutOfSight: 1
+  chargeWhenTargetInSight: 1
   width: 64
   height: 24
   recalculationDelay: 0.1
   raycastDelay: 1
-  desiredDistanceToTarget: 0.75
-  speed: 5
-  pathfindWhenTargetOutOfSight: 1
-  chargeWhenTargetInSight: 0
 --- !u!212 &1186850307
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3931,14 +3931,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 1365659973}
   target: {fileID: 976618489}
+  desiredDistanceToTarget: 0.75
+  speed: 5
+  pathfindWhenTargetOutOfSight: 1
+  chargeWhenTargetInSight: 1
   width: 64
   height: 24
   recalculationDelay: 0.1
   raycastDelay: 1
-  desiredDistanceToTarget: 0.75
-  speed: 5
-  pathfindWhenTargetOutOfSight: 1
-  chargeWhenTargetInSight: 0
 --- !u!212 &1523324125
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4147,14 +4147,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 1365659973}
   target: {fileID: 976618489}
+  desiredDistanceToTarget: 0.75
+  speed: 5
+  pathfindWhenTargetOutOfSight: 1
+  chargeWhenTargetInSight: 1
   width: 64
   height: 24
   recalculationDelay: 0.1
   raycastDelay: 1
-  desiredDistanceToTarget: 0.75
-  speed: 5
-  pathfindWhenTargetOutOfSight: 1
-  chargeWhenTargetInSight: 0
 --- !u!212 &1571334105
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4318,14 +4318,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 1365659973}
   target: {fileID: 976618489}
+  desiredDistanceToTarget: 0.75
+  speed: 5
+  pathfindWhenTargetOutOfSight: 1
+  chargeWhenTargetInSight: 1
   width: 64
   height: 24
   recalculationDelay: 0.1
   raycastDelay: 1
-  desiredDistanceToTarget: 0.75
-  speed: 5
-  pathfindWhenTargetOutOfSight: 1
-  chargeWhenTargetInSight: 0
 --- !u!212 &1577479931
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4530,14 +4530,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 1365659973}
   target: {fileID: 976618489}
+  desiredDistanceToTarget: 0.75
+  speed: 5
+  pathfindWhenTargetOutOfSight: 1
+  chargeWhenTargetInSight: 1
   width: 64
   height: 24
   recalculationDelay: 0.1
   raycastDelay: 1
-  desiredDistanceToTarget: 0.75
-  speed: 5
-  pathfindWhenTargetOutOfSight: 1
-  chargeWhenTargetInSight: 0
 --- !u!212 &1803096548
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4706,14 +4706,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 1365659973}
   target: {fileID: 976618489}
+  desiredDistanceToTarget: 0.75
+  speed: 5
+  pathfindWhenTargetOutOfSight: 1
+  chargeWhenTargetInSight: 1
   width: 64
   height: 24
   recalculationDelay: 0.1
   raycastDelay: 1
-  desiredDistanceToTarget: 0.75
-  speed: 5
-  pathfindWhenTargetOutOfSight: 1
-  chargeWhenTargetInSight: 0
 --- !u!50 &1806864465
 Rigidbody2D:
   serializedVersion: 4
@@ -4872,14 +4872,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 1365659973}
   target: {fileID: 976618489}
+  desiredDistanceToTarget: 0.75
+  speed: 5
+  pathfindWhenTargetOutOfSight: 1
+  chargeWhenTargetInSight: 1
   width: 64
   height: 24
   recalculationDelay: 0.1
   raycastDelay: 1
-  desiredDistanceToTarget: 0.75
-  speed: 5
-  pathfindWhenTargetOutOfSight: 1
-  chargeWhenTargetInSight: 0
 --- !u!212 &1937212761
 SpriteRenderer:
   m_ObjectHideFlags: 0

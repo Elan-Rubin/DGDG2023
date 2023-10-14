@@ -90,7 +90,7 @@ public class PathfinderEnemy : MonoBehaviour
 
     private void CalculatePath()
     {
-        if (Vector3.Distance(transform.position, target.transform.position) < desiredDistanceToTarget)
+        if (Vector3.Distance(transform.position, target.transform.position) < desiredDistanceToTarget || (targetVisible && chargeWhenTargetInSight))
             return;
 
         Vector3Int currentCell = map.WorldToCell(transform.position);
