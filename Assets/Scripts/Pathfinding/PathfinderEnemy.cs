@@ -44,13 +44,15 @@ public class PathfinderEnemy : MonoBehaviour
             if (pathCalculator.IsPathReady())
             {
                 List<Waypoint> newPath = pathCalculator.Path();
-                if (path == null)
+                if (newPath == null || newPath.Count < 1)
                     return;
 
                 path = newPath;
 
-                Vector3 nextWaypointCenter = map.CellToWorld(path[0].GetMapPosition()) + new Vector3(pathCalculator.grid.GetCellSize(), pathCalculator.grid.GetCellSize()) * 0.5f;
-                Vector3 followingWaypointCenter = map.CellToWorld(path[0].GetMapPosition()) + new Vector3(pathCalculator.grid.GetCellSize(), pathCalculator.grid.GetCellSize()) * 0.5f;
+                if (newPath.Count <= 1)
+                    return;
+
+                Vector3 followingWaypointCenter = map.CellToWorld(path[1].GetMapPosition()) + new Vector3(pathCalculator.grid.GetCellSize(), pathCalculator.grid.GetCellSize()) * 0.5f;
 
                 // If the following waypoint is closer than the next one, use it instead
                 // (due to the time it takes to recalculate, sometimes we will have already passed the 'next waypoint' and be ready for the one after that)
@@ -73,7 +75,7 @@ public class PathfinderEnemy : MonoBehaviour
         Vector3Int targetCell = map.WorldToCell(target.transform.position);
 
         // If this enemy is on the correct path and the target hasn't changed cells
-        if (path.Count > 0 && (currentCell == lastPathCell || currentCell == path[0].GetMapPosition()) && targetCell == lastTargetCell)
+        if (path != null && path.Count > 0 && (currentCell == lastPathCell || currentCell == path[0].GetMapPosition()) && targetCell == lastTargetCell)
             return;
 
         lastTargetCell = targetCell;
