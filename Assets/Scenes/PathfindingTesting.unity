@@ -221,9 +221,11 @@ MonoBehaviour:
   target: {fileID: 976618489}
   width: 64
   height: 24
+  recalculationDelay: 0.1
   desiredDistanceToTarget: 0.25
   speed: 5
-  recalculationDelay: 0.1
+  pathfindWhenTargetOutOfSight: 1
+  chargeWhenTargetInSight: 1
 --- !u!212 &286530737
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -284,7 +286,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 286530733}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.2070894, y: -1.3626757, z: -0.36240298}
+  m_LocalPosition: {x: -2.29, y: -4.05, z: -0.36240298}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -389,9 +391,11 @@ MonoBehaviour:
   target: {fileID: 976618489}
   width: 64
   height: 24
+  recalculationDelay: 0.1
   desiredDistanceToTarget: 0.25
   speed: 5
-  recalculationDelay: 0.1
+  pathfindWhenTargetOutOfSight: 1
+  chargeWhenTargetInSight: 1
 --- !u!212 &605659031
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -452,7 +456,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 605659027}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.2070894, y: 0.31732464, z: -0.36240298}
+  m_LocalPosition: {x: 18.11, y: 15.58, z: -0.36240298}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -557,9 +561,11 @@ MonoBehaviour:
   target: {fileID: 976618489}
   width: 64
   height: 24
+  recalculationDelay: 0.1
   desiredDistanceToTarget: 0.25
   speed: 5
-  recalculationDelay: 0.1
+  pathfindWhenTargetOutOfSight: 1
+  chargeWhenTargetInSight: 1
 --- !u!212 &843181336
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -620,7 +626,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 843181332}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.3470898, y: -1.3626757, z: -0.36240298}
+  m_LocalPosition: {x: 5.91, y: -0.59, z: -0.36240298}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -734,7 +740,7 @@ GameObject:
   - component: {fileID: 976618493}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -979,9 +985,11 @@ MonoBehaviour:
   target: {fileID: 976618489}
   width: 64
   height: 24
+  recalculationDelay: 0.1
   desiredDistanceToTarget: 0.25
   speed: 5
-  recalculationDelay: 0.1
+  pathfindWhenTargetOutOfSight: 1
+  chargeWhenTargetInSight: 1
 --- !u!212 &1186850307
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1042,7 +1050,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1186850303}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.3470898, y: 0.31732464, z: -0.36240298}
+  m_LocalPosition: {x: 7.97, y: 7.04, z: -0.36240298}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3921,9 +3929,11 @@ MonoBehaviour:
   target: {fileID: 976618489}
   width: 64
   height: 24
+  recalculationDelay: 0.1
   desiredDistanceToTarget: 0.25
   speed: 5
-  recalculationDelay: 0.1
+  pathfindWhenTargetOutOfSight: 1
+  chargeWhenTargetInSight: 1
 --- !u!212 &1523324125
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3984,7 +3994,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1523324121}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.30709076, y: -1.3626757, z: -0.36240298}
+  m_LocalPosition: {x: 14.19, y: -4.24, z: -0.36240298}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4134,9 +4144,11 @@ MonoBehaviour:
   target: {fileID: 976618489}
   width: 64
   height: 24
+  recalculationDelay: 0.1
   desiredDistanceToTarget: 0.25
   speed: 5
-  recalculationDelay: 0.1
+  pathfindWhenTargetOutOfSight: 1
+  chargeWhenTargetInSight: 1
 --- !u!212 &1571334105
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4197,7 +4209,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1571334101}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.30709076, y: 0.31732464, z: -0.36240298}
+  m_LocalPosition: {x: 11.88, y: 3, z: -0.36240298}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4302,9 +4314,11 @@ MonoBehaviour:
   target: {fileID: 976618489}
   width: 64
   height: 24
+  recalculationDelay: 0.1
   desiredDistanceToTarget: 0.25
   speed: 5
-  recalculationDelay: 0.1
+  pathfindWhenTargetOutOfSight: 1
+  chargeWhenTargetInSight: 1
 --- !u!212 &1577479931
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4365,7 +4379,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1577479927}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.3370895, y: -1.3626757, z: -0.36240298}
+  m_LocalPosition: {x: -3.99, y: 6.94, z: -0.36240298}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4511,9 +4525,11 @@ MonoBehaviour:
   target: {fileID: 976618489}
   width: 64
   height: 24
+  recalculationDelay: 0.1
   desiredDistanceToTarget: 0.25
   speed: 5
-  recalculationDelay: 0.1
+  pathfindWhenTargetOutOfSight: 1
+  chargeWhenTargetInSight: 1
 --- !u!212 &1803096548
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4574,7 +4590,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1803096544}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.3370895, y: 0.31732464, z: -0.36240298}
+  m_LocalPosition: {x: 3.12, y: 11.02, z: -0.36240298}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4661,7 +4677,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1806864459}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.3770895, y: -1.3626757, z: -0.36240298}
+  m_LocalPosition: {x: 13.27, y: 11.83, z: -0.36240298}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4684,9 +4700,11 @@ MonoBehaviour:
   target: {fileID: 976618489}
   width: 64
   height: 24
+  recalculationDelay: 0.1
   desiredDistanceToTarget: 0.25
   speed: 5
-  recalculationDelay: 0.1
+  pathfindWhenTargetOutOfSight: 1
+  chargeWhenTargetInSight: 1
 --- !u!50 &1806864465
 Rigidbody2D:
   serializedVersion: 4
@@ -4847,9 +4865,11 @@ MonoBehaviour:
   target: {fileID: 976618489}
   width: 64
   height: 24
+  recalculationDelay: 0.1
   desiredDistanceToTarget: 0.25
   speed: 5
-  recalculationDelay: 0.1
+  pathfindWhenTargetOutOfSight: 1
+  chargeWhenTargetInSight: 1
 --- !u!212 &1937212761
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4910,7 +4930,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1937212757}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.3770895, y: 0.31732464, z: -0.36240298}
+  m_LocalPosition: {x: -15.34, y: 12.79, z: -0.36240298}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

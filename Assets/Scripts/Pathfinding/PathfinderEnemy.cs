@@ -8,18 +8,20 @@ public class PathfinderEnemy : MonoBehaviour
     [Header("References")]
     [SerializeField] private Tilemap map;
     [SerializeField] private GameObject target;
-    [Header("Variables")]
+    [Header("Performance")]
     [SerializeField] private int width = 64;
     [SerializeField] private int height = 64;
+    [SerializeField] private float recalculationDelay = 1f;
+    [Header("Enemy")]
     [SerializeField] private float desiredDistanceToTarget = 1f;
     [SerializeField] private float speed = 1f;
     // The pathfinder only recalculates the path every X seconds
-    [SerializeField] private float recalculationDelay = 1f;
+    [SerializeField] private bool pathfindWhenTargetOutOfSight = true;
+    [SerializeField] private bool chargeWhenTargetInSight = false;
 
     private Vector3Int lastTargetCell;
     private Vector3Int lastPathCell;
 
-    private float lastRecalcTime;
     private Rigidbody2D rb;
 
     List<Waypoint> path = new List<Waypoint>();
@@ -37,8 +39,17 @@ public class PathfinderEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        RaycastHit2D rayToTarget = Physics2D.Raycast(transform.position, target.transform.position - transform.position);
+
+        // If close enough to player
         if (Vector3.Distance(transform.position, target.transform.position) < desiredDistanceToTarget)
             rb.velocity = Vector3.zero;
+        // If we can see the player and we're supposed to charge when we see the player
+        else if (chargeWhenTargetInSight && rayToTarget.collider == null || rayToTarget.collider.gameObject.CompareTag("Player"))
+        {
+            rb.velocity = (target.transform.position - transform.position).normalized * speed;
+        }
+        // Otherwise, pathfind
         else
         {
             if (pathCalculator.IsPathReady())
