@@ -24,6 +24,7 @@ public class PathfinderEnemy : MonoBehaviour
     private Vector3Int lastPathCell;
     private bool targetVisible;
 
+    private SpriteRenderer spriteRenderer;
     private Rigidbody2D rb;
 
     List<Waypoint> path = new List<Waypoint>();
@@ -33,6 +34,7 @@ public class PathfinderEnemy : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
         pathCalculator = new PathCalculator(width, height, map);
         SetupGridFromTilemap();
         InvokeRepeating("CalculatePath", 0f, recalculationDelay);
@@ -40,9 +42,10 @@ public class PathfinderEnemy : MonoBehaviour
             InvokeRepeating("IsTargetVisible", 0f, raycastDelay);
     }
 
-    // Update is called once per frame
     void Update()
     {
+        spriteRenderer.flipX = target.transform.position.x < transform.position.x;
+
         RaycastHit2D rayToTarget = Physics2D.Raycast(transform.position, target.transform.position - transform.position);
 
         // If close enough to player

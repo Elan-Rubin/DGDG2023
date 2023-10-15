@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
     {
         PlayerPosition = transform.position;
         if (!CanMove) return;
-        if (Vector2.Distance(PlayerPosition, RevivalScript.Instance.GetLatest()) > 3f) RevivalScript.Instance.AddPosition(PlayerPosition);
+        if (RevivalScript.Instance!=null && Vector2.Distance(PlayerPosition, RevivalScript.Instance.GetLatest()) > 3f) RevivalScript.Instance.AddPosition(PlayerPosition);
         var movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         if (movement.magnitude > 1) movement /= movement.magnitude;
         rigidBody.velocity = movement * movementSpeed; 

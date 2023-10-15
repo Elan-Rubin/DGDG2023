@@ -10,6 +10,7 @@ public class Bullet : MonoBehaviour
     private List<int> uids = new();
     private Rigidbody2D rb;
     private bool destroying;
+    [HideInInspector] public Vector2 Velocity;
 
     void Start()
     {
@@ -28,11 +29,17 @@ public class Bullet : MonoBehaviour
     {
         switch (collision.gameObject.layer)
         {
-            case 8: //wall
-                DestroyBullet();
-                break;
             case 7: //player
                 Physics2D.IgnoreCollision(collision.collider, collision.otherCollider);
+                break;
+            case 9: //enemy
+                DestroyBullet();
+                MakeParticle();
+                collision.rigidbody.AddForce(Velocity * 100f);
+                break;
+            case 8: //wall
+                MakeParticle();
+                DestroyBullet();
                 break;
         }
     }
@@ -49,6 +56,11 @@ public class Bullet : MonoBehaviour
         sequence.Append(bulletRenderer.DOColor(Color.white, 0.1f));
         sequence.Append(bulletRenderer.transform.DOScale(Vector2.zero, 0.1f));
         sequence.OnComplete(() => Destroy(gameObject));
+    }
+    private void MakeParticle()
+    {
+        var p = Instantiate(GunManager.Instance.BulletParticle, transform.position, Quaternion.identity);
+        Destroy(p, 1f);
     }
 
     public void StartLifetime(float time) => StartCoroutine(nameof(StartLifetimeCoroutine), time);

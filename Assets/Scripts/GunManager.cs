@@ -27,6 +27,7 @@ public class GunManager : MonoBehaviour
     [HideInInspector] public Transform GunTip { get { return gunTip; } }
 
     [HideInInspector] public SpriteRenderer GunRenderer { get { return gunRenderer; } }
+    public ParticleSystem BulletParticle;
 
     private float waitTime;
     private bool queuedShoot;
@@ -86,6 +87,7 @@ public class GunManager : MonoBehaviour
                 var dif = (CameraManager.Instance.LaggedMousePos - (Vector2)GunTip.position).normalized;
                 //bodyRigid.AddForce(dif * multiplier * Time.deltatime);
                 dif = HelperClass.RotateVector(dif, Random.Range(-selectedGun.Inaccuracy, selectedGun.Inaccuracy));
+                bullet.Velocity = dif.normalized;
                 b.AddForce(100 * selectedGun.ShootForce * dif);
                 CameraManager.Instance.ShakeCamera();
             }

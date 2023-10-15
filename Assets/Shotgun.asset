@@ -26,6 +26,6 @@ MonoBehaviour:
   Inaccuracy: 20
   Laser: 0
   Machinegun: 0
-  GunSprite: {fileID: 1042298936, guid: 032225b6df562504991d4b9de7430360, type: 3}
-  GunOffset: {x: 0.55, y: -0.15}
+  GunSprite: {fileID: 21300000, guid: 5b66d497a3e23ec4e891f3cf4380d910, type: 3}
+  GunOffset: {x: 0.85, y: -0.15}
   TipOffset: {x: 0.5, y: 0}
