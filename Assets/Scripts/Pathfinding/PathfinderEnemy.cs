@@ -8,18 +8,22 @@ public class PathfinderEnemy : MonoBehaviour
     [Header("References")]
     [SerializeField] private Tilemap map;
     [SerializeField] private GameObject target;
-    [Header("Variables")]
-    [SerializeField] private int width = 64;
-    [SerializeField] private int height = 64;
+    [Header("Enemy")]
     [SerializeField] private float desiredDistanceToTarget = 1f;
     [SerializeField] private float speed = 1f;
     // The pathfinder only recalculates the path every X seconds
+    [SerializeField] private bool pathfindWhenTargetOutOfSight = true;
+    [SerializeField] private bool chargeWhenTargetInSight = false;
+    [Header("Performance")]
+    [SerializeField] private int width = 64;
+    [SerializeField] private int height = 64;
     [SerializeField] private float recalculationDelay = 1f;
+    [SerializeField] private float raycastDelay = 1f;
 
     private Vector3Int lastTargetCell;
     private Vector3Int lastPathCell;
+    private bool targetVisible;
 
-    private float lastRecalcTime;
     private Rigidbody2D rb;
 
     List<Waypoint> path = new List<Waypoint>();
@@ -32,25 +36,39 @@ public class PathfinderEnemy : MonoBehaviour
         pathCalculator = new PathCalculator(width, height, map);
         SetupGridFromTilemap();
         InvokeRepeating("CalculatePath", 0f, recalculationDelay);
+        if (chargeWhenTargetInSight)
+            InvokeRepeating("IsTargetVisible", 0f, raycastDelay);
     }
 
     // Update is called once per frame
     void Update()
     {
+        RaycastHit2D rayToTarget = Physics2D.Raycast(transform.position, target.transform.position - transform.position);
+
+        // If close enough to player
         if (Vector3.Distance(transform.position, target.transform.position) < desiredDistanceToTarget)
             rb.velocity = Vector3.zero;
-        else
+        // If we can see the player and we're supposed to charge when we see the player
+        else if (chargeWhenTargetInSight && targetVisible)
+        {
+            Debug.Log("Charging");
+            rb.velocity = (target.transform.position - transform.position).normalized * speed;
+        }
+        // Otherwise, pathfind
+        else if (pathfindWhenTargetOutOfSight)
         {
             if (pathCalculator.IsPathReady())
             {
                 List<Waypoint> newPath = pathCalculator.Path();
-                if (path == null)
+                if (newPath == null || newPath.Count < 1)
                     return;
 
                 path = newPath;
 
-                Vector3 nextWaypointCenter = map.CellToWorld(path[0].GetMapPosition()) + new Vector3(pathCalculator.grid.GetCellSize(), pathCalculator.grid.GetCellSize()) * 0.5f;
-                Vector3 followingWaypointCenter = map.CellToWorld(path[0].GetMapPosition()) + new Vector3(pathCalculator.grid.GetCellSize(), pathCalculator.grid.GetCellSize()) * 0.5f;
+                if (newPath.Count <= 1)
+                    return;
+
+                Vector3 followingWaypointCenter = map.CellToWorld(path[1].GetMapPosition()) + new Vector3(pathCalculator.grid.GetCellSize(), pathCalculator.grid.GetCellSize()) * 0.5f;
 
                 // If the following waypoint is closer than the next one, use it instead
                 // (due to the time it takes to recalculate, sometimes we will have already passed the 'next waypoint' and be ready for the one after that)
@@ -64,16 +82,22 @@ public class PathfinderEnemy : MonoBehaviour
         }
     }
 
+    private void IsTargetVisible()
+    {
+        RaycastHit2D rayToTarget = Physics2D.Raycast(transform.position, target.transform.position - transform.position);
+        targetVisible = (rayToTarget.collider == null || rayToTarget.collider.gameObject.CompareTag("Player"));
+    }
+
     private void CalculatePath()
     {
-        if (Vector3.Distance(transform.position, target.transform.position) < desiredDistanceToTarget)
+        if (Vector3.Distance(transform.position, target.transform.position) < desiredDistanceToTarget || (targetVisible && chargeWhenTargetInSight))
             return;
 
         Vector3Int currentCell = map.WorldToCell(transform.position);
         Vector3Int targetCell = map.WorldToCell(target.transform.position);
 
         // If this enemy is on the correct path and the target hasn't changed cells
-        if (path.Count > 0 && (currentCell == lastPathCell || currentCell == path[0].GetMapPosition()) && targetCell == lastTargetCell)
+        if (path != null && path.Count > 0 && (currentCell == lastPathCell || currentCell == path[0].GetMapPosition()) && targetCell == lastTargetCell)
             return;
 
         lastTargetCell = targetCell;
