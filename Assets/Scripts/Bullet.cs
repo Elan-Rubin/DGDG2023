@@ -11,6 +11,7 @@ public class Bullet : MonoBehaviour
     private Rigidbody2D rb;
     private bool destroying;
     [HideInInspector] public Vector2 Velocity;
+    [SerializeField] private bool enemyBullet;
 
     void Start()
     {
@@ -30,12 +31,21 @@ public class Bullet : MonoBehaviour
         switch (collision.gameObject.layer)
         {
             case 7: //player
-                Physics2D.IgnoreCollision(collision.collider, collision.otherCollider);
+                if(!enemyBullet) Physics2D.IgnoreCollision(collision.collider, collision.otherCollider);
+                else
+                {
+                    DestroyBullet();
+                    MakeParticle();
+                }
                 break;
             case 9: //enemy
-                DestroyBullet();
-                MakeParticle();
-                collision.rigidbody.AddForce(Velocity * 100f);
+                if(enemyBullet) Physics2D.IgnoreCollision(collision.collider, collision.otherCollider);
+                else
+                {
+                    DestroyBullet();
+                    MakeParticle();
+                    collision.rigidbody.AddForce(Velocity * 100f);
+                }
                 break;
             case 8: //wall
                 MakeParticle();

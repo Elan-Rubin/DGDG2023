@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -14,6 +16,11 @@ public class PathfinderEnemy : MonoBehaviour
     // The pathfinder only recalculates the path every X seconds
     [SerializeField] private bool pathfindWhenTargetOutOfSight = true;
     [SerializeField] private bool chargeWhenTargetInSight = false;
+    [SerializeField] private GameObject enemyBullet;
+    [SerializeField] private bool shootBullets;
+    [SerializeField] private float bulletCooldownBase;
+    private Transform bulletPos;
+    private float bulletCooldown;
     [Header("Performance")]
     [SerializeField] private int width = 64;
     [SerializeField] private int height = 64;
@@ -33,6 +40,9 @@ public class PathfinderEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        bulletCooldown = bulletCooldownBase;
+        bulletPos = transform.GetChild(1);
+
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
         pathCalculator = new PathCalculator(width, height, map);
@@ -44,7 +54,24 @@ public class PathfinderEnemy : MonoBehaviour
 
     void Update()
     {
-        spriteRenderer.flipX = target.transform.position.x < transform.position.x;
+        var flip = spriteRenderer.flipX = target.transform.position.x < transform.position.x;
+
+
+        if (shootBullets && targetVisible) bulletCooldown -= Time.deltaTime;
+        if (bulletCooldown <= 0)
+        {
+            //this is copied code should be simplified later
+            var spawnPos = (Vector2)transform.position + new Vector2(bulletPos.localPosition.x * (flip ? 1 : -1), bulletPos.localPosition.y);
+            var b = Instantiate(enemyBullet, spawnPos, Quaternion.identity).GetComponent<Rigidbody2D>();
+            var bullet = b.GetComponent<Bullet>();
+            bullet.StartLifetime(0.5f);
+            var dif = ((Vector2)target.transform.position - spawnPos).normalized;
+            bullet.Velocity = dif.normalized;
+            b.AddForce(500 * dif);
+
+            bulletCooldown = bulletCooldownBase;
+        }
+
 
         RaycastHit2D rayToTarget = Physics2D.Raycast(transform.position, target.transform.position - transform.position);
 
