@@ -24,6 +24,7 @@ public class GunData : ScriptableObject
     [HideInInspector] public int GunLevel { get { return gunLevel; } }*/
     [Header("Information")]
     public string GunName;
+    public string GunDescription;
     [Range(1,3)]
     public int GunLevel;
     [Header("Stats")]
@@ -38,6 +39,9 @@ public class GunData : ScriptableObject
     public float DelayBetween;
     [Range(1,10)]
     public int BulletsPerShot;
+    [Range(0, 1.5f)]
+    public float BulletLifeTime;
+    public bool LifetimeVariation;
     [Range(0,90)]
     public float Inaccuracy;
     [Header("Abilities")]

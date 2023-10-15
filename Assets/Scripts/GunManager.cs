@@ -15,6 +15,7 @@ public class GunManager : MonoBehaviour
         else instance = this;
     }
     [SerializeField] private GunData selectedGun;
+    [HideInInspector] public GunData SelectedGun { get { return selectedGun; } }
     private Vector2 gunPosition;
     [HideInInspector] public Vector2 GunPosition { get { return gunPosition; } }
     [SerializeField] private GameObject crosshair;
@@ -36,9 +37,9 @@ public class GunManager : MonoBehaviour
 
     void Update()
     {
-        
-        gunRenderer.flipY = PlayerRenderer.Instance.PlayerPosition.x > gunPosition.x;
-        gunRenderer.sortingOrder = PlayerRenderer.Instance.PlayerPosition.y > gunPosition.y ? 2 : -2;
+
+        gunRenderer.flipY = PlayerMovement.Instance.PlayerPosition.x > gunPosition.x;
+        gunRenderer.sortingOrder = PlayerMovement.Instance.PlayerPosition.y > gunPosition.y ? 2 : -2;
         gunPosition = gunRenderer.transform.position;
         laser.gameObject.SetActive(selectedGun.Laser);
         if (selectedGun.Laser)
@@ -75,11 +76,13 @@ public class GunManager : MonoBehaviour
     {
         waitTime = selectedGun.ReloadTime;
         queuedShoot = false;
-        for (int i = 0; i < selectedGun.Repetitions +1; i++)
+        for (int i = 0; i < selectedGun.Repetitions + 1; i++)
         {
             for (int j = 0; j < selectedGun.BulletsPerShot; j++)
             {
                 var b = Instantiate(selectedGun.Bullet, gunTip.position, Quaternion.identity).GetComponent<Rigidbody2D>();
+                var bullet = b.GetComponent<Bullet>();
+                bullet.StartLifetime(selectedGun.LifetimeVariation ? selectedGun.BulletLifeTime : (selectedGun.BulletLifeTime * Random.Range(0.5f, 2f)));
                 var dif = (CameraManager.Instance.LaggedMousePos - (Vector2)GunTip.position).normalized;
                 //bodyRigid.AddForce(dif * multiplier * Time.deltatime);
                 dif = HelperClass.RotateVector(dif, Random.Range(-selectedGun.Inaccuracy, selectedGun.Inaccuracy));
@@ -87,7 +90,7 @@ public class GunManager : MonoBehaviour
                 CameraManager.Instance.ShakeCamera();
             }
             yield return new WaitForSeconds(selectedGun.DelayBetween);
-           
+
         }
     }
 
@@ -96,7 +99,7 @@ public class GunManager : MonoBehaviour
         crosshair.transform.position = CameraManager.Instance.LaggedMousePos;
     }
 
-    private void SwitchGun(GunData newGun)
+    public void SwitchGun(GunData newGun)
     {
         selectedGun = newGun;
         gunRenderer.sprite = selectedGun.GunSprite;

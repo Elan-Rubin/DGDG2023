@@ -15,8 +15,6 @@ public class PlayerRenderer : MonoBehaviour
     //[SerializeField] private float gunRotationSpeed = 90;
     
     private SpriteRenderer playerSprite;
-    private Vector2 playerPosition;
-    [HideInInspector] public Vector2 PlayerPosition { get { return playerPosition; } }
     
 
     void Start()
@@ -26,14 +24,7 @@ public class PlayerRenderer : MonoBehaviour
 
     void Update()
     {
-        playerPosition = transform.position;
-
-        /*var target = CameraManager.Instance.MousePos;
-        float angle = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg;
-        gunRotator.rotation = Quaternion.Euler(new Vector3(0, 0, angle));*/
-
-
-        playerSprite.flipX = CameraManager.Instance.MousePos.x < playerPosition.x;
+        playerSprite.flipX = CameraManager.Instance.MousePos.x < PlayerMovement.Instance.PlayerPosition.x;
     }
 
     private void FixedUpdate()

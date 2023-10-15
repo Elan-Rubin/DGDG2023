@@ -10,19 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0911cb225c7d1384fb869dd53a5e37ec, type: 3}
-  m_Name: Pistol
+  m_Name: Shotgun
   m_EditorClassIdentifier: 
-  GunName: Pistol
+  GunName: Shotgun
+  GunDescription: Spray and pray
   GunLevel: 1
-  ShootForce: 10
-  ReloadTime: 0.1
+  ShootForce: 5
+  ReloadTime: 0.3
   Bullet: {fileID: 7544120140449932333, guid: e76d0013d30ff0349bded44c06d5abf7, type: 3}
   Repetitions: 0
   DelayBetween: 0
-  BulletsPerShot: 1
-  Inaccuracy: 5
-  Laser: 1
+  BulletsPerShot: 3
+  Inaccuracy: 20
+  Laser: 0
   Machinegun: 0
-  GunSprite: {fileID: -1927711263, guid: 50ff3bb8a03354f9f9dcddd1599059c5, type: 3}
+  GunSprite: {fileID: 1042298936, guid: 032225b6df562504991d4b9de7430360, type: 3}
   GunOffset: {x: 0.55, y: -0.15}
   TipOffset: {x: 0.5, y: 0}
