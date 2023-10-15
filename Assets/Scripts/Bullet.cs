@@ -8,15 +8,20 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer bulletRenderer;
     private List<int> uids = new();
+    private Rigidbody2D rb;
+    private bool destroying;
 
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
-        
+        if (rb == null) return;
+        var v = rb.velocity;
+        var angle = Mathf.Atan2(v.y, v.x) * Mathf.Rad2Deg;
+        bulletRenderer.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -34,15 +39,16 @@ public class Bullet : MonoBehaviour
 
     private void DestroyBullet()
     {
+        if (destroying) return;
+        destroying = true;
+
         Destroy(GetComponent<Collider2D>());
         Destroy(GetComponent<Rigidbody2D>());
         var sequence = DOTween.Sequence();
         uids.Add(sequence.intId);
         sequence.Append(bulletRenderer.DOColor(Color.white, 0.1f));
-        sequence.Append(bulletRenderer.transform.DOScale(Vector2.zero, 0.1f)).OnComplete(() => {
-            foreach (var u in uids) DOTween.Kill(u);
-            Destroy(gameObject);
-            });
+        sequence.Append(bulletRenderer.transform.DOScale(Vector2.zero, 0.1f));
+        sequence.OnComplete(() => Destroy(gameObject));
     }
 
     public void StartLifetime(float time) => StartCoroutine(nameof(StartLifetimeCoroutine), time);
