@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,8 +10,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float movementSpeed;
     [Header("References")]
     private Rigidbody2D rigidBody;
-    private Vector2 playerPosition;
-    [HideInInspector] public Vector2 PlayerPosition { get { return playerPosition; } }
+    [HideInInspector] public Vector2 PlayerPosition;
+    [HideInInspector] public bool CanMove;
+    private Vector2 currentPos, targetPos;
     private static PlayerMovement instance;
     public static PlayerMovement Instance { get { return instance; } }
     private void Awake()
@@ -20,15 +22,22 @@ public class PlayerMovement : MonoBehaviour
     }
     void Start()
     {
+        CanMove = true;
         rigidBody = GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
-        playerPosition = transform.position;
+        if (!CanMove)
+        {
+            transform.position = currentPos = Vector2.Lerp(currentPos, targetPos, Time.deltaTime * 5f);
+        }
     }
     private void FixedUpdate()
     {
+        PlayerPosition = transform.position;
+        if (!CanMove) return;
+        if (Vector2.Distance(PlayerPosition, RevivalScript.Instance.GetLatest()) > 3f) RevivalScript.Instance.AddPosition(PlayerPosition);
         var movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         if (movement.magnitude > 1) movement /= movement.magnitude;
         rigidBody.velocity = movement * movementSpeed; 
@@ -42,5 +51,11 @@ public class PlayerMovement : MonoBehaviour
                 collision.GetComponent<GunChest>().SwitchGun(GunManager.Instance.SelectedGun);
                 break;
         }
+    }
+
+    public void ForceMovePlayer(Vector2 newPosition)
+    {
+        //transform.DOMove(newPosition, 0.5f, true);
+        targetPos = newPosition;
     }
 }

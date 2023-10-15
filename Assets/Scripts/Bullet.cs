@@ -7,6 +7,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer bulletRenderer;
+    private List<int> uids = new();
 
     void Start()
     {
@@ -36,8 +37,12 @@ public class Bullet : MonoBehaviour
         Destroy(GetComponent<Collider2D>());
         Destroy(GetComponent<Rigidbody2D>());
         var sequence = DOTween.Sequence();
+        uids.Add(sequence.intId);
         sequence.Append(bulletRenderer.DOColor(Color.white, 0.1f));
-        sequence.Append(bulletRenderer.transform.DOScale(Vector2.zero, 0.1f)).OnComplete(() => Destroy(gameObject));
+        sequence.Append(bulletRenderer.transform.DOScale(Vector2.zero, 0.1f)).OnComplete(() => {
+            foreach (var u in uids) DOTween.Kill(u);
+            Destroy(gameObject);
+            });
     }
 
     public void StartLifetime(float time) => StartCoroutine(nameof(StartLifetimeCoroutine), time);

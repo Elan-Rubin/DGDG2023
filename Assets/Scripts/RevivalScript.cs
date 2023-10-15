@@ -9,13 +9,21 @@ public class RevivalScript : MonoBehaviour
 
     public GameObject TimerText;
 
-    // Start is called before the first frame update
+    private List<Vector2> positionsList = new();
+    private Vector2 latestPos;
+    [SerializeField] private LineRenderer revivalLine;
+    private static RevivalScript instance;
+    public static RevivalScript Instance { get { return instance; } }
+    private void Awake()
+    {
+        if (instance != null && instance != this) Destroy(gameObject);
+        else instance = this;
+    }
     void Start()
     {
         TimerOn = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(TimerOn)
@@ -30,13 +38,57 @@ public class RevivalScript : MonoBehaviour
                 TimerOn = false;
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Space)) Rewind();
     }
 
-    void updateTimer(float currentTime)
+    public Vector2 FirstPosition()
+    {
+        return positionsList[0];
+    }
+
+    public void AddPosition(Vector2 newPosition)
+    {
+        //ahh i could make this one line ill do that later mwahaha
+        positionsList.Add(latestPos = newPosition);
+    }
+    public Vector2 GetLatest()
+    {
+        return latestPos;
+    }
+    public void Rewind()
+    {
+        revivalLine.gameObject.SetActive(true);
+        PlayerMovement.Instance.CanMove = false;
+        StartCoroutine(nameof(RewindCoroutine));
+    }
+
+    private IEnumerator RewindCoroutine()
+    {
+        revivalLine.positionCount = positionsList.Count;
+        for (int i = 0; i < positionsList.Count; i++)
+        {
+            revivalLine.SetPosition(i, positionsList[i]);
+        }
+
+        PlayerMovement.Instance.PlayerPosition = FirstPosition();
+        while(positionsList.Count > 0)
+        {
+            PlayerMovement.Instance.ForceMovePlayer(positionsList[0]);
+            positionsList.RemoveAt(0);
+            yield return new WaitForSeconds(0.5f);
+        }
+        PlayerMovement.Instance.CanMove = true;
+        revivalLine.gameObject.SetActive(false);
+    }
+
+    void UpdateTimer(float currentTime)
     {
         currentTime += 1;
 
         float minutes = Mathf.FloorToInt(currentTime / 60);
         float seconds = Mathf.FloorToInt(currentTime % 60);
+
+        string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 }

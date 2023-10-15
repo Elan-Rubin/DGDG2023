@@ -21,6 +21,8 @@ MonoBehaviour:
   Repetitions: 0
   DelayBetween: 0
   BulletsPerShot: 3
+  BulletLifeTime: 0.2
+  LifetimeVariation: 1
   Inaccuracy: 20
   Laser: 0
   Machinegun: 0
