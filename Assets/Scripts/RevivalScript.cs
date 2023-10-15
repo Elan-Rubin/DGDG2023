@@ -12,6 +12,8 @@ public class RevivalScript : MonoBehaviour
     private List<Vector2> positionsList = new();
     private Vector2 latestPos;
     [SerializeField] private LineRenderer revivalLine;
+    [SerializeField] private int minimumDistance = 3;
+    [HideInInspector] public int MinimumDistance { get { return minimumDistance; } }
     private static RevivalScript instance;
     public static RevivalScript Instance { get { return instance; } }
     private void Awake()
@@ -70,6 +72,8 @@ public class RevivalScript : MonoBehaviour
         {
             revivalLine.SetPosition(i, positionsList[i]);
         }
+        
+
 
         PlayerMovement.Instance.PlayerPosition = FirstPosition();
         while(positionsList.Count > 0)

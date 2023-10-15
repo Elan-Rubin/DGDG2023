@@ -30,13 +30,16 @@ public class Bullet : MonoBehaviour
     {
         switch (collision.gameObject.layer)
         {
-            case 7: //player
+            case 6: //player
                 if(!enemyBullet) Physics2D.IgnoreCollision(collision.collider, collision.otherCollider);
                 else
                 {
                     DestroyBullet();
                     MakeParticle();
                 }
+                break;
+            case 7:
+                Physics2D.IgnoreCollision(collision.collider, collision.otherCollider);
                 break;
             case 9: //enemy
                 if(enemyBullet) Physics2D.IgnoreCollision(collision.collider, collision.otherCollider);
@@ -69,7 +72,7 @@ public class Bullet : MonoBehaviour
     }
     private void MakeParticle()
     {
-        var p = Instantiate(GunManager.Instance.BulletParticle, transform.position, Quaternion.identity);
+        var p = Instantiate(GunManager.Instance.BulletParticle, transform.position, Quaternion.identity).gameObject;
         Destroy(p, 1f);
     }
 
