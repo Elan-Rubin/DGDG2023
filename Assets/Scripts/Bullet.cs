@@ -15,6 +15,7 @@ public class Bullet : MonoBehaviour
 
     void Start()
     {
+        Physics2D.IgnoreLayerCollision(7, 7);
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -37,9 +38,6 @@ public class Bullet : MonoBehaviour
                     DestroyBullet();
                     MakeParticle();
                 }
-                break;
-            case 7:
-                Physics2D.IgnoreCollision(collision.collider, collision.otherCollider);
                 break;
             case 9: //enemy
                 if(enemyBullet) Physics2D.IgnoreCollision(collision.collider, collision.otherCollider);
