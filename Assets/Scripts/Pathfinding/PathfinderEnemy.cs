@@ -81,7 +81,7 @@ public class PathfinderEnemy : MonoBehaviour
         // If we can see the player and we're supposed to charge when we see the player
         else if (chargeWhenTargetInSight && targetVisible)
         {
-            Debug.Log("Charging");
+            //Debug.Log("Charging");
             rb.velocity = (target.transform.position - transform.position).normalized * speed;
         }
         // Otherwise, pathfind

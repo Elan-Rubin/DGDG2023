@@ -7,6 +7,8 @@ public class PlayerRenderer : MonoBehaviour
 {
     private SpriteRenderer playerSprite;
     private Animator animator;
+    private bool flip;
+    public bool Flip { get { return flip; } }
 
     private static PlayerRenderer instance;
     public static PlayerRenderer Instance { get { return instance; } }
@@ -24,7 +26,7 @@ public class PlayerRenderer : MonoBehaviour
 
     void Update()
     {
-        playerSprite.flipX = CameraManager.Instance.MousePos.x < PlayerMovement.Instance.PlayerPosition.x;
+        flip = playerSprite.flipX = CameraManager.Instance.MousePos.x < PlayerMovement.Instance.PlayerPosition.x;
         animator.SetBool("walking", PlayerMovement.Instance.Moving);
     }
 
