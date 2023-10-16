@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rigidBody;
     [HideInInspector] public Vector2 PlayerPosition;
     [HideInInspector] public bool CanMove;
+    [HideInInspector] public bool Moving;
     private Vector2 currentPos, targetPos;
     private static PlayerMovement instance;
     public static PlayerMovement Instance { get { return instance; } }
@@ -39,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
         if (!CanMove) return;
         if (RevivalScript.Instance!=null && Vector2.Distance(PlayerPosition, RevivalScript.Instance.GetLatest()) > RevivalScript.Instance.MinimumDistance) RevivalScript.Instance.AddPosition(PlayerPosition);
         var movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        Moving = movement.magnitude > 0;
         if (movement.magnitude > 1) movement /= movement.magnitude;
         rigidBody.velocity = movement * movementSpeed; 
     }

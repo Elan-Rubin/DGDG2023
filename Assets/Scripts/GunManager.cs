@@ -40,7 +40,7 @@ public class GunManager : MonoBehaviour
     {
 
         gunRenderer.flipY = PlayerMovement.Instance.PlayerPosition.x > gunPosition.x;
-        gunRenderer.sortingOrder = PlayerMovement.Instance.PlayerPosition.y > gunPosition.y ? 2 : -2;
+        gunRenderer.sortingOrder = PlayerMovement.Instance.PlayerPosition.y > gunPosition.y ? 3 : 1;
         gunPosition = gunRenderer.transform.position;
         laser.gameObject.SetActive(selectedGun.Laser);
         if (selectedGun.Laser)
