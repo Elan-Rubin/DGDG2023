@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -12,6 +13,7 @@ public class Bullet : MonoBehaviour
     private bool destroying;
     [HideInInspector] public Vector2 Velocity;
     [SerializeField] private bool enemyBullet;
+    [SerializeField] private GameObject particle;
 
     void Start()
     {
@@ -70,8 +72,8 @@ public class Bullet : MonoBehaviour
     }
     private void MakeParticle()
     {
-        var p = Instantiate(GunManager.Instance.BulletParticle, transform.position, Quaternion.identity).gameObject;
-        Destroy(p, 1f);
+        var p = Instantiate(particle, transform.position, Quaternion.identity).gameObject;
+        //Destroy(p, 1f);
     }
 
     public void StartLifetime(float time) => StartCoroutine(nameof(StartLifetimeCoroutine), time);

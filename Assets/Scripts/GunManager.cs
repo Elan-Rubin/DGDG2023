@@ -27,7 +27,6 @@ public class GunManager : MonoBehaviour
     [HideInInspector] public Transform GunTip { get { return gunTip; } }
 
     [HideInInspector] public SpriteRenderer GunRenderer { get { return gunRenderer; } }
-    public ParticleSystem BulletParticle;
 
     private float waitTime;
     private bool queuedShoot;

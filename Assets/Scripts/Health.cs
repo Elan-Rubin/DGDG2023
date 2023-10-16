@@ -42,6 +42,12 @@ public class Health : MonoBehaviour
     {
         playerHealth -= damage;
 
+        var lastBot = healthBots[healthBots.Count - 1];
+        healthBots.Remove(lastBot);
+        Destroy(lastBot);
+        currentPositions.RemoveAt(currentPositions.Count - 1);
+        targetPositions.RemoveAt(targetPositions.Count - 1);
+
         if (playerHealth <= 0)
         {
             RevivalScript.Instance.Rewind();
