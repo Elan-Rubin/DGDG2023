@@ -51,6 +51,7 @@ public class Bullet : MonoBehaviour
                 }
                 break;
             case 8: //wall
+                SoundManager.Instance.PlaySoundEffect("bulletHitWall");
                 MakeParticle();
                 DestroyBullet();
                 break;

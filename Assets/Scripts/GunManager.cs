@@ -74,6 +74,7 @@ public class GunManager : MonoBehaviour
 
     private IEnumerator ShootGun()
     {
+        SoundManager.Instance.PlaySoundEffect("shoot");
         waitTime = selectedGun.ReloadTime;
         queuedShoot = false;
         for (int i = 0; i < selectedGun.Repetitions + 1; i++)

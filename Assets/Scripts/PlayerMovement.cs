@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public bool CanMove;
     [HideInInspector] public bool Moving;
     private Vector2 currentPos, targetPos;
+    float counter;
     private static PlayerMovement instance;
     public static PlayerMovement Instance { get { return instance; } }
     private void Awake()
@@ -29,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        counter += Time.deltaTime;
         if (!CanMove)
         {
             transform.position = currentPos = Vector2.Lerp(currentPos, targetPos, Time.deltaTime * 5f);
@@ -41,6 +43,10 @@ public class PlayerMovement : MonoBehaviour
         if (RevivalScript.Instance!=null && Vector2.Distance(PlayerPosition, RevivalScript.Instance.GetLatest()) > RevivalScript.Instance.MinimumDistance) RevivalScript.Instance.AddPosition(PlayerPosition);
         var movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         Moving = movement.magnitude > 0;
+        if (Moving && counter > 0.5f)
+        {
+            SoundManager.Instance.PlaySoundEffect("playerFootstep");
+        } 
         if (movement.magnitude > 1) movement /= movement.magnitude;
         rigidBody.velocity = movement * movementSpeed; 
     }
@@ -51,6 +57,9 @@ public class PlayerMovement : MonoBehaviour
         {
             case "Chest":
                 collision.GetComponent<GunChest>().SwitchGun(GunManager.Instance.SelectedGun);
+                break;
+            case "Key":
+                collision.GetComponent<Key>().Collect();
                 break;
         }
     }
