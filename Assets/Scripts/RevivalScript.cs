@@ -12,7 +12,8 @@ public class RevivalScript : MonoBehaviour
     private List<Vector2> positionsList = new();
     private Vector2 latestPos;
     [SerializeField] private LineRenderer revivalLine;
-    [SerializeField] private int minimumDistance = 3;
+    [SerializeField] private int minimumDistance = 1;
+    [SerializeField] private GameObject dot;
     [HideInInspector] public int MinimumDistance { get { return minimumDistance; } }
     private static RevivalScript instance;
     public static RevivalScript Instance { get { return instance; } }
@@ -41,6 +42,8 @@ public class RevivalScript : MonoBehaviour
             }
         }
 
+
+        //remember to remove this later
         if (Input.GetKeyDown(KeyCode.Space)) Rewind();
     }
 
@@ -51,8 +54,8 @@ public class RevivalScript : MonoBehaviour
 
     public void AddPosition(Vector2 newPosition)
     {
-        //ahh i could make this one line ill do that later mwahaha
-        positionsList.Add(latestPos = newPosition);
+        positionsList.Add(latestPos = new Vector2((int)newPosition.x, (int)newPosition.y));
+        Instantiate(dot, newPosition, Quaternion.identity);
     }
     public Vector2 GetLatest()
     {
