@@ -1,5 +1,7 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.U2D.Animation;
 using UnityEngine;
 
 public class RevivalScript : MonoBehaviour
@@ -11,6 +13,7 @@ public class RevivalScript : MonoBehaviour
 
     private List<Vector2> positionsList = new();
     private Vector2 latestPos;
+    [SerializeField] private GameObject mask;
     [SerializeField] private LineRenderer revivalLine;
     [SerializeField] private int minimumDistance = 1;
     [SerializeField] private GameObject dot;
@@ -24,6 +27,7 @@ public class RevivalScript : MonoBehaviour
     }
     void Start()
     {
+        mask.SetActive(false);
         TimerOn = true;
     }
 
@@ -70,6 +74,10 @@ public class RevivalScript : MonoBehaviour
 
     private IEnumerator RewindCoroutine()
     {
+        mask.SetActive(true);
+        mask.transform.localScale = Vector2.zero;
+        mask.transform.DOScale(Vector2.one * 100f, 3.5f);
+
         revivalLine.positionCount = positionsList.Count;
         for (int i = 0; i < positionsList.Count; i++)
         {

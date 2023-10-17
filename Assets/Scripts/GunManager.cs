@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.Dependencies.Sqlite;
@@ -74,6 +75,11 @@ public class GunManager : MonoBehaviour
 
     private IEnumerator ShootGun()
     {
+        crosshair.transform.DOPunchScale(Vector2.one * 0.25f, 0.2f).OnComplete(() => crosshair.transform.localScale = Vector2.one);
+        crosshair.transform.DOShakeRotation(0.2f, strength: Vector3.forward * 10f).OnComplete(() => crosshair.transform.rotation = Quaternion.Euler(Vector3.zero));
+
+        gunRenderer.transform.DOPunchScale(Vector2.right * 0.4f, 0.2f).OnComplete(() => crosshair.transform.localScale = Vector2.one);
+
         SoundManager.Instance.PlaySoundEffect("shoot");
         waitTime = selectedGun.ReloadTime;
         queuedShoot = false;
