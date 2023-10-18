@@ -80,13 +80,14 @@ public class GunManager : MonoBehaviour
 
         gunRenderer.transform.DOPunchScale(Vector2.right * 0.4f, 0.2f).OnComplete(() => crosshair.transform.localScale = Vector2.one);
 
-        SoundManager.Instance.PlaySoundEffect("shoot");
         waitTime = selectedGun.ReloadTime;
         queuedShoot = false;
         for (int i = 0; i < selectedGun.Repetitions + 1; i++)
         {
             for (int j = 0; j < selectedGun.BulletsPerShot; j++)
             {
+                SoundManager.Instance.PlaySoundEffect("shoot");
+
                 var b = Instantiate(selectedGun.Bullet, gunTip.position, Quaternion.identity).GetComponent<Rigidbody2D>();
                 var bullet = b.GetComponent<Bullet>();
                 bullet.StartLifetime(selectedGun.LifetimeVariation ? selectedGun.BulletLifeTime : (selectedGun.BulletLifeTime * Random.Range(0.5f, 2f)));

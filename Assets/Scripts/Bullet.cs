@@ -14,6 +14,7 @@ public class Bullet : MonoBehaviour
     [HideInInspector] public Vector2 Velocity;
     [SerializeField] private bool enemyBullet;
     [SerializeField] private GameObject particle;
+    [SerializeField] private Material whiteMat;
 
     void Start()
     {
@@ -65,6 +66,8 @@ public class Bullet : MonoBehaviour
 
         Destroy(GetComponent<Collider2D>());
         Destroy(GetComponent<Rigidbody2D>());
+
+        transform.GetChild(0).GetComponent<SpriteRenderer>().material = whiteMat;
         var sequence = DOTween.Sequence();
         uids.Add(sequence.intId);
         sequence.Append(bulletRenderer.DOColor(Color.white, 0.1f));

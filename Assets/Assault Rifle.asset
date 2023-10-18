@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0911cb225c7d1384fb869dd53a5e37ec, type: 3}
-  m_Name: Shotgun
+  m_Name: Assault Rifle
   m_EditorClassIdentifier: 
-  GunName: Shotgun
-  GunDescription: Spray and pray
+  GunName: Assault Rifle
+  GunDescription: Boom boom boom
   GunLevel: 1
-  ShootForce: 5
-  ReloadTime: 0.3
+  ShootForce: 8
+  ReloadTime: 1
   Bullet: {fileID: 7544120140449932333, guid: e76d0013d30ff0349bded44c06d5abf7, type: 3}
-  Repetitions: 0
-  DelayBetween: 0
-  BulletsPerShot: 3
-  BulletLifeTime: 0.4
-  LifetimeVariation: 1
-  Inaccuracy: 20
+  Repetitions: 2
+  DelayBetween: 0.1
+  BulletsPerShot: 1
+  BulletLifeTime: 0.6
+  LifetimeVariation: 0
+  Inaccuracy: 7
   Laser: 0
   Machinegun: 0
   GunSprite: {fileID: 21300000, guid: 5b66d497a3e23ec4e891f3cf4380d910, type: 3}

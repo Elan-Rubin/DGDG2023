@@ -10,6 +10,9 @@ public class PlayerRenderer : MonoBehaviour
     private bool flip;
     public bool Flip { get { return flip; } }
 
+    [SerializeField] private Material whiteMaterial;
+    bool flashing;
+
     private static PlayerRenderer instance;
     public static PlayerRenderer Instance { get { return instance; } }
     private void Awake()
@@ -17,7 +20,7 @@ public class PlayerRenderer : MonoBehaviour
         if (instance != null && instance != this) Destroy(gameObject);
         else instance = this;
     }
-    
+
     void Start()
     {
         playerSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
@@ -30,8 +33,18 @@ public class PlayerRenderer : MonoBehaviour
         animator.SetBool("walking", PlayerMovement.Instance.Moving);
     }
 
-    private void FixedUpdate()
+    public void FlashWhite()
     {
-
+        StartCoroutine(nameof(FlashWhiteCoroutine));
+    }
+    private IEnumerator FlashWhiteCoroutine()
+    {
+        if (flashing);
+        flashing = true;
+        var mat = playerSprite.material;
+        playerSprite.material = whiteMaterial;
+        yield return new WaitForSeconds(0.1f);
+        playerSprite.material = mat;
+        flashing = false;
     }
 }

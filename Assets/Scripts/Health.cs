@@ -40,6 +40,8 @@ public class Health : MonoBehaviour
 
     public void Damage(int damage)
     {
+        PlayerRenderer.Instance.FlashWhite();
+
         playerHealth -= damage;
 
         var lastBot = healthBots[healthBots.Count - 1];
