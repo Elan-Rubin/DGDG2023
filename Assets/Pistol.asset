@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0911cb225c7d1384fb869dd53a5e37ec, type: 3}
   m_Name: Pistol
   m_EditorClassIdentifier: 
-  GunName: Revolver
-  GunDescription: Trusty ol' revolver
-  GunLevel: 1
+  GunName: Classic Trout
+  GunDescription: Don't pout.
+  SoundName: pistol
   ShootForce: 10
   ReloadTime: 0.1
   Bullet: {fileID: 7544120140449932333, guid: e76d0013d30ff0349bded44c06d5abf7, type: 3}
@@ -26,6 +26,7 @@ MonoBehaviour:
   Inaccuracy: 5
   Laser: 0
   Machinegun: 0
+  Pierce: 0
   GunSprite: {fileID: 21300000, guid: 5b66d497a3e23ec4e891f3cf4380d910, type: 3}
-  GunOffset: {x: 0.55, y: -0.15}
+  GunOffset: {x: 1, y: -0.15}
   TipOffset: {x: 0.5, y: 0}

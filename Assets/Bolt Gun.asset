@@ -10,23 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0911cb225c7d1384fb869dd53a5e37ec, type: 3}
-  m_Name: Assault Rifle
+  m_Name: Bolt Gun
   m_EditorClassIdentifier: 
-  GunName: Cut-throat Trout
-  GunDescription: Boom boom boom
-  SoundName: heavy
-  ShootForce: 8
+  GunName: Bluefin
+  GunDescription: text
+  SoundName: bolt
+  ShootForce: 35
   ReloadTime: 1
   Bullet: {fileID: 7544120140449932333, guid: e76d0013d30ff0349bded44c06d5abf7, type: 3}
-  Repetitions: 2
-  DelayBetween: 0.1
+  Repetitions: 0
+  DelayBetween: 0
   BulletsPerShot: 1
-  BulletLifeTime: 0.6
+  BulletLifeTime: 0.5
   LifetimeVariation: 0
-  Inaccuracy: 7
-  Laser: 0
+  Inaccuracy: 0
+  Laser: 1
   Machinegun: 0
-  Pierce: 0
+  Pierce: 1
   GunSprite: {fileID: 21300000, guid: 5b66d497a3e23ec4e891f3cf4380d910, type: 3}
   GunOffset: {x: 1, y: -0.15}
   TipOffset: {x: 0.5, y: 0}

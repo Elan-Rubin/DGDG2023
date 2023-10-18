@@ -43,7 +43,7 @@ public class Bullet : MonoBehaviour
                 }
                 break;
             case 9: //enemy
-                if(enemyBullet) Physics2D.IgnoreCollision(collision.collider, collision.otherCollider);
+                if(enemyBullet || GunManager.Instance.SelectedGun.Pierce) Physics2D.IgnoreCollision(collision.collider, collision.otherCollider);
                 else
                 {
                     DestroyBullet();

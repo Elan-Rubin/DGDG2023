@@ -6250,7 +6250,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 799850805}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.55, y: -0.15, z: 0}
+  m_LocalPosition: {x: 1, y: -0.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6459,7 +6459,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   volumeMultiplier: 1
   soundEffects:
-  - SoundName: shoot
+  - SoundName: pistol
     Clips:
     - {fileID: 8300000, guid: a328df95fe33e8740a682ea213e185c9, type: 3}
     - {fileID: 8300000, guid: 07d645ca86a61fb46a1a8af06f1b9633, type: 3}
@@ -6468,16 +6468,14 @@ MonoBehaviour:
     Vary: 1
   - SoundName: playerFootstep
     Clips:
-    - {fileID: 8300000, guid: 633b90c52d1369549993406f337b91cc, type: 3}
-    - {fileID: 8300000, guid: 0ea69762f2ab6fc4589026cf87bc2bfe, type: 3}
-    - {fileID: 8300000, guid: d11fadf201030a34cbc9ebb3430084c8, type: 3}
-    - {fileID: 8300000, guid: 227bc10cb89873e419b4e1b2de782efb, type: 3}
-    Volume: 1
-    Vary: 0
+    - {fileID: 8300000, guid: 6e7bb0785a4300847ae8aa78fc7ad8af, type: 3}
+    - {fileID: 8300000, guid: 58a3beef6f73ae8488a78cf2b0aa8626, type: 3}
+    Volume: 0.393
+    Vary: 1
   - SoundName: bulletHitWall
     Clips:
     - {fileID: 8300000, guid: a1a3d0aad64c4d44a8e8949bc96f788b, type: 3}
-    Volume: 1
+    Volume: 0.675
     Vary: 1
   - SoundName: enemyDeath
     Clips:
@@ -6488,6 +6486,27 @@ MonoBehaviour:
     Clips:
     - {fileID: 8300000, guid: 54668838d34103249bdbef062830c68f, type: 3}
     - {fileID: 8300000, guid: 38dbecb88f3cedb46918c4864a539009, type: 3}
+    Volume: 1
+    Vary: 0
+  - SoundName: shotgun
+    Clips:
+    - {fileID: 8300000, guid: 412e801d142825542b14ccef18ddfc75, type: 3}
+    - {fileID: 8300000, guid: b688f12024696924fb390b080a0de8d4, type: 3}
+    - {fileID: 8300000, guid: 069dc5469de12c9439a9a19348b5cfe5, type: 3}
+    Volume: 1
+    Vary: 0
+  - SoundName: heavy
+    Clips:
+    - {fileID: 8300000, guid: ebb0516b50312ea4db644ae0e64fd98f, type: 3}
+    - {fileID: 8300000, guid: c98e67c30f57f814a9f02057440f3d88, type: 3}
+    - {fileID: 8300000, guid: 507aad4124222704885e7f6800b19839, type: 3}
+    Volume: 1
+    Vary: 0
+  - SoundName: bolt
+    Clips:
+    - {fileID: 8300000, guid: a483485954d441b4b86a6daa30ef6e56, type: 3}
+    - {fileID: 8300000, guid: c01d7a35cc78b3b45ba06d7c5097a69f, type: 3}
+    - {fileID: 8300000, guid: 6fbc2e7eb7bade746a3aecc1a7dd58a8, type: 3}
     Volume: 1
     Vary: 0
 --- !u!114 &886368936
@@ -11609,7 +11628,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 857429f025d40bc4b965bd501104ea5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  storedGun: {fileID: 11400000, guid: 5b5c6f6d72ab8c34d8603289802f466b, type: 2}
+  storedGun: {fileID: 11400000, guid: 6349084001807fe47b426b34fec4d5dc, type: 2}
   closedSprite: {fileID: 21300000, guid: 4c0013af3a7341f46b5421746f7cba92, type: 3}
   openSprite: {fileID: 21300000, guid: 4c0013af3a7341f46b5421746f7cba92, type: 3}
   nameText: {fileID: 445349503}

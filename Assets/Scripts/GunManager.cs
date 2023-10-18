@@ -86,7 +86,7 @@ public class GunManager : MonoBehaviour
         {
             for (int j = 0; j < selectedGun.BulletsPerShot; j++)
             {
-                SoundManager.Instance.PlaySoundEffect("shoot");
+                SoundManager.Instance.PlaySoundEffect(selectedGun.SoundName);
 
                 var b = Instantiate(selectedGun.Bullet, gunTip.position, Quaternion.identity).GetComponent<Rigidbody2D>();
                 var bullet = b.GetComponent<Bullet>();

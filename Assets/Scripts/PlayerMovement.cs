@@ -43,9 +43,10 @@ public class PlayerMovement : MonoBehaviour
         if (RevivalScript.Instance!=null && Vector2.Distance(PlayerPosition, RevivalScript.Instance.GetLatest()) > RevivalScript.Instance.MinimumDistance) RevivalScript.Instance.AddPosition(PlayerPosition);
         var movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         Moving = movement.magnitude > 0;
-        if (Moving && counter > 0.5f)
+        if (Moving && counter > 0.15f)
         {
             SoundManager.Instance.PlaySoundEffect("playerFootstep");
+            counter = 0;
         } 
         if (movement.magnitude > 1) movement /= movement.magnitude;
         rigidBody.velocity = movement * movementSpeed; 

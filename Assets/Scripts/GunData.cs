@@ -6,29 +6,12 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "GunData")]
 public class GunData : ScriptableObject
 {
-    /*[SerializeField] private string gunName;
-    [HideInInspector] public string GunName { get { return gunName; } }
-
-    [SerializeField] private float reloadTime;
-    [HideInInspector] public float ReloadTime { get { return reloadTime; } }
-    [SerializeField] private GameObject bullet;
-    [HideInInspector] public GameObject Bullet { get { return bullet; } }
-
-    [SerializeField] private Sprite gunSprite;
-    [HideInInspector] public Sprite GunSprite { get { return gunSprite; } }
-    [SerializeField] private Vector2 gunOffset;
-    [HideInInspector] public Vector2 GunOffset { get {  return gunOffset; } }
-    [SerializeField] private Vector2 tipOffset;
-    [HideInInspector] public Vector2 TipOffset { get { return tipOffset; } }
-    [SerializeField] private int gunLevel;
-    [HideInInspector] public int GunLevel { get { return gunLevel; } }*/
     [Header("Information")]
     public string GunName;
     public string GunDescription;
-    [Range(1,3)]
-    public int GunLevel;
+    public string SoundName;
     [Header("Stats")]
-    [Range(0,20)]
+    [Range(0,35)]
     public int ShootForce;
     [Range(0,1)]
     public float ReloadTime;
@@ -47,6 +30,7 @@ public class GunData : ScriptableObject
     [Header("Abilities")]
     public bool Laser;
     public bool Machinegun;
+    public bool Pierce;
     [Header("References")]
     public Sprite GunSprite;
     public Vector2 GunOffset;
