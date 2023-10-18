@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c5c744a9786ccab49ab99aa9e9bf91c1
+guid: 80a7f1084f6d1994ab7bb561dedc1cc3
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: slime enemy run_0
+      name: goo tiles3_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 16
-        height: 17
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,20 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 30c48c7f276ed27438ad3848f1924b77
-      internalID: -1179076939
+      spriteID: 947b021ef6e76b445abdeb7bc4e6a4c8
+      internalID: 1190401287
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: slime enemy run_1
+      name: goo tiles3_1
       rect:
         serializedVersion: 2
         x: 16
         y: 0
         width: 16
-        height: 17
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -158,20 +158,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a976f67563194424f922f2b4fb3b5233
-      internalID: -198163536
+      spriteID: 81724323ee9858741a6fba20745d71bf
+      internalID: -420268108
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: slime enemy run_2
+      name: goo tiles3_2
       rect:
         serializedVersion: 2
         x: 32
         y: 0
         width: 16
-        height: 17
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -179,8 +179,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aeaaef105e6dcf04d81bed361293d9b9
-      internalID: 489355135
+      spriteID: 928cff56d9a08f44290e2994b5f010d0
+      internalID: -1858044951
       vertices: []
       indices: 
       edges: []
@@ -196,9 +196,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      slime enemy run_0: -1179076939
-      slime enemy run_1: -198163536
-      slime enemy run_2: 489355135
+      goo tiles3_0: 1190401287
+      goo tiles3_1: -420268108
+      goo tiles3_2: -1858044951
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -4,7 +4,10 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
-{ 
+{
+    [SerializeField] private GameObject lower, upper;
+    [HideInInspector] public GameObject Lower { get { return lower; } }
+    [HideInInspector] public GameObject Upper { get { return upper; } }
 
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
@@ -15,7 +18,7 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-
+        lower.SetActive(false);
     }
 
     void Update()
