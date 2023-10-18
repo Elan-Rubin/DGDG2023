@@ -176,7 +176,7 @@ public class LineRendererSmootherEditor : Editor
             Handles.Label(segments[segments.Length - 1], $"C{i} S{segments.Length - 1}");
             Handles.DotHandleCap(EditorGUIUtility.GetControlID(FocusType.Passive), segments[segments.Length - 1], Quaternion.identity, 0.05f, EventType.Repaint);
 
-            Handles.DrawLine(segments[segments.Length - 1], Curves[i].EndPosition);
+            Handles.DrawLine(segments[^1], Curves[i].EndPosition);
         }
     }
 

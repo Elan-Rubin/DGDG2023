@@ -4,7 +4,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
-{
+{ 
+
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
     private void Awake()
@@ -14,6 +15,7 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
+
     }
 
     void Update()
