@@ -78,7 +78,7 @@ public class GunManager : MonoBehaviour
         crosshair.transform.DOPunchScale(Vector2.one * 0.25f, 0.2f).OnComplete(() => crosshair.transform.localScale = Vector2.one);
         crosshair.transform.DOShakeRotation(0.2f, strength: Vector3.forward * 10f).OnComplete(() => crosshair.transform.rotation = Quaternion.Euler(Vector3.zero));
 
-        gunRenderer.transform.DOPunchScale(Vector2.right * 0.4f, 0.2f).OnComplete(() => crosshair.transform.localScale = Vector2.one);
+        gunRenderer.transform.DOPunchScale(Vector2.right * 0.4f, 0.2f).OnComplete(() => gunRenderer.transform.localScale = Vector2.one);
 
         waitTime = selectedGun.ReloadTime;
         queuedShoot = false;

@@ -32,10 +32,13 @@ public class PathfinderEnemy : MonoBehaviour
     private bool targetVisible;
 
     private SpriteRenderer spriteRenderer;
+    private CircleCollider2D collider;
     private Rigidbody2D rb;
 
     List<Waypoint> path = new List<Waypoint>();
     PathCalculator pathCalculator;
+
+    private bool stopPathfinding;
 
     // Start is called before the first frame update
     void Start()
@@ -43,9 +46,14 @@ public class PathfinderEnemy : MonoBehaviour
         bulletCooldown = bulletCooldownBase;
         bulletPos = transform.GetChild(1);
 
+        GameManager.Instance.PlayerDeath += PlayerDeadDisappear;
+        // TODO: Add and subscribe to a reborn event
+
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        collider = GetComponent<CircleCollider2D>();
         pathCalculator = new PathCalculator(width, height, map);
+
         SetupGridFromTilemap();
         InvokeRepeating("CalculatePath", 0f, recalculationDelay);
         if (chargeWhenTargetInSight)
@@ -57,7 +65,7 @@ public class PathfinderEnemy : MonoBehaviour
         var flip = spriteRenderer.flipX = target.transform.position.x < transform.position.x;
 
 
-        if (shootBullets && targetVisible) bulletCooldown -= Time.deltaTime;
+        if (shootBullets && targetVisible && !stopPathfinding) bulletCooldown -= Time.deltaTime;
         if (bulletCooldown <= 0)
         {
             //this is copied code should be simplified later
@@ -120,6 +128,9 @@ public class PathfinderEnemy : MonoBehaviour
 
     private void CalculatePath()
     {
+        if (stopPathfinding)
+            return;
+
         if (Vector3.Distance(transform.position, target.transform.position) < desiredDistanceToTarget || (targetVisible && chargeWhenTargetInSight))
             return;
 
@@ -138,6 +149,9 @@ public class PathfinderEnemy : MonoBehaviour
 
     private void FollowPath()
     {
+        if (stopPathfinding)
+            return;
+
         if (path != null && path.Count > 0)
         {
             Vector3 nextWaypointCenter = map.CellToWorld(path[0].GetMapPosition()) + new Vector3(pathCalculator.grid.GetCellSize(), pathCalculator.grid.GetCellSize()) * 0.5f;
@@ -153,7 +167,7 @@ public class PathfinderEnemy : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player" && !stopPathfinding)
         {
             Health.Instance.Damage(1);
         }
@@ -173,5 +187,22 @@ public class PathfinderEnemy : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void PlayerDeadDisappear()
+    {
+        Debug.Log("Vanishing");
+        spriteRenderer.enabled = false;
+        collider.enabled = false;
+        rb.bodyType = RigidbodyType2D.Static;
+        stopPathfinding = true;
+    }
+
+    public void PlayerRebornReappear()
+    {
+        spriteRenderer.enabled = true;
+        collider.enabled = false;
+        rb.bodyType = RigidbodyType2D.Dynamic;
+        stopPathfinding = false;
     }
 }
