@@ -52,7 +52,7 @@ public class Health : MonoBehaviour
 
         if (playerHealth <= 0)
         {
-            RevivalScript.Instance.Rewind();
+            GameManager.Instance.Die();
         }
     }
 

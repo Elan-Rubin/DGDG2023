@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -8,6 +9,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject lower, upper;
     [HideInInspector] public GameObject Lower { get { return lower; } }
     [HideInInspector] public GameObject Upper { get { return upper; } }
+
+    public event Action PlayerDeath;
+    public Vector2 bottomLeft, topRight;
 
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
@@ -24,5 +28,10 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if (Input.GetMouseButtonDown((int)MouseButton.Left)) Cursor.visible = false;
+    }
+
+    public void Die()
+    {
+        PlayerDeath?.Invoke();
     }
 }

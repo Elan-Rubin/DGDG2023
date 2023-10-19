@@ -30,6 +30,8 @@ public class RevivalScript : MonoBehaviour
     {
         mask.SetActive(false);
         TimerOn = true;
+
+        GameManager.Instance.PlayerDeath += Rewind;
     }
 
     void Update()
