@@ -94,12 +94,12 @@ public class RevivalScript : MonoBehaviour
         mask.SetActive(true);
 
         mask.transform.localScale = Vector2.zero;
-        mask.transform.DOScale(Vector2.one * 50, 10f);
+        mask.transform.DOScale(Vector2.one * 50, 5f);
 
         var sr = mask.transform.GetChild(0).GetComponent<SpriteRenderer>();
         sr.color = Color.clear;
         var sequence = DOTween.Sequence();
-        sequence.Append(sr.DOColor(Color.white, 1f)).OnComplete(() => sr.DOColor(new Color(97/255f, 224/255f, 135/255f), 1f));
+        sequence.Append(sr.DOColor(Color.white, .5f)).OnComplete(() => sr.DOColor(new Color(97/255f, 224/255f, 135/255f), .5f));
         //sequence.Append(sr.DOColor(new Color(97, 224, 135), 2f));
 
         var ps = mask.transform.GetChild(1).GetComponent<ParticleSystem>();
@@ -108,10 +108,10 @@ public class RevivalScript : MonoBehaviour
         var e = ps.emission;
         var counter = 0f;
         var alr = false;
-        DOTween.To(() => counter, x => counter = x, 50, 10f)
+        DOTween.To(() => counter, x => counter = x, 50, 5f)
             .OnUpdate(() =>
             {
-                if (!alr && counter > 4)
+                if (!alr && counter > 1)
                 {
                     alr = true;
                     ps.Play();

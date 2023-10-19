@@ -7,17 +7,22 @@ public class GunChest : MonoBehaviour
 {
     [SerializeField] private GunData storedGun;
     [HideInInspector] public GunData StoredGun { get { return storedGun; } }
-    private SpriteRenderer chestRenderer;
-    [SerializeField] private Sprite closedSprite, openSprite;
+    private SpriteRenderer sr, sr2;
+    [SerializeField] private Sprite ghostSprite;
     [SerializeField] private TextMeshProUGUI nameText, descriptionText;
     private GunData previousStoredGun;
     private Animator animator;
     private bool open;
+
+    private bool dead;
+
     void Start()
     {
         animator = GetComponent<Animator>();
-        chestRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        sr = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        sr2 = transform.GetChild(1).GetComponent<SpriteRenderer>();
         SwitchGun(storedGun, false);
+        GameManager.Instance.PlayerDeath += Switch;
     }
 
     void Update()
@@ -43,5 +48,18 @@ public class GunChest : MonoBehaviour
         storedGun = newGun;
         nameText.text = storedGun.GunName;
         descriptionText.text = storedGun.GunDescription;
+    }
+    private void Switch()//ten seconds
+    {
+        StartCoroutine(nameof(SwitchCoroutine));
+    }
+    private IEnumerator SwitchCoroutine()
+    {
+        sr.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
+        sr2.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+
+        yield return new WaitForSeconds(5f);
+        sr.gameObject.SetActive(false);
+        sr2.maskInteraction = SpriteMaskInteraction.None;
     }
 }
