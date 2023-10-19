@@ -70,7 +70,6 @@ public class RevivalScript : MonoBehaviour
     public void Rewind()
     {
         revivalLine.gameObject.SetActive(true);
-        PlayerMovement.Instance.CanMove = false;
         StartCoroutine(nameof(RewindCoroutine));
     }
 
@@ -138,7 +137,8 @@ public class RevivalScript : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         while (positionsList.Count > 0)
         {
-            //PlayerMovement.Instance.ForceMovePlayer(positionsList[0]);
+            PlayerMovement.Instance.ForceMovePlayer(positionsList[0]);
+            PlayerMovement.Instance.CanMove = false;
             positionsList.RemoveAt(0);
             yield return new WaitForSeconds(0.25f);
         }
