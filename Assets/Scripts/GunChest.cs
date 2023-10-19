@@ -39,6 +39,7 @@ public class GunChest : MonoBehaviour
         //chestRenderer.sprite = open ? openSprite : closedSprite;
         nameText.gameObject.SetActive(open);
         descriptionText.gameObject.SetActive(open);
+        nameText.color = storedGun.GunColor;
     }
     public void SwitchGun(GunData newGun) => SwitchGun(newGun, true);
     void SwitchGun(GunData newGun, bool makeSwitch)
@@ -58,7 +59,7 @@ public class GunChest : MonoBehaviour
         sr.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
         sr2.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
 
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(1.25f);
         sr.gameObject.SetActive(false);
         sr2.maskInteraction = SpriteMaskInteraction.None;
     }

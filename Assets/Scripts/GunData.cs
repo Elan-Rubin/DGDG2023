@@ -10,6 +10,7 @@ public class GunData : ScriptableObject
     public string GunName;
     public string GunDescription;
     public string SoundName;
+    public Color GunColor = Color.white;
     [Header("Stats")]
     [Range(0,35)]
     public int ShootForce;
@@ -31,6 +32,7 @@ public class GunData : ScriptableObject
     public bool Laser;
     public bool Machinegun;
     public bool Pierce;
+    public bool PierceWall;
     [Header("References")]
     public Sprite GunSprite;
     public Vector2 GunOffset;

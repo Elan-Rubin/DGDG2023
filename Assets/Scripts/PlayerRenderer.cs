@@ -29,7 +29,9 @@ public class PlayerRenderer : MonoBehaviour
 
     void Update()
     {
-        flip = playerSprite.flipX = CameraManager.Instance.MousePos.x < PlayerMovement.Instance.PlayerPosition.x;
+        if (PlayerMovement.Instance.Moving) flip = playerSprite.flipX = PlayerMovement.Instance.PreviousMovment.x < 0;
+        else playerSprite.flipX = CameraManager.Instance.MousePos.x < PlayerMovement.Instance.PlayerPosition.x;
+
         animator.SetBool("walking", PlayerMovement.Instance.Moving);
     }
 

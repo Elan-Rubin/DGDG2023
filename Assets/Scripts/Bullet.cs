@@ -32,6 +32,7 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+
         switch (collision.gameObject.layer)
         {
             case 6: //player
@@ -52,9 +53,13 @@ public class Bullet : MonoBehaviour
                 }
                 break;
             case 8: //wall
-                SoundManager.Instance.PlaySoundEffect("bulletHitWall");
-                MakeParticle();
-                DestroyBullet();
+                if (GunManager.Instance.SelectedGun.PierceWall) Physics2D.IgnoreCollision(collision.collider, collision.otherCollider);
+                else
+                {
+                    SoundManager.Instance.PlaySoundEffect("bulletHitWall");
+                    MakeParticle();
+                    DestroyBullet();
+                }
                 break;
         }
     }

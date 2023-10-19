@@ -15,6 +15,8 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public bool Moving;
     private Vector2 currentPos, targetPos;
     float counter;
+    private Vector2 previousMovement;
+    public Vector2 PreviousMovment { get { return previousMovement; } }
     private static PlayerMovement instance;
     public static PlayerMovement Instance { get { return instance; } }
     private void Awake()
@@ -42,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
         if (!CanMove) return;
         if (RevivalScript.Instance!=null && Vector2.Distance(PlayerPosition, RevivalScript.Instance.GetLatest()) > RevivalScript.Instance.MinimumDistance) RevivalScript.Instance.AddPosition(PlayerPosition);
         var movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        previousMovement = movement; 
         Moving = movement.magnitude > 0;
         if (Moving && counter > 0.15f)
         {

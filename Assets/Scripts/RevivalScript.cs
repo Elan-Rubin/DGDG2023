@@ -93,29 +93,29 @@ public class RevivalScript : MonoBehaviour
         mask.SetActive(true);
 
         mask.transform.localScale = Vector2.zero;
-        mask.transform.DOScale(Vector2.one * 50, 5f);
+
+        var ps = mask.transform.GetChild(1).GetComponent<ParticleSystem>();
+
+        var sequence = DOTween.Sequence();
+        sequence.Append(mask.transform.DOScale(Vector2.one * 6, 1.25f).SetEase(Ease.InCirc));
+        sequence.AppendInterval(1f).OnComplete(()=>ps.Play());
+        sequence.Append(mask.transform.DOScale(Vector2.one * 50, 0.75f).SetEase(Ease.InCirc));
+
 
         var sr = mask.transform.GetChild(0).GetComponent<SpriteRenderer>();
         sr.color = Color.clear;
-        var sequence = DOTween.Sequence();
-        sequence.Append(sr.DOColor(Color.white, .5f)).OnComplete(() => sr.DOColor(new Color(97/255f, 224/255f, 135/255f), .5f));
+
+        var sequence2 = DOTween.Sequence();
+        sequence2.Append(sr.DOColor(Color.white, .5f)).OnComplete(() => sr.DOColor(new Color(97/255f, 224/255f, 135/255f), .5f));
         //sequence.Append(sr.DOColor(new Color(97, 224, 135), 2f));
 
-        var ps = mask.transform.GetChild(1).GetComponent<ParticleSystem>();
         var sh = ps.shape;
         var m = ps.main;
         var e = ps.emission;
         var counter = 0f;
-        var alr = false;
-        DOTween.To(() => counter, x => counter = x, 50, 5f)
+        DOTween.To(() => counter, x => counter = x, 50, 1.25f).SetEase(Ease.InCirc)
             .OnUpdate(() =>
             {
-                if (!alr && counter > 1)
-                {
-                    alr = true;
-                    ps.Play();
-                }
-
                 sh.radius = .8f + (counter / 2f);
                 //sh.radiusThickness = counter * 0.2f;
                 m.startSpeed = -(Mathf.Pow(3f, (counter / 25f)));

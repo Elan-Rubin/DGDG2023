@@ -10,23 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0911cb225c7d1384fb869dd53a5e37ec, type: 3}
-  m_Name: Assault Rifle
+  m_Name: Minnow
   m_EditorClassIdentifier: 
-  GunName: Cut-throat Trout
-  GunDescription: Boom boom boom
-  SoundName: heavy
-  ShootForce: 8
-  ReloadTime: 1
+  GunName: Minnow
+  GunDescription: Minn-oh no!
+  SoundName: pistol
+  GunColor: {r: 0.3803922, g: 0.87843144, b: 0.5294118, a: 1}
+  ShootForce: 10
+  ReloadTime: 0.075
   Bullet: {fileID: 7544120140449932333, guid: e76d0013d30ff0349bded44c06d5abf7, type: 3}
-  Repetitions: 2
-  DelayBetween: 0.1
+  Repetitions: 0
+  DelayBetween: 0
   BulletsPerShot: 1
-  BulletLifeTime: 0.6
-  LifetimeVariation: 0
-  Inaccuracy: 7
+  BulletLifeTime: 0.1
+  LifetimeVariation: 1
+  Inaccuracy: 15
   Laser: 0
-  Machinegun: 0
+  Machinegun: 1
   Pierce: 0
-  GunSprite: {fileID: 21300000, guid: 5b66d497a3e23ec4e891f3cf4380d910, type: 3}
+  PierceWall: 0
+  GunSprite: {fileID: 21300000, guid: ee53e4e78e758f047ab53484c81f91c6, type: 3}
   GunOffset: {x: 1, y: -0.15}
   TipOffset: {x: 0.5, y: 0}
