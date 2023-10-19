@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.Tilemaps;
 using UnityEngine;
+using UnityEngine.U2D;
 using UnityEngine.Windows.Speech;
 
 public class CameraManager : MonoBehaviour
@@ -48,8 +49,11 @@ public class CameraManager : MonoBehaviour
 
         targetPos = Vector2.Lerp(PlayerMovement.Instance.transform.position, mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition), mousePull);
 
-        if (targetPos.x < bottomLeft.x + size) targetPos.x = bottomLeft.x + size;
-        else if(targetPos.x > topRight.x - size) targetPos.x = topRight.x - size;
+        var pp = GetComponent<PixelPerfectCamera>();
+        var ratio = pp.refResolutionX / pp.refResolutionY;
+
+        if (targetPos.x < bottomLeft.x + size) targetPos.x = bottomLeft.x + size / ratio;
+        else if(targetPos.x > topRight.x - size) targetPos.x = topRight.x - size / ratio;
         if(targetPos.y < bottomLeft.y + size) targetPos.y = bottomLeft.y + size;
         else if(targetPos.y > topRight.y - size) targetPos.y = topRight.y - size;
 
