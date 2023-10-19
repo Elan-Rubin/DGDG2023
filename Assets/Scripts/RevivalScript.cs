@@ -21,6 +21,7 @@ public class RevivalScript : MonoBehaviour
     [HideInInspector] public int MinimumDistance { get { return minimumDistance; } }
     private static RevivalScript instance;
     public static RevivalScript Instance { get { return instance; } }
+
     private void Awake()
     {
         if (instance != null && instance != this) Destroy(gameObject);
