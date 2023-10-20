@@ -18,6 +18,7 @@ public class Bullet : MonoBehaviour
 
     void Start()
     {
+        transform.GetChild(0).GetComponent<SpriteRenderer>().color = GunManager.Instance.SelectedGun.BulletColor;
         Physics2D.IgnoreLayerCollision(7, 7);
         rb = GetComponent<Rigidbody2D>();
     }

@@ -10,7 +10,10 @@ public class GunData : ScriptableObject
     public string GunName;
     public string GunDescription;
     public string SoundName;
+
+    public Color BulletColor = Color.white;
     public Color GunColor = Color.white;
+
     [Header("Stats")]
     [Range(0,35)]
     public int ShootForce;

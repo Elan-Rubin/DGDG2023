@@ -10,25 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0911cb225c7d1384fb869dd53a5e37ec, type: 3}
-  m_Name: Sonic Marlin
+  m_Name: Goblin Shark
   m_EditorClassIdentifier: 
-  GunName: Sonic Marlin
-  GunDescription: swordfish to a gunfight
-  SoundName: bolt
-  GunColor: {r: 0, g: 0.5019608, b: 1, a: 1}
-  ShootForce: 35
-  ReloadTime: 1
+  GunName: Goblin Shark
+  GunDescription: Fin-appetit!
+  SoundName: shotgun
+  BulletColor: {r: 0.3019608, g: 0.41960788, b: 0.11764707, a: 1}
+  GunColor: {r: 0.3019608, g: 0.41960788, b: 0.11764707, a: 1}
+  ShootForce: 5
+  ReloadTime: 0.3
   Bullet: {fileID: 7544120140449932333, guid: e76d0013d30ff0349bded44c06d5abf7, type: 3}
   Repetitions: 0
   DelayBetween: 0
-  BulletsPerShot: 1
-  BulletLifeTime: 0.5
-  LifetimeVariation: 0
-  Inaccuracy: 0
-  Laser: 1
-  Machinegun: 0
-  Pierce: 1
+  BulletsPerShot: 5
+  BulletLifeTime: 0.4
+  LifetimeVariation: 1
+  Inaccuracy: 20
+  Laser: 0
+  Machinegun: 1
+  Pierce: 0
   PierceWall: 0
-  GunSprite: {fileID: 21300000, guid: d7e41391df53448499c63e148eb41e70, type: 3}
+  GunSprite: {fileID: 21300000, guid: 9eaebf33fe488ee478e58b1ab922895f, type: 3}
   GunOffset: {x: 1, y: -0.15}
   TipOffset: {x: 0.5, y: 0}
