@@ -32,4 +32,4 @@ MonoBehaviour:
   PierceWall: 0
   GunSprite: {fileID: 21300000, guid: 46f130c4c50318c4a96ddeaaafd509b8, type: 3}
   GunOffset: {x: 1, y: -0.15}
-  TipOffset: {x: 0.5, y: 0}
+  TipOffset: {x: 0.45, y: 0}

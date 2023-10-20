@@ -20836,7 +20836,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 857429f025d40bc4b965bd501104ea5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  storedGun: {fileID: 11400000, guid: 0fd6f6143867e56479f4f9e5725ca9fb, type: 2}
+  storedGun: {fileID: 11400000, guid: 43e16fcc23465254ebc4e4a21f02101b, type: 2}
   ghostSprite: {fileID: 0}
   nameText: {fileID: 445349503}
   descriptionText: {fileID: 262898353}

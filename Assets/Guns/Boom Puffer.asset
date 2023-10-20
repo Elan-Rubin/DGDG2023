@@ -15,6 +15,7 @@ MonoBehaviour:
   GunName: Boom Puffer
   GunDescription: Puff Boom Fiesta!
   SoundName: shotgun
+  BulletColor: {r: 0.8078432, g: 0.14901961, b: 0.5411765, a: 1}
   GunColor: {r: 0.47450984, g: 0.42352945, b: 0.1764706, a: 1}
   ShootForce: 5
   ReloadTime: 0.3
@@ -31,4 +32,4 @@ MonoBehaviour:
   PierceWall: 1
   GunSprite: {fileID: 21300000, guid: 300d537bc35a66845a525a95b39a1681, type: 3}
   GunOffset: {x: 1, y: -0.15}
-  TipOffset: {x: 0.5, y: 0}
+  TipOffset: {x: 0.45, y: 0}

@@ -28,6 +28,7 @@ public class GunManager : MonoBehaviour
     [HideInInspector] public Transform GunTip { get { return gunTip; } }
 
     [HideInInspector] public SpriteRenderer GunRenderer { get { return gunRenderer; } }
+    private bool playingAnim;
 
     private float waitTime;
     private bool queuedShoot;
@@ -75,10 +76,17 @@ public class GunManager : MonoBehaviour
 
     private IEnumerator ShootGun()
     {
-        crosshair.transform.DOPunchScale(Vector2.one * 0.25f, 0.2f).OnComplete(() => crosshair.transform.localScale = Vector2.one);
-        crosshair.transform.DOShakeRotation(0.2f, strength: Vector3.forward * 10f).OnComplete(() => crosshair.transform.rotation = Quaternion.Euler(Vector3.zero));
+        if (!playingAnim)
+        {
+            playingAnim = true;
+            crosshair.transform.DOPunchScale(Vector2.one * 0.25f, 0.2f).OnComplete(() => crosshair.transform.localScale = Vector2.one);
+            gunRenderer.transform.DOPunchScale(Vector2.right * 0.4f, 0.2f).OnComplete(() => gunRenderer.transform.localScale = Vector2.one);
 
-        gunRenderer.transform.DOPunchScale(Vector2.right * 0.4f, 0.2f).OnComplete(() => gunRenderer.transform.localScale = Vector2.one);
+            crosshair.transform.DOShakeRotation(0.2f, strength: Vector3.forward * 10f).OnComplete(() => {
+                crosshair.transform.rotation = Quaternion.Euler(Vector3.zero);
+                playingAnim = false;
+            });
+        }
 
         waitTime = selectedGun.ReloadTime;
         queuedShoot = false;
