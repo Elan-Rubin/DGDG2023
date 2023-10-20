@@ -39,5 +39,6 @@ public class GameManager : MonoBehaviour
     public void Reborn()
     {
         PlayerReborn?.Invoke();
+        GetComponent<Health>().ResetHealth();
     }
 }

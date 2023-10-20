@@ -14,6 +14,9 @@ public class Health : MonoBehaviour
     float counter;
     private static Health instance;
     [HideInInspector] public static Health Instance { get { return instance; } }
+
+    private int startingHealth;
+
     private void Awake()
     {
         if (instance != null && instance != this) Destroy(gameObject);
@@ -21,8 +24,20 @@ public class Health : MonoBehaviour
     }
     void Start()
     {
-        for (int i = 0; i < playerHealth; i++) GenerateBot();
+        SetupHealth();
+        startingHealth = playerHealth;
         StartCoroutine(nameof(LateStart));
+    }
+
+    public void ResetHealth()
+    {
+        playerHealth = startingHealth;
+        SetupHealth();
+    }
+
+    private void SetupHealth()
+    {
+        for (int i = 0; i < playerHealth; i++) GenerateBot();
     }
 
     private IEnumerator LateStart()

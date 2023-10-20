@@ -40,6 +40,7 @@ public class PathfinderEnemy : MonoBehaviour
     PathCalculator pathCalculator;
 
     private bool stopPathfinding;
+    // TODO: Implement random walk when can't see player
     private Vector3Int randomPosToWalkTo = Vector3Int.zero;
     private int health;
 
@@ -52,7 +53,7 @@ public class PathfinderEnemy : MonoBehaviour
         health = startHealth;
 
         GameManager.Instance.PlayerDeath += PlayerDeadDisappear;
-        // TODO: Add and subscribe to a reborn event
+        GameManager.Instance.PlayerReborn += PlayerRebornReappear;
 
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();

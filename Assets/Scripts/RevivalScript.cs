@@ -161,6 +161,7 @@ public class RevivalScript : MonoBehaviour
         }
         PlayerMovement.Instance.CanMove = true;
         revivalLine.gameObject.SetActive(false);
+        GameManager.Instance.Reborn();
     }
 
     void UpdateTimer(float currentTime)
