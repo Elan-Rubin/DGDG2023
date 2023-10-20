@@ -8,11 +8,6 @@ using UnityEngine.Tilemaps;
 
 public class RevivalScript : MonoBehaviour
 {
-    public float TimeLeft;
-    public bool TimerOn = false;
-
-    public GameObject TimerText;
-
     private List<Vector2> positionsList = new();
     private Vector2 latestPos;
     [SerializeField] private GameObject mask;
@@ -32,27 +27,11 @@ public class RevivalScript : MonoBehaviour
     void Start()
     {
         mask.SetActive(false);
-        TimerOn = true;
-
         GameManager.Instance.PlayerDeath += Rewind;
     }
 
     void Update()
     {
-        if (TimerOn)
-        {
-            if (TimeLeft > 0)
-            {
-                TimeLeft -= Time.deltaTime;
-            }
-            else
-            {
-                TimeLeft = 0;
-                TimerOn = false;
-            }
-        }
-
-
         //remember to remove this later
         if (Input.GetKeyDown(KeyCode.Space)) Rewind();
     }
