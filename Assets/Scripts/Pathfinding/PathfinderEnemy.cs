@@ -10,6 +10,7 @@ public class PathfinderEnemy : MonoBehaviour
     [Header("References")]
     [SerializeField] private Tilemap map;
     [SerializeField] private GameObject target;
+    [SerializeField] private Material whiteMaterial;
     [Header("Enemy")]
     [SerializeField] private float desiredDistanceToTarget = 1f;
     [SerializeField] private float speed = 1f;
@@ -40,7 +41,10 @@ public class PathfinderEnemy : MonoBehaviour
     PathCalculator pathCalculator;
 
 
+    private bool flashing;
     private bool stopPathfinding;
+    private bool flip;
+
     // TODO: Implement random walk when can't see player
     private Vector3Int randomPosToWalkTo = Vector3Int.zero;
     private int lastHealth;
@@ -70,18 +74,21 @@ public class PathfinderEnemy : MonoBehaviour
 
     void Update()
     {
-        if (health != lastHealth || stopPathfinding)
+        int i = 0;
+        foreach (Transform child in transform)
         {
-            lastHealth = health;
-            int i = 0;
-            foreach (Transform child in transform)
+            if (health != lastHealth || stopPathfinding)
             {
+                lastHealth = health;
                 child.gameObject.SetActive(i == health && (!stopPathfinding || i == 0));
-                i++;
             }
+            if (i != 0 && i == health)
+            {
+                flip = target.transform.position.x < transform.position.x;
+                child.gameObject.GetComponent<SpriteRenderer>().flipX = flip;
+            }
+            i++;
         }
-
-        var flip = spriteRenderer.flipX = target.transform.position.x < transform.position.x;
 
 
         if (shootBullets && targetVisible && !stopPathfinding) bulletCooldown -= Time.deltaTime;
@@ -207,6 +214,29 @@ public class PathfinderEnemy : MonoBehaviour
         }
     }
 
+    private IEnumerator FlashWhiteCoroutine()
+    {
+        if (!flashing)
+        {
+            flashing = true;
+            var initialMat = spriteRenderer.material;
+            foreach (Transform child in transform)
+            {
+                SpriteRenderer sr = new SpriteRenderer();
+                if (child.gameObject.TryGetComponent<SpriteRenderer>(out sr))
+                    sr.material = whiteMaterial;
+            }
+            yield return new WaitForSeconds(0.1f);
+            foreach (Transform child in transform)
+            {
+                SpriteRenderer sr = new SpriteRenderer();
+                if (child.gameObject.TryGetComponent<SpriteRenderer>(out sr))
+                    sr.material = initialMat;
+            }
+            flashing = false;
+        }
+    }
+
     public void TakeDamage(int damage = 1)
     {
         health -= damage;
@@ -214,6 +244,8 @@ public class PathfinderEnemy : MonoBehaviour
         {
             Death();
         }
+        else
+            StartCoroutine(nameof(FlashWhiteCoroutine));
     }
 
     private void Death()

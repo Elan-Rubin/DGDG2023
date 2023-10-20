@@ -6317,6 +6317,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 1755766469}
   target: {fileID: 522556892}
+  whiteMaterial: {fileID: 2100000, guid: 31646886384bc65469e23720d59109da, type: 2}
   desiredDistanceToTarget: 0.75
   speed: 4
   startHealth: 1
@@ -26682,6 +26683,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 1755766469}
   target: {fileID: 522556892}
+  whiteMaterial: {fileID: 2100000, guid: 31646886384bc65469e23720d59109da, type: 2}
   desiredDistanceToTarget: 5
   speed: 3
   startHealth: 2
