@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public GameObject Upper { get { return upper; } }
 
     public event Action PlayerDeath;
+    public event Action PlayerReborn;
     public Vector2 bottomLeft, topRight;
 
     private static GameManager instance;
@@ -33,5 +34,10 @@ public class GameManager : MonoBehaviour
     public void Die()
     {
         PlayerDeath?.Invoke();
+    }
+
+    public void Reborn()
+    {
+        PlayerReborn?.Invoke();
     }
 }

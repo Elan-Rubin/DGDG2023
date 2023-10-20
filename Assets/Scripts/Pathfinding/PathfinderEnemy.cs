@@ -40,7 +40,7 @@ public class PathfinderEnemy : MonoBehaviour
     PathCalculator pathCalculator;
 
     private bool stopPathfinding;
-
+    private Vector3Int randomPosToWalkTo = Vector3Int.zero;
     private int health;
 
     // Start is called before the first frame update
@@ -67,6 +67,25 @@ public class PathfinderEnemy : MonoBehaviour
 
     void Update()
     {
+        // TODO: Put in actual sprites
+        switch (health)
+        {
+            case 0:
+                // Dead sprite
+                break;
+            case 1:
+                // Reg sprite
+                // TODO: Play sprites if moving
+                break;
+            case 2:
+                // Armor sprite
+                // TODO: Play sprites if moving
+                break;
+            default:
+                // Also armor sprite?
+                break;
+        }
+
         var flip = spriteRenderer.flipX = target.transform.position.x < transform.position.x;
 
 
@@ -85,9 +104,6 @@ public class PathfinderEnemy : MonoBehaviour
             bulletCooldown = bulletCooldownBase;
         }
 
-
-        RaycastHit2D rayToTarget = Physics2D.Raycast(transform.position, target.transform.position - transform.position);
-
         // If close enough to player
         if (Vector3.Distance(transform.position, target.transform.position) < desiredDistanceToTarget)
             rb.velocity = Vector3.zero;
@@ -97,7 +113,7 @@ public class PathfinderEnemy : MonoBehaviour
             //Debug.Log("Charging");
             rb.velocity = (target.transform.position - transform.position).normalized * speed;
         }
-        // Otherwise, pathfind
+        // Otherwise, pathfind if supposed to
         else if (pathfindWhenTargetOutOfSight)
         {
             if (pathCalculator.IsPathReady())
@@ -136,8 +152,9 @@ public class PathfinderEnemy : MonoBehaviour
         if (stopPathfinding)
             return;
 
-        if (Vector3.Distance(transform.position, target.transform.position) < desiredDistanceToTarget || (targetVisible && chargeWhenTargetInSight))
+        if ((Vector3.Distance(transform.position, target.transform.position) < desiredDistanceToTarget || (targetVisible && chargeWhenTargetInSight)))
             return;
+
 
         Vector3Int currentCell = map.WorldToCell(transform.position);
         Vector3Int targetCell = map.WorldToCell(target.transform.position);

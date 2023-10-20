@@ -40,6 +40,7 @@ public class Bullet : MonoBehaviour
                 if(!enemyBullet) Physics2D.IgnoreCollision(collision.collider, collision.otherCollider);
                 else
                 {
+                    GameManager.Instance.GetComponent<Health>()?.Damage(1);
                     DestroyBullet();
                     MakeParticle();
                 }
