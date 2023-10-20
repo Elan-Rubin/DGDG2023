@@ -39,9 +39,11 @@ public class PathfinderEnemy : MonoBehaviour
     List<Waypoint> path = new List<Waypoint>();
     PathCalculator pathCalculator;
 
+
     private bool stopPathfinding;
     // TODO: Implement random walk when can't see player
     private Vector3Int randomPosToWalkTo = Vector3Int.zero;
+    private int lastHealth;
     private int health;
 
     // Start is called before the first frame update
@@ -68,23 +70,15 @@ public class PathfinderEnemy : MonoBehaviour
 
     void Update()
     {
-        // TODO: Put in actual sprites
-        switch (health)
+        if (health != lastHealth)
         {
-            case 0:
-                // Dead sprite
-                break;
-            case 1:
-                // Reg sprite
-                // TODO: Play sprites if moving
-                break;
-            case 2:
-                // Armor sprite
-                // TODO: Play sprites if moving
-                break;
-            default:
-                // Also armor sprite?
-                break;
+            lastHealth = health;
+            int i = 0;
+            foreach (Transform child in transform)
+            {
+                child.gameObject.SetActive(i == health);
+                i++;
+            }
         }
 
         var flip = spriteRenderer.flipX = target.transform.position.x < transform.position.x;
@@ -241,7 +235,7 @@ public class PathfinderEnemy : MonoBehaviour
     public void PlayerRebornReappear()
     {
         spriteRenderer.enabled = true;
-        coll.enabled = false;
+        coll.enabled = true;
         rb.bodyType = RigidbodyType2D.Dynamic;
         stopPathfinding = false;
     }
