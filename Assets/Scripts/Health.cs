@@ -22,6 +22,16 @@ public class Health : MonoBehaviour
     void Start()
     {
         for (int i = 0; i < playerHealth; i++) GenerateBot();
+        StartCoroutine(nameof(LateStart));
+    }
+
+    private IEnumerator LateStart()
+    {
+        yield return null;
+        for (int i = 0; i < playerHealth; i++)
+        {
+            currentPositions[i] = targetPositions[i];
+        }
     }
 
     void LateUpdate()
@@ -71,5 +81,6 @@ public class Health : MonoBehaviour
         var b = Instantiate(healthBot, spawnPos, Quaternion.identity);
         healthBots.Add(b);
         b.transform.SetParent(transform);
+        b.GetComponent<Animator>().speed = Random.Range(0.8f, 1.2f);
     }
 }

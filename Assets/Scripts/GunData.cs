@@ -17,6 +17,7 @@ public class GunData : ScriptableObject
     [Header("Stats")]
     [Range(0,35)]
     public int ShootForce;
+    public int ShootKnockback;
     [Range(0,1)]
     public float ReloadTime;
     public GameObject Bullet;

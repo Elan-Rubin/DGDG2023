@@ -18,6 +18,7 @@ MonoBehaviour:
   BulletColor: {r: 0.8431373, g: 0.82745105, b: 0.13725491, a: 1}
   GunColor: {r: 0.8431373, g: 0.82745105, b: 0.13725491, a: 1}
   ShootForce: 10
+  ShootKnockback: 5
   ReloadTime: 0.1
   Bullet: {fileID: 7544120140449932333, guid: e76d0013d30ff0349bded44c06d5abf7, type: 3}
   Repetitions: 0

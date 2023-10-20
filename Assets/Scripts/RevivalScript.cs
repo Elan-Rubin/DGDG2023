@@ -19,6 +19,9 @@ public class RevivalScript : MonoBehaviour
     [SerializeField] private LineRenderer revivalLine;
     [SerializeField] private int minimumDistance = 1;
     [HideInInspector] public int MinimumDistance { get { return minimumDistance; } }
+
+    [SerializeField] private GameObject underworldCanvas;   
+
     private static RevivalScript instance;
     public static RevivalScript Instance { get { return instance; } }
     private void Awake()
@@ -126,8 +129,13 @@ public class RevivalScript : MonoBehaviour
                 t1tm.maskInteraction = SpriteMaskInteraction.None;
                 t2tm.maskInteraction = SpriteMaskInteraction.None;
                 t2.SetActive(false);
+                StartCoroutine(nameof(DeathGameplay));
             });
+        yield return null;
+    }
 
+    private IEnumerator DeathGameplay()
+    {
         revivalLine.positionCount = positionsList.Count;
         for (int i = 0; i < positionsList.Count; i++)
         {

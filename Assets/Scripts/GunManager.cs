@@ -19,7 +19,6 @@ public class GunManager : MonoBehaviour
     [HideInInspector] public GunData SelectedGun { get { return selectedGun; } }
     private Vector2 gunPosition;
     [HideInInspector] public Vector2 GunPosition { get { return gunPosition; } }
-    [SerializeField] private GameObject crosshair;
     [SerializeField] private LineRenderer laser;
     [SerializeField] private LayerMask laserIgnore;
     [SerializeField] private SpriteRenderer gunRenderer;
@@ -79,11 +78,11 @@ public class GunManager : MonoBehaviour
         if (!playingAnim)
         {
             playingAnim = true;
-            crosshair.transform.DOPunchScale(Vector2.one * 0.25f, 0.2f).OnComplete(() => crosshair.transform.localScale = Vector2.one);
+            CameraManager.Instance.Crosshair.transform.DOPunchScale(Vector2.one * 0.25f, 0.2f).OnComplete(() => CameraManager.Instance.Crosshair.transform.localScale = Vector2.one);
             gunRenderer.transform.DOPunchScale(Vector2.right * 0.4f, 0.2f).OnComplete(() => gunRenderer.transform.localScale = Vector2.one);
 
-            crosshair.transform.DOShakeRotation(0.2f, strength: Vector3.forward * 10f).OnComplete(() => {
-                crosshair.transform.rotation = Quaternion.Euler(Vector3.zero);
+            CameraManager.Instance.Crosshair.transform.DOShakeRotation(0.2f, strength: Vector3.forward * 10f).OnComplete(() => {
+                CameraManager.Instance.Crosshair.transform.rotation = Quaternion.Euler(Vector3.zero);
                 playingAnim = false;
             });
         }
@@ -104,6 +103,9 @@ public class GunManager : MonoBehaviour
                 dif = HelperClass.RotateVector(dif, Random.Range(-selectedGun.Inaccuracy, selectedGun.Inaccuracy));
                 bullet.Velocity = dif.normalized;
                 b.AddForce(100 * selectedGun.ShootForce * dif);
+
+                PlayerMovement.Instance.GetComponent<Rigidbody2D>().AddForce(-100 * selectedGun.ShootKnockback * dif);
+
                 CameraManager.Instance.ShakeCamera();
             }
             yield return new WaitForSeconds(selectedGun.DelayBetween);
@@ -113,7 +115,7 @@ public class GunManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        crosshair.transform.position = CameraManager.Instance.LaggedMousePos;
+
     }
 
     public void SwitchGun(GunData newGun)

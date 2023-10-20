@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown((int)MouseButton.Left)) Cursor.visible = false;
+
     }
 
     public void Die()

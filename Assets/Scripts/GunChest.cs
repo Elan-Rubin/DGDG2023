@@ -8,7 +8,6 @@ public class GunChest : MonoBehaviour
     [SerializeField] private GunData storedGun;
     [HideInInspector] public GunData StoredGun { get { return storedGun; } }
     private SpriteRenderer sr, sr2;
-    [SerializeField] private Sprite ghostSprite;
     [SerializeField] private TextMeshProUGUI nameText, descriptionText;
     private GunData previousStoredGun;
     private Animator animator;
