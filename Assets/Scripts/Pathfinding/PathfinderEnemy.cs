@@ -13,6 +13,7 @@ public class PathfinderEnemy : MonoBehaviour
     [Header("Enemy")]
     [SerializeField] private float desiredDistanceToTarget = 1f;
     [SerializeField] private float speed = 1f;
+    [SerializeField] private int startHealth = 1;
     // The pathfinder only recalculates the path every X seconds
     [SerializeField] private bool pathfindWhenTargetOutOfSight = true;
     [SerializeField] private bool chargeWhenTargetInSight = false;
@@ -32,7 +33,7 @@ public class PathfinderEnemy : MonoBehaviour
     private bool targetVisible;
 
     private SpriteRenderer spriteRenderer;
-    private CircleCollider2D collider;
+    private CircleCollider2D coll;
     private Rigidbody2D rb;
 
     List<Waypoint> path = new List<Waypoint>();
@@ -40,18 +41,22 @@ public class PathfinderEnemy : MonoBehaviour
 
     private bool stopPathfinding;
 
+    private int health;
+
     // Start is called before the first frame update
     void Start()
     {
         bulletCooldown = bulletCooldownBase;
         bulletPos = transform.GetChild(1);
 
+        health = startHealth;
+
         GameManager.Instance.PlayerDeath += PlayerDeadDisappear;
         // TODO: Add and subscribe to a reborn event
 
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
-        collider = GetComponent<CircleCollider2D>();
+        coll = GetComponent<CircleCollider2D>();
         pathCalculator = new PathCalculator(width, height, map);
 
         SetupGridFromTilemap();
@@ -165,6 +170,7 @@ public class PathfinderEnemy : MonoBehaviour
             }
         }
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Player" && !stopPathfinding)
@@ -189,11 +195,27 @@ public class PathfinderEnemy : MonoBehaviour
         }
     }
 
+    public void TakeDamage(int damage = 1)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            Death();
+        }
+    }
+
+    private void Death()
+    {
+        // TODO: Play death anim, freeze last frame
+        coll.enabled = false;
+        rb.bodyType = RigidbodyType2D.Static;
+        stopPathfinding = true;
+    }
+
     public void PlayerDeadDisappear()
     {
-        Debug.Log("Vanishing");
         spriteRenderer.enabled = false;
-        collider.enabled = false;
+        coll.enabled = false;
         rb.bodyType = RigidbodyType2D.Static;
         stopPathfinding = true;
     }
@@ -201,7 +223,7 @@ public class PathfinderEnemy : MonoBehaviour
     public void PlayerRebornReappear()
     {
         spriteRenderer.enabled = true;
-        collider.enabled = false;
+        coll.enabled = false;
         rb.bodyType = RigidbodyType2D.Dynamic;
         stopPathfinding = false;
     }
