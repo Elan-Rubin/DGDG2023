@@ -70,13 +70,13 @@ public class PathfinderEnemy : MonoBehaviour
 
     void Update()
     {
-        if (health != lastHealth)
+        if (health != lastHealth || stopPathfinding)
         {
             lastHealth = health;
             int i = 0;
             foreach (Transform child in transform)
             {
-                child.gameObject.SetActive(i == health);
+                child.gameObject.SetActive(i == health && (!stopPathfinding || i == 0));
                 i++;
             }
         }
@@ -226,7 +226,6 @@ public class PathfinderEnemy : MonoBehaviour
 
     public void PlayerDeadDisappear()
     {
-        spriteRenderer.enabled = false;
         coll.enabled = false;
         rb.bodyType = RigidbodyType2D.Static;
         stopPathfinding = true;
@@ -234,7 +233,6 @@ public class PathfinderEnemy : MonoBehaviour
 
     public void PlayerRebornReappear()
     {
-        spriteRenderer.enabled = true;
         coll.enabled = true;
         rb.bodyType = RigidbodyType2D.Dynamic;
         stopPathfinding = false;
