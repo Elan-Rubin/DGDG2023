@@ -43,6 +43,8 @@ public class PathfinderEnemy : MonoBehaviour
 
     private bool flashing;
     private bool stopPathfinding;
+    private bool flip;
+
     // TODO: Implement random walk when can't see player
     private Vector3Int randomPosToWalkTo = Vector3Int.zero;
     private int lastHealth;
@@ -80,10 +82,13 @@ public class PathfinderEnemy : MonoBehaviour
                 lastHealth = health;
                 child.gameObject.SetActive(i == health && (!stopPathfinding || i == 0));
             }
+            if (i != 0 && i == health)
+            {
+                flip = target.transform.position.x < transform.position.x;
+                child.gameObject.GetComponent<SpriteRenderer>().flipX = flip;
+            }
             i++;
         }
-
-        var flip = spriteRenderer.flipX = target.transform.position.x < transform.position.x;
 
 
         if (shootBullets && targetVisible && !stopPathfinding) bulletCooldown -= Time.deltaTime;
