@@ -5729,6 +5729,7 @@ MonoBehaviour:
   PlayerPosition: {x: 0, y: 0}
   CanMove: 0
   Moving: 0
+  PreviousPositionsLength: 0
 --- !u!4 &522556894
 Transform:
   m_ObjectHideFlags: 0
@@ -5994,6 +5995,7 @@ MonoBehaviour:
   target: {fileID: 522556892}
   desiredDistanceToTarget: 0.75
   speed: 4
+  startHealth: 1
   pathfindWhenTargetOutOfSight: 1
   chargeWhenTargetInSight: 1
   enemyBullet: {fileID: 7544120140449932333, guid: 0da94292ceb0ee84f9964e4e53a33b8b, type: 3}
@@ -15777,7 +15779,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b1e35b2a2ec85049b9d137a8e5fb6ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHealth: 3
+  playerHealth: 4
   healthBot: {fileID: 4683771287446048816, guid: 253289b772644f9428bfe7d718b18cea, type: 3}
 --- !u!1 &923322150
 GameObject:
@@ -20836,7 +20838,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 857429f025d40bc4b965bd501104ea5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  storedGun: {fileID: 11400000, guid: 43e16fcc23465254ebc4e4a21f02101b, type: 2}
+  storedGun: {fileID: 11400000, guid: 0fd6f6143867e56479f4f9e5725ca9fb, type: 2}
   ghostSprite: {fileID: 0}
   nameText: {fileID: 445349503}
   descriptionText: {fileID: 262898353}
@@ -26098,6 +26100,7 @@ MonoBehaviour:
   target: {fileID: 522556892}
   desiredDistanceToTarget: 5
   speed: 3
+  startHealth: 1
   pathfindWhenTargetOutOfSight: 1
   chargeWhenTargetInSight: 1
   enemyBullet: {fileID: 7544120140449932333, guid: 0da94292ceb0ee84f9964e4e53a33b8b, type: 3}
@@ -26345,7 +26348,7 @@ LineRenderer:
     colorGradient:
       serializedVersion: 2
       key0: {r: 0.3137255, g: 0.7411765, b: 0.4431373, a: 1}
-      key1: {r: 0.3137255, g: 0.7411765, b: 0.4431373, a: 1}
+      key1: {r: 0.3137255, g: 0.7411765, b: 0.4431373, a: 0}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -26368,7 +26371,7 @@ LineRenderer:
       atime5: 0
       atime6: 0
       atime7: 0
-      m_Mode: 1
+      m_Mode: 0
       m_ColorSpace: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
@@ -38517,13 +38520,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1835795795}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sharedProfile: {fileID: 11400000, guid: 3e38078daf67b9d47befd9e40ea7129d, type: 2}
-  isGlobal: 1
+  isGlobal: 0
   blendDistance: 0
   weight: 1
   priority: 0
@@ -38851,7 +38854,7 @@ SpriteRenderer:
   m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: -2059099819, guid: 7d0b3d64070bffc4997bf8fff8db780a, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8679245, g: 0.8679245, b: 0.8679245, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

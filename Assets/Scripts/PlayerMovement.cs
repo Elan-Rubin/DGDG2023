@@ -17,6 +17,13 @@ public class PlayerMovement : MonoBehaviour
     float counter;
     private Vector2 previousMovement;
     public Vector2 PreviousMovment { get { return previousMovement; } }
+
+    private List<Vector2> previousPositions = new();
+    public List<Vector2> PreviousPositions { get { return previousPositions; } }
+
+    public int PreviousPositionsLength;
+    int iterator;
+
     private static PlayerMovement instance;
     public static PlayerMovement Instance { get { return instance; } }
     private void Awake()
@@ -28,6 +35,11 @@ public class PlayerMovement : MonoBehaviour
     {
         CanMove = true;
         rigidBody = GetComponent<Rigidbody2D>();
+
+        for (int i = 0; i < Health.Instance.PlayerHealth; i++)
+        {
+            previousPositions.Add((Vector2)transform.position - Vector2.right * (i+1));
+        }
     }
 
     void Update()
@@ -35,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
         counter += Time.deltaTime;
         if (!CanMove)
         {
-            transform.position = currentPos = Vector2.Lerp(currentPos, targetPos, Time.deltaTime * 10f);
+            transform.position = currentPos = Vector2.Lerp(currentPos, targetPos, Time.deltaTime * 5f);
         }
     }
     private void FixedUpdate()
@@ -53,6 +65,15 @@ public class PlayerMovement : MonoBehaviour
         } 
         if (movement.magnitude > 1) movement /= movement.magnitude;
         rigidBody.velocity = movement * movementSpeed; 
+
+        if(Vector2.Distance(PlayerPosition, previousPositions[0]) > 1f)
+        {
+            if (iterator <= 0) iterator = previousPositions.Count - 1;
+            else iterator--;
+
+            previousPositions.RemoveAt(previousPositions.Count-1);
+            previousPositions.Insert(0, PlayerPosition);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

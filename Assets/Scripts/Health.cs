@@ -24,16 +24,17 @@ public class Health : MonoBehaviour
         for (int i = 0; i < playerHealth; i++) GenerateBot();
     }
 
-    void Update()
+    void LateUpdate()
     {
         counter += Time.deltaTime;
         var i = 0;
         foreach (var b in healthBots)
         {
-            targetPositions[i] = PlayerMovement.Instance.PlayerPosition +
-                (0.75f * (i + 2) * (PlayerRenderer.Instance.Flip ? Vector2.right : Vector2.left) +
-                (0.35f * Vector2.up * Mathf.Sin((2.5f * counter) + 30 * i)));
-            b.transform.position = currentPositions[i] = Vector2.Lerp(currentPositions[i], targetPositions[i], Time.deltaTime * 10f);
+            targetPositions[i] = PlayerMovement.Instance.PreviousPositions[i] +
+                /*(0.75f * (i + 2) * (PlayerRenderer.Instance.Flip ? Vector2.right : Vector2.left) +*/
+                (0.35f * Vector2.up * Mathf.Sin((2.5f * counter) + 30 * i));
+            if (Vector2.Distance(currentPositions[i],PlayerMovement.Instance.PlayerPosition) > 0.75f) b.transform.position = currentPositions[i] = Vector2.Lerp(currentPositions[i], targetPositions[i], Time.deltaTime * 2f);
+            b.transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = currentPositions[i].x > targetPositions[i].x;
             i++;
         }
     }

@@ -136,12 +136,20 @@ public class RevivalScript : MonoBehaviour
 
 
         yield return new WaitForSeconds(0.1f);
+        int iterator = 0;
         while (positionsList.Count > 0)
         {
             PlayerMovement.Instance.ForceMovePlayer(positionsList[0]);
             PlayerMovement.Instance.CanMove = false;
+
             positionsList.RemoveAt(0);
             yield return new WaitForSeconds(0.25f);
+
+            /*for (int i = 0; i < iterator; i++)
+            {
+                revivalLine.SetPosition(i, positionsList[0]);
+            }*/
+            iterator++;
         }
         PlayerMovement.Instance.CanMove = true;
         revivalLine.gameObject.SetActive(false);

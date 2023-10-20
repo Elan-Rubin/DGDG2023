@@ -30,7 +30,7 @@ public class PlayerRenderer : MonoBehaviour
     void Update()
     {
         if (PlayerMovement.Instance.Moving) flip = playerSprite.flipX = PlayerMovement.Instance.PreviousMovment.x < 0;
-        else playerSprite.flipX = CameraManager.Instance.MousePos.x < PlayerMovement.Instance.PlayerPosition.x;
+        else playerSprite.flipX = flip = CameraManager.Instance.MousePos.x < PlayerMovement.Instance.PlayerPosition.x;
 
         animator.SetBool("walking", PlayerMovement.Instance.Moving);
     }
@@ -41,12 +41,14 @@ public class PlayerRenderer : MonoBehaviour
     }
     private IEnumerator FlashWhiteCoroutine()
     {
-        if (flashing);
-        flashing = true;
-        var mat = playerSprite.material;
-        playerSprite.material = whiteMaterial;
-        yield return new WaitForSeconds(0.1f);
-        playerSprite.material = mat;
-        flashing = false;
+        if (!flashing)
+        {
+            flashing = true;
+            var mat = playerSprite.material;
+            playerSprite.material = whiteMaterial;
+            yield return new WaitForSeconds(0.1f);
+            playerSprite.material = mat;
+            flashing = false;
+        }
     }
 }
