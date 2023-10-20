@@ -76,7 +76,7 @@ public class PathfinderEnemy : MonoBehaviour
             int i = 0;
             foreach (Transform child in transform)
             {
-                child.gameObject.SetActive(i == health && !stopPathfinding);
+                child.gameObject.SetActive(i == health && (!stopPathfinding || i == 0));
                 i++;
             }
         }
