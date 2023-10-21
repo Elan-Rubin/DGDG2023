@@ -18,31 +18,30 @@ public class SoundManager : MonoBehaviour
     }
 
     [SerializeField] private List<SoundEffect> soundEffects;
-    public void OnValidate()
-    {
-        for (int i = 0; i < soundEffects.Count; i++)
-        {
-            soundEffects[i].OnValidate();
-        }
-    }
-
-    public void PlayClickSoundEffect() => PlaySoundEffect(SoundType.Click);
+    //public void OnValidate()
+    //{
+    //    for (int i = 0; i < soundEffects.Count; i++)
+    //    {
+    //        soundEffects[i].OnValidate();
+    //    }
+    //}
+    public void PlayClickSoundEffect() => PlaySoundEffect("click");
     /// <summary>
     /// Plays a certain sound from an instance of the SoundManager. Volume is constant
     /// </summary>
     /// <param name="soundType">The type of sound that will play</param>
-    public void PlaySoundEffect(SoundType soundType) => PlaySoundEffect(soundType, 0);
+    public void PlaySoundEffect(string soundName) => PlaySoundEffect(soundName, 0);
     /// <summary>
     /// Plays a certain sound from an instance of the SoundManager. Volume is constant
     /// </summary>
     /// <param name="soundType">The type of sound that will play</param>
     /// <param name="modifier">Modifier on the pitch of the sound</param>
-    public void PlaySoundEffect(SoundType soundType, int modifier)
+    public void PlaySoundEffect(string soundName, int modifier)
     {
-        var matchingEffects = soundEffects.Where(s => s.Type.Equals(soundType)).ToList();
+        var matchingEffects = soundEffects.Where(s => s.SoundName.Equals(soundName)).ToList();
         var soundEffect = matchingEffects[Random.Range(0, matchingEffects.Count)];
         var chosenClip = soundEffect.Clips[Random.Range(0, soundEffect.Clips.Count)];
-        var newSoundEffect = new GameObject($"Sound: {soundType}, {chosenClip.length}s");
+        var newSoundEffect = new GameObject($"Sound: {soundName}, {chosenClip.length}s");
         newSoundEffect.transform.parent = transform;
         Destroy(newSoundEffect, chosenClip.length * 1.5f);
         var source = newSoundEffect.AddComponent<AudioSource>();
@@ -55,24 +54,12 @@ public class SoundManager : MonoBehaviour
 }
 
 [System.Serializable]
-public enum SoundType
-{
-    SnakeTurnN,
-    SnakeTurnE,
-    SnakeTurnS,
-    SnakeTurnW,
-    SnakeEat,
-    SnakeDie,
-    Click
-}
-
-[System.Serializable]
 public struct SoundEffect
 {
     private string name;
-    public SoundType Type;
+    public string SoundName;
     public List<AudioClip> Clips;
     [Range(0, 1)] public float Volume;
     public bool Vary;
-    public void OnValidate() => name = Type.ToString();
+    //public void OnValidate() => name = Type.ToString();
 }

@@ -5,6 +5,14 @@ using UnityEngine;
 
 public class PlayerRenderer : MonoBehaviour
 {
+    private SpriteRenderer playerSprite;
+    private Animator animator;
+    private bool flip;
+    public bool Flip { get { return flip; } }
+
+    [SerializeField] private Material whiteMaterial;
+    bool flashing;
+
     private static PlayerRenderer instance;
     public static PlayerRenderer Instance { get { return instance; } }
     private void Awake()
@@ -12,32 +20,35 @@ public class PlayerRenderer : MonoBehaviour
         if (instance != null && instance != this) Destroy(gameObject);
         else instance = this;
     }
-    //[SerializeField] private float gunRotationSpeed = 90;
-    
-    private SpriteRenderer playerSprite;
-    private Vector2 playerPosition;
-    [HideInInspector] public Vector2 PlayerPosition { get { return playerPosition; } }
-    
 
     void Start()
     {
         playerSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
     {
-        playerPosition = transform.position;
+        if (PlayerMovement.Instance.Moving) flip = playerSprite.flipX = PlayerMovement.Instance.PreviousMovment.x < 0;
+        else playerSprite.flipX = flip = CameraManager.Instance.MousePos.x < PlayerMovement.Instance.PlayerPosition.x;
 
-        /*var target = CameraManager.Instance.MousePos;
-        float angle = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg;
-        gunRotator.rotation = Quaternion.Euler(new Vector3(0, 0, angle));*/
-
-
-        playerSprite.flipX = CameraManager.Instance.MousePos.x < playerPosition.x;
+        animator.SetBool("walking", PlayerMovement.Instance.Moving);
     }
 
-    private void FixedUpdate()
+    public void FlashWhite()
     {
-
+        StartCoroutine(nameof(FlashWhiteCoroutine));
+    }
+    private IEnumerator FlashWhiteCoroutine()
+    {
+        if (!flashing)
+        {
+            flashing = true;
+            var mat = playerSprite.material;
+            playerSprite.material = whiteMaterial;
+            yield return new WaitForSeconds(0.1f);
+            playerSprite.material = mat;
+            flashing = false;
+        }
     }
 }

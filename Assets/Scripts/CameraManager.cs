@@ -1,11 +1,20 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.Tilemaps;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.U2D;
+using UnityEngine.Windows.Speech;
 
 public class CameraManager : MonoBehaviour
 {
     [Header("Variables")]
+    [SerializeField] private GameObject crosshair;
+    [HideInInspector] public GameObject Crosshair { get { return crosshair; } }
+
+    [SerializeField] private bool menuCamera; 
     [SerializeField] private float movementSpeed;
     [Range(0,1)]
     [SerializeField] private float mousePull = 0.4f;
@@ -20,6 +29,7 @@ public class CameraManager : MonoBehaviour
     [HideInInspector] public Vector2 LaggedMousePos { get { return laggedMousePos; } }
     public static CameraManager Instance { get { return instance; } }
     private Vector2 currentPos, targetPos;
+    private Vector2 bottomLeft, topRight;
     private void Awake()
     {
         if (instance != null && instance != this) Destroy(gameObject);
@@ -27,18 +37,47 @@ public class CameraManager : MonoBehaviour
     }
     void Start()
     {
+        Cursor.visible = false;
+
         mainCamera = GetComponent<Camera>();
         currentPos = targetPos = transform.position;
         cameraContainer = transform.parent;
+
+        var pp = GetComponent<PixelPerfectCamera>();
+        var ratio1 = pp.refResolutionX / pp.refResolutionY;
+        var ratio2 = pp.refResolutionY / pp.refResolutionX;
+        if (menuCamera) return;
+        GetComponent<PostProcessVolume>().isGlobal = true;
+        bottomLeft = GameManager.Instance.bottomLeft + Vector2.right * ratio1 + Vector2.up * ratio2;
+        topRight = GameManager.Instance.topRight - Vector2.right * ratio1 - Vector2.up * ratio2;
     }
 
     void Update()
     {
         laggedMousePos = Vector2.Lerp(laggedMousePos, mousePos, Time.deltaTime * mouseLagSpeed);
+        crosshair.transform.position = laggedMousePos;
+
     }
     private void FixedUpdate()
     {
-        targetPos = Vector2.Lerp(PlayerMovement.Instance.transform.position, mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition), mousePull);
+        if (Input.GetMouseButtonDown((int)MouseButton.Left)) Cursor.visible = false;
+
+        var size = GetComponent<Camera>().orthographicSize;
+
+        if (!menuCamera) targetPos = Vector2.Lerp(PlayerMovement.Instance.transform.position, mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition), mousePull);
+        else targetPos = Vector2.Lerp(Vector2.zero, mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition), mousePull);
+
+        var pp = GetComponent<PixelPerfectCamera>();
+        var ratio = pp.refResolutionX / pp.refResolutionY;
+
+        if (!menuCamera)
+        {
+            if (targetPos.x < bottomLeft.x + size) targetPos.x = bottomLeft.x + (size / ratio);
+            else if (targetPos.x > topRight.x - size) targetPos.x = topRight.x - (size / ratio);
+            if (targetPos.y < bottomLeft.y + size) targetPos.y = bottomLeft.y + size;
+            else if (targetPos.y > topRight.y - size) targetPos.y = topRight.y - size;
+        }
+
         currentPos = Vector2.Lerp(currentPos, targetPos, 0.01f * movementSpeed);
         cameraContainer.position = new Vector3(currentPos.x, currentPos.y, -10);
     }

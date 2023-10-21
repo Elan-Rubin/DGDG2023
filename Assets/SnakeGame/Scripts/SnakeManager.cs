@@ -159,13 +159,13 @@ public class SnakeManager : MonoBehaviour
             tryingToTurn = true;
             Camera.main.transform.DOPunchScale(Vector3.one * -0.025f, 0.10f, 1);
 
-            SoundType s;
+            string s;
             switch (facingDirection)
             {
-                case Vector2Int v when v.Equals(Vector2Int.up): s = SoundType.SnakeTurnN; break;
-                case Vector2Int v when v.Equals(Vector2Int.right): s = SoundType.SnakeTurnE; break;
-                case Vector2Int v when v.Equals(Vector2Int.down): s = SoundType.SnakeTurnS; break;
-                default: s = SoundType.SnakeTurnW; break;
+                case Vector2Int v when v.Equals(Vector2Int.up): s = "snakeTurnN"; break;
+                case Vector2Int v when v.Equals(Vector2Int.right): s = "snakeTurnE"; break;
+                case Vector2Int v when v.Equals(Vector2Int.down): s = "snakeTurnS"; break;
+                default: s = "snakeTurnW"; break;
             }
             SoundManager.Instance.PlaySoundEffect(s);
         }
@@ -372,7 +372,7 @@ public class SnakeManager : MonoBehaviour
         // Collect a list of the empty squares
         // Randomly select one of them
         // Show the fruit there
-        SoundManager.Instance.PlaySoundEffect(SoundType.SnakeEat);
+        SoundManager.Instance.PlaySoundEffect("snakeEat");
         frame = 0;
         eating = true;
 
@@ -413,7 +413,7 @@ public class SnakeManager : MonoBehaviour
 
     private void GameOver()
     {
-        SoundManager.Instance.PlaySoundEffect(SoundType.SnakeDie);
+        SoundManager.Instance.PlaySoundEffect("snakeDie");
         Camera.main.transform.DOShakePosition(0.15f, 0.5f, 50);
         // TODO: Show the player their score
         CancelInvoke();
