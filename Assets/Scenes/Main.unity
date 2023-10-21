@@ -5642,7 +5642,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &395474650
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6620,6 +6620,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae3e2d00a99c144b915874bf0402a46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  whiteMaterial: {fileID: 2100000, guid: 31646886384bc65469e23720d59109da, type: 2}
+  particlePrefab: {fileID: 6569956850436613323, guid: c9e47d5955f332940a297af43c16977c, type: 3}
 --- !u!4 &585111420
 Transform:
   m_ObjectHideFlags: 0
@@ -16370,6 +16372,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae3e2d00a99c144b915874bf0402a46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  whiteMaterial: {fileID: 2100000, guid: 31646886384bc65469e23720d59109da, type: 2}
+  particlePrefab: {fileID: 6569956850436613323, guid: c9e47d5955f332940a297af43c16977c, type: 3}
 --- !u!95 &846581712
 Animator:
   serializedVersion: 5
@@ -21999,7 +22003,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1221239312
 RectTransform:
   m_ObjectHideFlags: 0
