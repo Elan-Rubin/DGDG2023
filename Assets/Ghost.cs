@@ -19,8 +19,8 @@ public class Ghost : MonoBehaviour
     {
         currentPosition = targetPosition = transform.position;
         timer2 = Random.Range(0, 1);
-        circle = transform.GetChild(1).GetChild(0).GetComponent<Image>();
-        text = transform.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>();
+        circle = transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>();
+        text = transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>();
     }
 
     void Update()
@@ -36,7 +36,7 @@ public class Ghost : MonoBehaviour
             timer = Random.Range(1f, 3f);
         }
 
-        text.gameObject.SetActive(caught);
+        text.gameObject.SetActive(caught || timer3 > 0);
         if (!caught) transform.position = currentPosition = Vector2.Lerp(currentPosition, targetPosition, Time.deltaTime * 3f);
         if (!caught) transform.GetChild(0).transform.localPosition = Vector2.up * Mathf.Sin(timer2 * 360f * Mathf.Deg2Rad);
         if (!caught&&timer3>0) timer3 -= Time.deltaTime;
