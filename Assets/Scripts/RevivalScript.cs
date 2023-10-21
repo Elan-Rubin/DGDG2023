@@ -140,7 +140,7 @@ public class RevivalScript : MonoBehaviour
         }
         PlayerMovement.Instance.CanMove = true;
         revivalLine.gameObject.SetActive(false);
-        GameManager.Instance.Reborn();
+        GhostSpawner.Instance.RevivalPathEnded();
     }
 
     void UpdateTimer(float currentTime)

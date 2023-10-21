@@ -279,6 +279,16 @@ public class PathfinderEnemy : MonoBehaviour
             StartCoroutine(nameof(FlashWhiteCoroutine));
     }
 
+    public bool IsSlime()
+    {
+        return shootBullets;
+    }
+
+    public bool IsDead()
+    {
+        return health <= 0;
+    }
+
     private void Death()
     {
         coll.enabled = false;

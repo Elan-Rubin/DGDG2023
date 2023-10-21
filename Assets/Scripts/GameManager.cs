@@ -41,4 +41,10 @@ public class GameManager : MonoBehaviour
         PlayerReborn?.Invoke();
         GetComponent<Health>().ResetHealth();
     }
+
+    public void GameOver()
+    {
+        // TODO: Implement actual game over
+        Debug.Log("GAME OVER!\nThe player has failed to collect enough ghosts in the afterlife to return.");
+    }
 }
