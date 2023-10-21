@@ -70,6 +70,8 @@ public class PathfinderEnemy : MonoBehaviour
         InvokeRepeating("CalculatePath", 0f, recalculationDelay);
         if (chargeWhenTargetInSight)
             InvokeRepeating("IsTargetVisible", 0f, raycastDelay);
+
+        SelectSpriteForHealth();
     }
 
     void Update()
@@ -77,11 +79,6 @@ public class PathfinderEnemy : MonoBehaviour
         int i = 0;
         foreach (Transform child in transform)
         {
-            if (health != lastHealth || stopPathfinding)
-            {
-                lastHealth = health;
-                child.gameObject.SetActive(i == health && (!stopPathfinding || i == 0));
-            }
             if (i != 0 && i == health)
             {
                 flip = target.transform.position.x < transform.position.x;
@@ -171,6 +168,16 @@ public class PathfinderEnemy : MonoBehaviour
         StartCoroutine(pathRoutine);
     }
 
+    private void SelectSpriteForHealth()
+    {
+        int i = 0;
+        foreach (Transform child in transform)
+        {
+            child.gameObject.SetActive(i == health);
+            i++;
+        }
+    }
+
     private void FollowPath()
     {
         if (stopPathfinding)
@@ -240,6 +247,7 @@ public class PathfinderEnemy : MonoBehaviour
     public void TakeDamage(int damage = 1)
     {
         health -= damage;
+        SelectSpriteForHealth();
         if (health <= 0)
         {
             Death();

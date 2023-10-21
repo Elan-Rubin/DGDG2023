@@ -6504,7 +6504,7 @@ MonoBehaviour:
   whiteMaterial: {fileID: 2100000, guid: 31646886384bc65469e23720d59109da, type: 2}
   desiredDistanceToTarget: 0.75
   speed: 4
-  startHealth: 1
+  startHealth: 2
   pathfindWhenTargetOutOfSight: 1
   chargeWhenTargetInSight: 1
   enemyBullet: {fileID: 7544120140449932333, guid: 0da94292ceb0ee84f9964e4e53a33b8b, type: 3}
