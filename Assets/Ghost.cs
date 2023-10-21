@@ -120,5 +120,6 @@ public class Ghost : MonoBehaviour
             yield return null;
         }
         Destroy(p.gameObject);
+        Destroy(gameObject);
     }
 }
