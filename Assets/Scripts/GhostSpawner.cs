@@ -10,6 +10,9 @@ public class GhostSpawner : MonoBehaviour
     [SerializeField] private GameObject ratGhost;
     [SerializeField] private GameObject slimeGhost;
     public int ghostsNeeded = 2;
+
+    List<GameObject> ghosts = new List<GameObject>();
+
     private int ghostsCaught = 0;
 
     private void Awake()
@@ -48,7 +51,7 @@ public class GhostSpawner : MonoBehaviour
                 else
                     newGhost = Instantiate(ratGhost, transform);
                 newGhost.transform.position = enemy.transform.position;
-
+                ghosts.Add(newGhost);
                 ghostsSpawned++;
             }
         }
@@ -73,6 +76,11 @@ public class GhostSpawner : MonoBehaviour
         if (ghostsCaught >= ghostsNeeded)
         {
             GameManager.Instance.Reborn();
+            foreach (GameObject ghost in ghosts)
+            {
+                Destroy(ghost);
+            }
+            ghosts.Clear();
         }
         else
         {
