@@ -6510,6 +6510,7 @@ MonoBehaviour:
   enemyBullet: {fileID: 7544120140449932333, guid: 0da94292ceb0ee84f9964e4e53a33b8b, type: 3}
   shootBullets: 0
   bulletCooldownBase: 1
+  meleeCooldown: 0.5
   width: 64
   height: 24
   recalculationDelay: 0.1
@@ -27316,6 +27317,7 @@ MonoBehaviour:
   enemyBullet: {fileID: 7544120140449932333, guid: 0da94292ceb0ee84f9964e4e53a33b8b, type: 3}
   shootBullets: 1
   bulletCooldownBase: 1
+  meleeCooldown: 0.5
   width: 64
   height: 24
   recalculationDelay: 0.1

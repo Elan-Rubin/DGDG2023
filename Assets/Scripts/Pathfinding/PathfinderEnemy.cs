@@ -19,8 +19,9 @@ public class PathfinderEnemy : MonoBehaviour
     [SerializeField] private bool pathfindWhenTargetOutOfSight = true;
     [SerializeField] private bool chargeWhenTargetInSight = false;
     [SerializeField] private GameObject enemyBullet;
-    [SerializeField] private bool shootBullets;
-    [SerializeField] private float bulletCooldownBase;
+    [SerializeField] private bool shootBullets = false;
+    [SerializeField] private float bulletCooldownBase = 1f;
+    [SerializeField] private float meleeCooldown = 1f;
     private Transform bulletPos;
     private float bulletCooldown;
     [Header("Performance")]
@@ -45,6 +46,9 @@ public class PathfinderEnemy : MonoBehaviour
     private bool stopPathfinding;
     private bool flip;
 
+    private bool playerInMeleeRange;
+    private float lastMeleeTime;
+
     // TODO: Implement random walk when can't see player
     private Vector3Int randomPosToWalkTo = Vector3Int.zero;
     private int lastHealth;
@@ -66,11 +70,11 @@ public class PathfinderEnemy : MonoBehaviour
         coll = GetComponent<CircleCollider2D>();
         pathCalculator = new PathCalculator(width, height, map);
 
-        SetupGridFromTilemap();
         InvokeRepeating("CalculatePath", 0f, recalculationDelay);
         if (chargeWhenTargetInSight)
             InvokeRepeating("IsTargetVisible", 0f, raycastDelay);
 
+        SetupGridFromTilemap();
         SelectSpriteForHealth();
     }
 
@@ -86,6 +90,8 @@ public class PathfinderEnemy : MonoBehaviour
             }
             i++;
         }
+
+        TryMeleeAttackPlayer();
 
 
         if (shootBullets && targetVisible && !stopPathfinding) bulletCooldown -= Time.deltaTime;
@@ -201,7 +207,24 @@ public class PathfinderEnemy : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player" && !stopPathfinding)
         {
+            playerInMeleeRange = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            playerInMeleeRange = false;
+        }
+    }
+
+    private void TryMeleeAttackPlayer()
+    {
+        if (playerInMeleeRange && Time.time - lastMeleeTime > meleeCooldown)
+        {
             Health.Instance.Damage(1);
+            lastMeleeTime = Time.time;
         }
     }
 
@@ -258,7 +281,6 @@ public class PathfinderEnemy : MonoBehaviour
 
     private void Death()
     {
-        // TODO: Play death anim, freeze last frame
         coll.enabled = false;
         rb.bodyType = RigidbodyType2D.Static;
         stopPathfinding = true;
@@ -267,12 +289,17 @@ public class PathfinderEnemy : MonoBehaviour
     public void PlayerDeadDisappear()
     {
         coll.enabled = false;
+        foreach (Transform child in transform)
+        {
+            child.gameObject.SetActive(false);
+        }
         rb.bodyType = RigidbodyType2D.Static;
         stopPathfinding = true;
     }
 
     public void PlayerRebornReappear()
     {
+        SelectSpriteForHealth();
         coll.enabled = true;
         rb.bodyType = RigidbodyType2D.Dynamic;
         stopPathfinding = false;
