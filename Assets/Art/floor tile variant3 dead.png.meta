@@ -126,9 +126,9 @@ TextureImporter:
       name: floor tile variant3 dead_1
       rect:
         serializedVersion: 2
-        x: 16
+        x: 0
         y: 32
-        width: 16
+        width: 32
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -232,9 +232,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 16
+        y: 0
         width: 16
-        height: 16
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -312,97 +312,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: floor tile variant3 dead_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 32
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 22c456dc82391564f986d9ff4fb468e4
-      internalID: -1459383362
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: floor tile variant3 dead_6
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6234fe04e74b39149948d5d1d6c90ef7
-      internalID: -665760978
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: floor tile variant3 dead_7
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 09269f9ff02dca145b60b4751f980614
-      internalID: 1093338359
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: floor tile variant3 dead_12
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c198b4612dc5f8644b52026d5dd042ab
-      internalID: -1812952257
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: floor tile variant3 dead_13
       rect:
         serializedVersion: 2
-        x: 16
+        x: 0
         y: 0
-        width: 16
-        height: 16
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -410,29 +326,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 12fc83fd7c48f7943aeb4bebbec6cc3f
-      internalID: 143182374
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: floor tile variant3 dead_14
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1613148446906a947a01c97a265c704f
-      internalID: -329431224
+      spriteID: 61d88c8bd46df3444ad2902f3ed6e785
+      internalID: 1291521172
       vertices: []
       indices: 
       edges: []
@@ -452,8 +347,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a4c25c82e9320b64682addda5046fc98
-      internalID: -1676986841
+      spriteID: 0db4fb8778c35054bb2675fed77e9dfb
+      internalID: -1879692883
       vertices: []
       indices: 
       edges: []
@@ -473,8 +368,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2156e1dcd3088694e8a35587c55e2fa2
-      internalID: -721875075
+      spriteID: 4a8acd5040c95f34ab97f0ce2cfcf2a3
+      internalID: -323216032
       vertices: []
       indices: 
       edges: []
@@ -494,8 +389,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1679e677f9fd5014d804e4363e206f59
-      internalID: -960868488
+      spriteID: b700ef50be34e1b4086beff805a5b965
+      internalID: -1905565020
       vertices: []
       indices: 
       edges: []
@@ -515,12 +410,12 @@ TextureImporter:
       floor tile variant3 dead_1: -1273576499
       floor tile variant3 dead_10: 1636402530
       floor tile variant3 dead_11: 1554806962
-      floor tile variant3 dead_12: -1812952257
-      floor tile variant3 dead_13: 143182374
-      floor tile variant3 dead_14: -329431224
-      floor tile variant3 dead_15: -1676986841
-      floor tile variant3 dead_16: -721875075
-      floor tile variant3 dead_17: -960868488
+      floor tile variant3 dead_12: -1217658185
+      floor tile variant3 dead_13: 1291521172
+      floor tile variant3 dead_14: 870836081
+      floor tile variant3 dead_15: -1879692883
+      floor tile variant3 dead_16: -323216032
+      floor tile variant3 dead_17: -1905565020
       floor tile variant3 dead_2: -2075915294
       floor tile variant3 dead_3: -1870956811
       floor tile variant3 dead_4: 2030919931
