@@ -119,6 +119,7 @@ public class Ghost : MonoBehaviour
 
             yield return null;
         }
+        GhostSpawner.Instance.CaughtGhost();
         Destroy(p.gameObject);
         Destroy(gameObject);
     }
