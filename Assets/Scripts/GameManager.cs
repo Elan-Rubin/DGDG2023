@@ -36,10 +36,10 @@ public class GameManager : MonoBehaviour
         PlayerDeath?.Invoke();
     }
 
-    public void Reborn()
+    public void Reborn(int newHealth)
     {
         PlayerReborn?.Invoke();
-        GetComponent<Health>().ResetHealth();
+        GetComponent<Health>().ResetHealth(newHealth);
     }
 
     public void GameOver()

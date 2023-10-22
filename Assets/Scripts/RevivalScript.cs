@@ -1,11 +1,13 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.U2D.Animation;
 using UnityEngine;
 using UnityEngine.InputSystem.Android;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public class RevivalScript : MonoBehaviour
 {
@@ -17,7 +19,12 @@ public class RevivalScript : MonoBehaviour
     [SerializeField] private int minimumDistance = 1;
     [HideInInspector] public int MinimumDistance { get { return minimumDistance; } }
 
-    [SerializeField] private GameObject underworldCanvas;
+    public int GhostCounter, GhostThreshold = 3;
+
+
+    [SerializeField] private GameObject ghostCanvas;
+    private TextMeshProUGUI ghostText;
+    private Slider ghostSlider;
 
     bool dead;
 
@@ -32,6 +39,8 @@ public class RevivalScript : MonoBehaviour
     {
         mask.SetActive(false);
         GameManager.Instance.PlayerDeath += Rewind;
+        ghostText = ghostCanvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        ghostSlider = ghostCanvas.transform.GetChild(1).GetComponent<Slider>();
     }
 
     void Update()
@@ -44,6 +53,9 @@ public class RevivalScript : MonoBehaviour
             var campos = CameraManager.Instance.LaggedMousePos;
             ghostLine.SetPosition(0, Vector2.Lerp(ppos, campos, 0.15f));
             ghostLine.SetPosition(1, Vector2.Lerp(ppos, campos, 0.9f));
+
+
+            ghostText.text = 
         }
     }
 
@@ -63,6 +75,7 @@ public class RevivalScript : MonoBehaviour
     public void Rewind()
     {
         dead = true;
+        ghostCanvas.SetActive(true);
         ghostLine.gameObject.SetActive(true);
         revivalLine.gameObject.SetActive(true);
         StartCoroutine(nameof(RewindCoroutine));
