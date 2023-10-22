@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.U2D.Animation;
 using UnityEngine;
 using UnityEngine.InputSystem.Android;
@@ -10,12 +11,15 @@ public class RevivalScript : MonoBehaviour
 {
     private List<Vector2> positionsList = new();
     private Vector2 latestPos;
+    [SerializeField] private LineRenderer ghostLine;   
     [SerializeField] private GameObject mask;
     [SerializeField] private LineRenderer revivalLine;
     [SerializeField] private int minimumDistance = 1;
     [HideInInspector] public int MinimumDistance { get { return minimumDistance; } }
 
-    [SerializeField] private GameObject underworldCanvas;   
+    [SerializeField] private GameObject underworldCanvas;
+
+    bool dead;
 
     private static RevivalScript instance;
     public static RevivalScript Instance { get { return instance; } }
@@ -34,6 +38,13 @@ public class RevivalScript : MonoBehaviour
     {
         //remember to remove this later
         if (Input.GetKeyDown(KeyCode.Space)) Rewind();
+        if (dead)
+        {
+            var ppos = PlayerMovement.Instance.PlayerPosition;
+            var campos = CameraManager.Instance.LaggedMousePos;
+            ghostLine.SetPosition(0, Vector2.Lerp(ppos, campos, 0.15f));
+            ghostLine.SetPosition(1, Vector2.Lerp(ppos, campos, 0.9f));
+        }
     }
 
     public Vector2 FirstPosition()
@@ -51,6 +62,8 @@ public class RevivalScript : MonoBehaviour
     }
     public void Rewind()
     {
+        dead = true;
+        ghostLine.gameObject.SetActive(true);
         revivalLine.gameObject.SetActive(true);
         StartCoroutine(nameof(RewindCoroutine));
     }
@@ -130,7 +143,7 @@ public class RevivalScript : MonoBehaviour
             PlayerMovement.Instance.CanMove = false;
 
             positionsList.RemoveAt(0);
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(0.5f);
 
             /*for (int i = 0; i < iterator; i++)
             {
@@ -141,15 +154,5 @@ public class RevivalScript : MonoBehaviour
         PlayerMovement.Instance.CanMove = true;
         revivalLine.gameObject.SetActive(false);
         GhostSpawner.Instance.RevivalPathEnded();
-    }
-
-    void UpdateTimer(float currentTime)
-    {
-        currentTime += 1;
-
-        float minutes = Mathf.FloorToInt(currentTime / 60);
-        float seconds = Mathf.FloorToInt(currentTime % 60);
-
-        string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 }

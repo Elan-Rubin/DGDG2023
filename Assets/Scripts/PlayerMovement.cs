@@ -47,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
         counter += Time.deltaTime;
         if (!CanMove)
         {
-            transform.position = currentPos = Vector2.Lerp(currentPos, targetPos, Time.deltaTime * 5f);
+            transform.position = currentPos = Vector2.Lerp(currentPos, targetPos, Time.deltaTime * 2.5f);
         }
     }
     private void FixedUpdate()
