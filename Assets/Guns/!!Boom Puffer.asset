@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0911cb225c7d1384fb869dd53a5e37ec, type: 3}
-  m_Name: Boom Puffer
+  m_Name: '!!Boom Puffer'
   m_EditorClassIdentifier: 
   GunName: Boom Puffer
   GunDescription: Puff Boom Fiesta!

@@ -120,12 +120,13 @@ public class PathfinderEnemy : MonoBehaviour
 
         // If close enough to player
         if (Vector3.Distance(transform.position, target.transform.position) < desiredDistanceToTarget)
-            rb.velocity = Vector3.zero;
+            if (!rb.bodyType.Equals(RigidbodyType2D.Static)) rb.velocity = Vector3.zero;
         // If we can see the player and we're supposed to charge when we see the player
         else if (chargeWhenTargetInSight && targetVisible)
         {
+
             //Debug.Log("Charging");
-            rb.velocity = (target.transform.position - transform.position).normalized * speed;
+            if(!rb.bodyType.Equals(RigidbodyType2D.Static)) rb.velocity = (target.transform.position - transform.position).normalized * speed;
         }
         // Otherwise, pathfind if supposed to
         else if (pathfindWhenTargetOutOfSight)
