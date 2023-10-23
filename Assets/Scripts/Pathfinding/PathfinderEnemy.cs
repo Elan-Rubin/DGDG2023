@@ -79,6 +79,9 @@ public class PathfinderEnemy : MonoBehaviour
 
         SetupGridFromTilemap();
         SelectSpriteForHealth();
+
+        map = GameObject.FindGameObjectWithTag("MainTilemap").transform.GetChild(0).GetComponent<Tilemap>();
+        target = GameObject.FindGameObjectWithTag("Player");
     }
 
     void Update()
