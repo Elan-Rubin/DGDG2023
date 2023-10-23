@@ -219,10 +219,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 1365659973}
   target: {fileID: 976618489}
+  whiteMaterial: {fileID: 0}
   desiredDistanceToTarget: 0.75
   speed: 5
+  startHealth: 1
   pathfindWhenTargetOutOfSight: 1
   chargeWhenTargetInSight: 1
+  enemyBullet: {fileID: 0}
+  shootBullets: 0
+  bulletCooldownBase: 1
+  meleeCooldown: 1
   width: 64
   height: 24
   recalculationDelay: 0.1
@@ -390,10 +396,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 1365659973}
   target: {fileID: 976618489}
+  whiteMaterial: {fileID: 0}
   desiredDistanceToTarget: 0.75
   speed: 5
+  startHealth: 1
   pathfindWhenTargetOutOfSight: 1
   chargeWhenTargetInSight: 1
+  enemyBullet: {fileID: 0}
+  shootBullets: 0
+  bulletCooldownBase: 1
+  meleeCooldown: 1
   width: 64
   height: 24
   recalculationDelay: 0.1
@@ -561,10 +573,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 1365659973}
   target: {fileID: 976618489}
+  whiteMaterial: {fileID: 0}
   desiredDistanceToTarget: 0.75
   speed: 5
+  startHealth: 1
   pathfindWhenTargetOutOfSight: 1
   chargeWhenTargetInSight: 1
+  enemyBullet: {fileID: 0}
+  shootBullets: 0
+  bulletCooldownBase: 1
+  meleeCooldown: 1
   width: 64
   height: 24
   recalculationDelay: 0.1
@@ -828,6 +846,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 5
+  PlayerPosition: {x: 0, y: 0}
+  CanMove: 0
+  Moving: 0
+  PreviousPositionsLength: 0
 --- !u!58 &976618493
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -986,10 +1008,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 1365659973}
   target: {fileID: 976618489}
+  whiteMaterial: {fileID: 0}
   desiredDistanceToTarget: 0.75
   speed: 5
+  startHealth: 1
   pathfindWhenTargetOutOfSight: 1
   chargeWhenTargetInSight: 1
+  enemyBullet: {fileID: 0}
+  shootBullets: 0
+  bulletCooldownBase: 1
+  meleeCooldown: 1
   width: 64
   height: 24
   recalculationDelay: 0.1
@@ -1077,7 +1105,7 @@ GameObject:
   - component: {fileID: 1365659976}
   m_Layer: 0
   m_Name: Tilemap
-  m_TagString: Untagged
+  m_TagString: MainTileMap
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3931,10 +3959,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 1365659973}
   target: {fileID: 976618489}
+  whiteMaterial: {fileID: 0}
   desiredDistanceToTarget: 0.75
   speed: 5
+  startHealth: 1
   pathfindWhenTargetOutOfSight: 1
   chargeWhenTargetInSight: 1
+  enemyBullet: {fileID: 0}
+  shootBullets: 0
+  bulletCooldownBase: 1
+  meleeCooldown: 1
   width: 64
   height: 24
   recalculationDelay: 0.1
@@ -4147,10 +4181,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 1365659973}
   target: {fileID: 976618489}
+  whiteMaterial: {fileID: 0}
   desiredDistanceToTarget: 0.75
   speed: 5
+  startHealth: 1
   pathfindWhenTargetOutOfSight: 1
   chargeWhenTargetInSight: 1
+  enemyBullet: {fileID: 0}
+  shootBullets: 0
+  bulletCooldownBase: 1
+  meleeCooldown: 1
   width: 64
   height: 24
   recalculationDelay: 0.1
@@ -4318,10 +4358,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 1365659973}
   target: {fileID: 976618489}
+  whiteMaterial: {fileID: 0}
   desiredDistanceToTarget: 0.75
   speed: 5
+  startHealth: 1
   pathfindWhenTargetOutOfSight: 1
   chargeWhenTargetInSight: 1
+  enemyBullet: {fileID: 0}
+  shootBullets: 0
+  bulletCooldownBase: 1
+  meleeCooldown: 1
   width: 64
   height: 24
   recalculationDelay: 0.1
@@ -4530,10 +4576,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 1365659973}
   target: {fileID: 976618489}
+  whiteMaterial: {fileID: 0}
   desiredDistanceToTarget: 0.75
   speed: 5
+  startHealth: 1
   pathfindWhenTargetOutOfSight: 1
   chargeWhenTargetInSight: 1
+  enemyBullet: {fileID: 0}
+  shootBullets: 0
+  bulletCooldownBase: 1
+  meleeCooldown: 1
   width: 64
   height: 24
   recalculationDelay: 0.1
@@ -4706,10 +4758,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 1365659973}
   target: {fileID: 976618489}
+  whiteMaterial: {fileID: 0}
   desiredDistanceToTarget: 0.75
   speed: 5
+  startHealth: 1
   pathfindWhenTargetOutOfSight: 1
   chargeWhenTargetInSight: 1
+  enemyBullet: {fileID: 0}
+  shootBullets: 0
+  bulletCooldownBase: 1
+  meleeCooldown: 1
   width: 64
   height: 24
   recalculationDelay: 0.1
@@ -4872,10 +4930,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 1365659973}
   target: {fileID: 976618489}
+  whiteMaterial: {fileID: 0}
   desiredDistanceToTarget: 0.75
   speed: 5
+  startHealth: 1
   pathfindWhenTargetOutOfSight: 1
   chargeWhenTargetInSight: 1
+  enemyBullet: {fileID: 0}
+  shootBullets: 0
+  bulletCooldownBase: 1
+  meleeCooldown: 1
   width: 64
   height: 24
   recalculationDelay: 0.1
