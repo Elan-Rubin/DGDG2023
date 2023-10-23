@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.U2D.Animation;
@@ -13,13 +14,14 @@ public class RevivalScript : MonoBehaviour
 {
     private List<Vector2> positionsList = new();
     private Vector2 latestPos;
-    [SerializeField] private LineRenderer ghostLine;   
+    [SerializeField] private LineRenderer ghostLine;
     [SerializeField] private GameObject mask;
     [SerializeField] private LineRenderer revivalLine;
     [SerializeField] private int minimumDistance = 1;
     [HideInInspector] public int MinimumDistance { get { return minimumDistance; } }
 
-    public int GhostCounter, GhostThreshold = 3;
+    public int GhostCounter;
+    public int GhostThreshold;
 
 
     [SerializeField] private GameObject ghostCanvas;
@@ -37,6 +39,7 @@ public class RevivalScript : MonoBehaviour
     }
     void Start()
     {
+        GhostThreshold = 3;
         mask.SetActive(false);
         GameManager.Instance.PlayerDeath += Rewind;
         ghostText = ghostCanvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
@@ -47,18 +50,37 @@ public class RevivalScript : MonoBehaviour
     {
         //remember to remove this later
         if (Input.GetKeyDown(KeyCode.Space)) Rewind();
+
         if (dead)
         {
             var ppos = PlayerMovement.Instance.PlayerPosition;
             var campos = CameraManager.Instance.LaggedMousePos;
             ghostLine.SetPosition(0, Vector2.Lerp(ppos, campos, 0.15f));
             ghostLine.SetPosition(1, Vector2.Lerp(ppos, campos, 0.9f));
-
-
-            ghostText.text = 
         }
     }
+    public void UpdateCatches()
+    {
+        Slider newSlider = null;
+        if (GhostCounter > GhostThreshold && GhostCounter % GhostThreshold == 0)
+        {
+            var g = Instantiate(ghostSlider, ghostSlider.transform.parent).GetComponent<Slider>();
+            g.transform.position = g.transform.position - Vector3.up;
+            newSlider = g.GetComponent<Slider>();
+        }
 
+        var gcNearest = Mathf.Clamp(Mathf.FloorToInt((float)GhostCounter / GhostThreshold), 0, 10);
+        ghostText.text = $"{GhostCounter} of {GhostThreshold}";
+        //Debug.Log(gcNearest);
+        var gcNew = GhostCounter - (gcNearest * GhostThreshold);
+        ghostSlider.DOValue((float)gcNew / GhostThreshold, 0.1f).OnComplete(() =>
+        {
+            if (newSlider != null) ghostSlider = newSlider;
+        });
+        //ghostSlider.transform.DOPunchScale(Vector2.one * 1.2f, 0.1f);
+        ghostText.transform.DOPunchScale(Vector2.one * 0.3f, 0.2f);
+
+    }
     public Vector2 FirstPosition()
     {
         return positionsList[0];
@@ -66,7 +88,7 @@ public class RevivalScript : MonoBehaviour
 
     public void AddPosition(Vector2 newPosition)
     {
-        positionsList.Add(latestPos = new Vector2(Mathf.Floor(newPosition.x)+0.5f, Mathf.Floor(newPosition.y)+.5f));
+        positionsList.Add(latestPos = new Vector2(Mathf.Floor(newPosition.x) + 0.5f, Mathf.Floor(newPosition.y) + .5f));
     }
     public Vector2 GetLatest()
     {
@@ -107,7 +129,7 @@ public class RevivalScript : MonoBehaviour
         var sr = mask.transform.GetChild(0).GetComponent<SpriteRenderer>();
         sr.color = Color.clear;
         var sequence = DOTween.Sequence();
-        sequence.Append(sr.DOColor(Color.white, .5f)).OnComplete(() => sr.DOColor(new Color(97/255f, 224/255f, 135/255f), .5f));
+        sequence.Append(sr.DOColor(Color.white, .5f)).OnComplete(() => sr.DOColor(new Color(97 / 255f, 224 / 255f, 135 / 255f), .5f));
         //sequence.Append(sr.DOColor(new Color(97, 224, 135), 2f));
 
         var ps = mask.transform.GetChild(1).GetComponent<ParticleSystem>();

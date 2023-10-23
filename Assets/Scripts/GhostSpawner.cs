@@ -52,7 +52,7 @@ public class GhostSpawner : MonoBehaviour
         }
 
         // Spawn additional ghosts up to ghostsNeeded (maybe +1)
-        for (int i = ghostsSpawned; i < RevivalScript.Instance.GhostThreshold * 1.5f; i++)
+        for (int i = ghostsSpawned; i < RevivalScript.Instance.GhostThreshold * 5f; i++)
         {
             if (i % 2 == 0)
                 Instantiate(slimeGhost, transform);

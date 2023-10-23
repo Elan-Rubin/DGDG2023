@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6670199652410530137}
   - component: {fileID: 2374188177112685595}
-  - component: {fileID: 4218357076306470833}
   - component: {fileID: 1313333472593048241}
   m_Layer: 0
   m_Name: RatGhost
@@ -49,41 +48,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whiteMaterial: {fileID: 2100000, guid: 31646886384bc65469e23720d59109da, type: 2}
   particlePrefab: {fileID: 6569956850436613323, guid: c9e47d5955f332940a297af43c16977c, type: 3}
---- !u!58 &4218357076306470833
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 199316346728551447}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.9972546
 --- !u!95 &1313333472593048241
 Animator:
   serializedVersion: 5

@@ -16,10 +16,11 @@ public class Ghost : MonoBehaviour
     TextMeshProUGUI text;
     bool caught, killed;
     [SerializeField] private Material whiteMaterial;
+    Color baseColor;
 
     float catchTime = 0.75f;
 
-    [SerializeField] private GameObject particlePrefab; 
+    [SerializeField] private GameObject particlePrefab;
 
 
     void Start()
@@ -28,14 +29,25 @@ public class Ghost : MonoBehaviour
         timer2 = Random.Range(0, 1);
         circle = transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>();
         text = transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>();
+        baseColor = transform.GetChild(0).GetComponent<SpriteRenderer>().color;
     }
 
     void Update()
     {
         if (killed) return;
+        if (Vector2.Distance(transform.position, CameraManager.Instance.LaggedMousePos) < 15)
+        {
+            transform.GetChild(0).GetComponent<SpriteRenderer>().color =
+                Color.Lerp(baseColor, Color.clear, Vector2.Distance(transform.position, CameraManager.Instance.LaggedMousePos) / 15f);
+        }
+        else
+        {
+            transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.clear;
+            return;
+        }
 
         timer -= Time.deltaTime;
-        if(!caught) timer2 += Time.deltaTime / 3f;
+        if (!caught) timer2 += Time.deltaTime / 3f;
         if (timer < 0 && !caught)
         {
             //var dif = PlayerMovement.Instance.PlayerPosition - currentPosition;
@@ -46,7 +58,7 @@ public class Ghost : MonoBehaviour
             timer = Random.Range(1f, 3f);
         }
 
-        text.gameObject.SetActive(caught || timer3 > 0);
+        //text.gameObject.SetActive(caught || timer3 > 0);
         if (!caught) transform.position = currentPosition = Vector2.Lerp(currentPosition, targetPosition, Time.deltaTime * 3f);
         if (!caught) transform.GetChild(0).transform.localPosition = Vector2.up * Mathf.Sin(timer2 * 360f * Mathf.Deg2Rad);
         if (!caught && timer3 > 0)
@@ -55,13 +67,14 @@ public class Ghost : MonoBehaviour
             circle.fillAmount = timer3 / catchTime;
             text.text = $"{(int)(timer3 / catchTime * 100)}";
         }
-        if (Vector2.Distance(transform.position, CameraManager.Instance.LaggedMousePos) < 1f)
+
+        if (Vector2.Distance(transform.position, CameraManager.Instance.LaggedMousePos) < 2.5f)
         {
             if (caught)
             {
-                if (timer3 < catchTime) timer3 += Time.deltaTime;
+                if (timer3 < catchTime) timer3 += Time.deltaTime * 2f;
                 circle.fillAmount = timer3 / catchTime;
-                text.text = $"{(int)(timer3 / catchTime * 100)}";
+                //text.text = $"{(int)(timer3 / catchTime * 100)}";
                 if (timer3 > catchTime) StartCoroutine(nameof(CatchAnimation));
                 //targetPosition = PlayerMovement.Instance.PlayerPosition;
             }
@@ -77,6 +90,7 @@ public class Ghost : MonoBehaviour
     private IEnumerator CatchAnimationCoroutine()
     {
         killed = true;
+
         yield return null;
         text.gameObject.SetActive(false);
 
@@ -95,7 +109,7 @@ public class Ghost : MonoBehaviour
         var timer4 = 0f;
         while (timer4 < 1f)
         {
-            timer4 += Time.deltaTime/5f;
+            timer4 += Time.deltaTime;
 
             var particles = new ParticleSystem.Particle[p.particleCount];
             var target = PlayerMovement.Instance.PlayerPosition;
@@ -111,7 +125,7 @@ public class Ghost : MonoBehaviour
 
                 //particles[i].velocity = (PlayerMovement.Instance.PlayerPosition - (Vector2)particles[i].position).normalized * ForceToAdd;
 
-                particles [i].position = Vector3.Slerp (particles [i].position, target, timer4);
+                particles[i].position = Vector3.Slerp(particles[i].position, target, timer4);
 
             }
 
@@ -120,6 +134,8 @@ public class Ghost : MonoBehaviour
             yield return null;
         }
         GhostSpawner.Instance.CaughtGhost();
+        RevivalScript.Instance.UpdateCatches();
+
         Destroy(p.gameObject);
         Destroy(gameObject);
     }
