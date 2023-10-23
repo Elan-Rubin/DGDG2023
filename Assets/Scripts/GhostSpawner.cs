@@ -71,7 +71,7 @@ public class GhostSpawner : MonoBehaviour
         var rs = RevivalScript.Instance;
         if (rs.GhostCounter >= rs.GhostThreshold)
         {
-            GameManager.Instance.Reborn(rs.GhostCounter/rs.GhostThreshold);
+            GameManager.Instance.Reborn(Mathf.FloorToInt((float)rs.GhostCounter/rs.GhostThreshold));
             foreach (GameObject ghost in ghosts)
             {
                 Destroy(ghost);
