@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public Vector2 PlayerPosition;
     [HideInInspector] public bool CanMove;
     [HideInInspector] public bool Moving;
-    private Vector2 currentPos, targetPos;
+    public Vector2 currentPos, targetPos;
     float counter;
     private Vector2 previousMovement;
     public Vector2 PreviousMovment { get { return previousMovement; } }
@@ -47,22 +47,28 @@ public class PlayerMovement : MonoBehaviour
         counter += Time.deltaTime;
         if (!CanMove)
         {
-            transform.position = currentPos = Vector2.Lerp(currentPos, targetPos, Time.deltaTime * 2.5f);
+            transform.position = currentPos = Vector2.Lerp(currentPos, targetPos, Time.deltaTime * 5f);
         }
     }
+
+    public void SnapPosition(Vector3 newPosition)
+    {
+        transform.position = currentPos = newPosition;
+    }
+
     private void FixedUpdate()
     {
         PlayerPosition = transform.position;
         if (!CanMove) return;
         if (RevivalScript.Instance!=null && Vector2.Distance(PlayerPosition, RevivalScript.Instance.GetLatest()) > RevivalScript.Instance.MinimumDistance) RevivalScript.Instance.AddPosition(PlayerPosition);
         var movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        previousMovement = movement; 
+        previousMovement = movement;
         Moving = movement.magnitude > 0;
         if (Moving && counter > 0.15f)
         {
             SoundManager.Instance.PlaySoundEffect("playerFootstep");
             counter = 0;
-        } 
+        }
         if (movement.magnitude > 1) movement /= movement.magnitude;
         rigidBody.velocity = movement * movementSpeed; 
 
