@@ -82,22 +82,17 @@ public class RevivalScript : MonoBehaviour
             newSlider = g.GetComponent<Slider>();
             ghostSliders.Add(newSlider);
         }
-        if (newSlider != null) ghostSlider = newSlider;
+        if (newSlider != null) ghostSliders[ghostSliders.Count-1] = newSlider;
 
         ghostText.text = $"{GhostCounter} of {GhostThreshold}";
 
         var gcNearest = Mathf.Clamp(Mathf.FloorToInt((float)GhostCounter / GhostThreshold), 0, 10);
         var gcNew = GhostCounter - (gcNearest * GhostThreshold);
 
-        ghostSliders[ghostSliders.Count-1].DOValue((float)gcNew / GhostThreshold, 0.1f).OnComplete(() =>
-        {
-            if (newSlider != null) ghostSliders[ghostSliders.Count-1] = newSlider;
-        //Debug.Log(gcNearest);
-        var gcNew = GhostCounter % GhostThreshold;
-        ghostSlider.DOValue((float)gcNew / GhostThreshold, 0.1f).OnComplete(() =>
-        {
-
-        });
+        ghostSliders[ghostSliders.Count - 1].DOValue((float)gcNew / GhostThreshold, 0.1f).OnComplete(() =>
+          {
+              if (newSlider != null) ghostSliders[ghostSliders.Count - 1] = newSlider;
+          });
 
         ghostText.transform.DOPunchScale(Vector2.one * 0.3f, 0.2f);
     }
