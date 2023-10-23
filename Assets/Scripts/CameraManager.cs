@@ -51,7 +51,10 @@ public class CameraManager : MonoBehaviour
         bottomLeft = GameManager.Instance.bottomLeft + Vector2.right * ratio1 + Vector2.up * ratio2;
         topRight = GameManager.Instance.topRight - Vector2.right * ratio1 - Vector2.up * ratio2;
     }
-
+    private void LateUpdate()
+    {
+        Cursor.visible = false;
+    }
     void Update()
     {
         laggedMousePos = Vector2.Lerp(laggedMousePos, mousePos, Time.deltaTime * mouseLagSpeed);

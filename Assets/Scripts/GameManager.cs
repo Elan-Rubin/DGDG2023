@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -42,9 +43,12 @@ public class GameManager : MonoBehaviour
         GetComponent<Health>().ResetHealth(newHealth);
     }
 
-    public void GameOver()
+    public void GameOver() => StartCoroutine(nameof(GameOverCoroutine));
+    private IEnumerator GameOverCoroutine()
     {
-        // TODO: Implement actual game over
-        Debug.Log("GAME OVER!\nThe player has failed to collect enough ghosts in the afterlife to return.");
+        CameraManager.Instance.transform.parent.GetChild(2).GetChild(1).gameObject.SetActive(true);
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
 }
