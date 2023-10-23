@@ -12,6 +12,8 @@ public class PathfinderEnemy : MonoBehaviour
     [SerializeField] private Tilemap map;
     [SerializeField] private GameObject target;
     [SerializeField] private Material whiteMaterial;
+    [SerializeField] private Sprite deadDeadSprite;
+    [SerializeField] private Sprite liveDeadSprite;
     [Header("Enemy")]
     [SerializeField] private float desiredDistanceToTarget = 1f;
     [SerializeField] private float speed = 1f;
@@ -34,6 +36,7 @@ public class PathfinderEnemy : MonoBehaviour
     private Vector3Int lastTargetCell;
     private Vector3Int lastPathCell;
     private bool targetVisible;
+
 
     private SpriteRenderer spriteRenderer;
     private CircleCollider2D coll;
@@ -306,9 +309,14 @@ public class PathfinderEnemy : MonoBehaviour
     public void PlayerDeadDisappear()
     {
         coll.enabled = false;
-        foreach (Transform child in transform)
+        if (IsDead())
+            transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = deadDeadSprite;
+        else
         {
-            child.gameObject.SetActive(false);
+            foreach (Transform child in transform)
+            {
+                child.gameObject.SetActive(false);
+            }
         }
         rb.bodyType = RigidbodyType2D.Static;
         stopPathfinding = true;
@@ -316,6 +324,8 @@ public class PathfinderEnemy : MonoBehaviour
 
     public void PlayerRebornReappear()
     {
+        if (IsDead())
+            transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = liveDeadSprite;
         SelectSpriteForHealth();
         coll.enabled = true;
         rb.bodyType = RigidbodyType2D.Dynamic;
