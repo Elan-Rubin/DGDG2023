@@ -55,7 +55,7 @@ public class RevivalScript : MonoBehaviour
             ghostLine.SetPosition(1, Vector2.Lerp(ppos, campos, 0.9f));
 
 
-            ghostText.text = 
+            //ghostText.text = 
         }
     }
 
