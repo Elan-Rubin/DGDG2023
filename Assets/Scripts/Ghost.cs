@@ -102,7 +102,7 @@ public class Ghost : MonoBehaviour
 
             p.GetParticles(particles);
 
-            for (int i = 0; i < particles.GetUpperBound(0); i++)
+            for (int i = 0; i <= particles.GetUpperBound(0); i++)
             {
 
                 //float ForceToAdd = (particles[i].startLifetime - particles[i].remainingLifetime) * (10 * Vector2.Distance(Target.position, particles[i].position));

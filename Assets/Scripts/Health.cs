@@ -29,9 +29,10 @@ public class Health : MonoBehaviour
         StartCoroutine(nameof(LateStart));
     }
 
-    public void ResetHealth()
+    public void ResetHealth() => ResetHealth(startingHealth);
+    public void ResetHealth(int newHealth)
     {
-        playerHealth = startingHealth;
+        playerHealth = newHealth;
         SetupHealth();
     }
 

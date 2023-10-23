@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Transactions;
 using Unity.VisualScripting;
 using UnityEditor.Tilemaps;
 using UnityEngine;
@@ -57,6 +58,8 @@ public class PathfinderEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        target = PlayerMovement.Instance.gameObject;
+
         bulletCooldown = bulletCooldownBase;
         bulletPos = transform.GetChild(1);
 

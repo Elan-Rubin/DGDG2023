@@ -9,11 +9,8 @@ public class GhostSpawner : MonoBehaviour
 
     [SerializeField] private GameObject ratGhost;
     [SerializeField] private GameObject slimeGhost;
-    public int ghostsNeeded = 2;
 
     List<GameObject> ghosts = new List<GameObject>();
-
-    private int ghostsCaught = 0;
 
     private void Awake()
     {
@@ -21,13 +18,11 @@ public class GhostSpawner : MonoBehaviour
         else instance = this;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         GameManager.Instance.PlayerDeath += SpawnGhosts;
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -35,7 +30,7 @@ public class GhostSpawner : MonoBehaviour
 
     public void SpawnGhosts()
     {
-        ghostsCaught = 0;
+        RevivalScript.Instance.GhostCounter = 0;
         int ghostsSpawned = 0;
 
         // Loop over enemies, check if dead, spawn ghosts
@@ -57,7 +52,7 @@ public class GhostSpawner : MonoBehaviour
         }
 
         // Spawn additional ghosts up to ghostsNeeded (maybe +1)
-        for (int i = ghostsSpawned; i < ghostsNeeded; i++)
+        for (int i = ghostsSpawned; i < RevivalScript.Instance.GhostThreshold * 1.5f; i++)
         {
             if (i % 2 == 0)
                 Instantiate(slimeGhost, transform);
@@ -68,14 +63,15 @@ public class GhostSpawner : MonoBehaviour
 
     public void CaughtGhost()
     {
-        ghostsCaught++;
+        RevivalScript.Instance.GhostCounter++;
     }
 
     public void RevivalPathEnded()
     {
-        if (ghostsCaught >= ghostsNeeded)
+        var rs = RevivalScript.Instance;
+        if (rs.GhostCounter >= rs.GhostThreshold)
         {
-            GameManager.Instance.Reborn();
+            GameManager.Instance.Reborn(rs.GhostCounter/rs.GhostThreshold);
             foreach (GameObject ghost in ghosts)
             {
                 Destroy(ghost);
