@@ -29,6 +29,7 @@ public class RevivalScript : MonoBehaviour
     private List<Slider> ghostSliders = new List<Slider>();
 
     bool dead;
+    public bool Dead { get { return dead; } }
 
     private static RevivalScript instance;
     public static RevivalScript Instance { get { return instance; } }

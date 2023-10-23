@@ -38,6 +38,11 @@ public class GunManager : MonoBehaviour
 
     void Update()
     {
+        gunRenderer.gameObject.SetActive(!RevivalScript.Instance.Dead);
+        if (RevivalScript.Instance.Dead)
+        {
+            return;
+        }
 
         gunRenderer.flipY = PlayerMovement.Instance.PlayerPosition.x > gunPosition.x;
         gunRenderer.sortingOrder = PlayerMovement.Instance.PlayerPosition.y > gunPosition.y ? 3 : 1;
