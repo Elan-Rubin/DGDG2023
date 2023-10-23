@@ -26,24 +26,26 @@ public class RevivalScript : MonoBehaviour
 
     [SerializeField] private GameObject ghostCanvas;
     private TextMeshProUGUI ghostText;
-    private Slider ghostSlider;
+    private List<Slider> ghostSliders = new List<Slider>();
 
     bool dead;
 
     private static RevivalScript instance;
     public static RevivalScript Instance { get { return instance; } }
+
     private void Awake()
     {
         if (instance != null && instance != this) Destroy(gameObject);
         else instance = this;
     }
+
     void Start()
     {
         GhostThreshold = 3;
         mask.SetActive(false);
         GameManager.Instance.PlayerDeath += Rewind;
         ghostText = ghostCanvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        ghostSlider = ghostCanvas.transform.GetChild(1).GetComponent<Slider>();
+        ghostSliders.Add(ghostCanvas.transform.GetChild(1).GetComponent<Slider>());
     }
 
     void Update()
@@ -58,29 +60,41 @@ public class RevivalScript : MonoBehaviour
             ghostLine.SetPosition(0, Vector2.Lerp(ppos, campos, 0.15f));
             ghostLine.SetPosition(1, Vector2.Lerp(ppos, campos, 0.9f));
         }
+
+        int current = 0;
+        foreach (Slider ghostSlider in ghostSliders)
+        {
+            if (current == ghostSliders.Count - 1)
+                ghostSlider.value = (float)(GhostCounter % GhostThreshold) / GhostThreshold;
+            else
+                ghostSlider.value = 1;
+            current++;
+        }
     }
+
     public void UpdateCatches()
     {
         Slider newSlider = null;
-        if (GhostCounter > GhostThreshold && GhostCounter % GhostThreshold == 0)
+        if (GhostCounter > GhostThreshold * ghostSliders.Count)
         {
-            var g = Instantiate(ghostSlider, ghostSlider.transform.parent).GetComponent<Slider>();
+            var g = Instantiate(ghostSliders[ghostSliders.Count-1], ghostSliders[ghostSliders.Count-1].transform.parent).GetComponent<Slider>();
             g.transform.position = g.transform.position - Vector3.up;
             newSlider = g.GetComponent<Slider>();
+            ghostSliders.Add(newSlider);
         }
 
-        var gcNearest = Mathf.Clamp(Mathf.FloorToInt((float)GhostCounter / GhostThreshold), 0, 10);
         ghostText.text = $"{GhostCounter} of {GhostThreshold}";
-        //Debug.Log(gcNearest);
+        var gcNearest = Mathf.Clamp(Mathf.FloorToInt((float)GhostCounter / GhostThreshold), 0, 10);
         var gcNew = GhostCounter - (gcNearest * GhostThreshold);
-        ghostSlider.DOValue((float)gcNew / GhostThreshold, 0.1f).OnComplete(() =>
-        {
-            if (newSlider != null) ghostSlider = newSlider;
-        });
-        //ghostSlider.transform.DOPunchScale(Vector2.one * 1.2f, 0.1f);
-        ghostText.transform.DOPunchScale(Vector2.one * 0.3f, 0.2f);
 
+        ghostSliders[ghostSliders.Count-1].DOValue((float)gcNew / GhostThreshold, 0.1f).OnComplete(() =>
+        {
+            if (newSlider != null) ghostSliders[ghostSliders.Count-1] = newSlider;
+        });
+
+        ghostText.transform.DOPunchScale(Vector2.one * 0.3f, 0.2f);
     }
+
     public Vector2 FirstPosition()
     {
         return positionsList[0];
