@@ -2,11 +2,9 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.U2D;
-using UnityEngine.Windows.Speech;
 
 public class CameraManager : MonoBehaviour
 {
