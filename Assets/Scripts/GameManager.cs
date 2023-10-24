@@ -83,7 +83,8 @@ public class GameManager : MonoBehaviour
         go.SetActive(true);
         go.transform.GetChild(0).gameObject.SetActive(false);
         yield return new WaitForSeconds(2);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex == 8 ? 0 : SceneManager.GetActiveScene().buildIndex + 1); 
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex == 8 ? 0 : SceneManager.GetActiveScene().buildIndex + 1); 
     }
 
 }
