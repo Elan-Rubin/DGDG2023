@@ -132,14 +132,12 @@ public class PathfinderEnemy : MonoBehaviour
         // If we can see the player and we're supposed to charge when we see the player
         else if (chargeWhenTargetInSight && targetSightedTime != 0 && Time.time - targetSightedTime > 0.25f)
         {
-            Debug.Log("Charging");
             if (!rb.bodyType.Equals(RigidbodyType2D.Static))
                 rb.velocity = (target.transform.position - transform.position).normalized * speed;
         }
         // Otherwise, pathfind if supposed to
         else if (pathfindWhenTargetOutOfSight)
         {
-            Debug.Log("Pathfinding to player");
             if (pathCalculator.IsPathReady())
             {
                 List<Waypoint> newPath = pathCalculator.Path();
