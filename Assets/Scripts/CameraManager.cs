@@ -52,6 +52,9 @@ public class CameraManager : MonoBehaviour
         GetComponent<PostProcessVolume>().isGlobal = true;
         bottomLeft = GameManager.Instance.bottomLeft + Vector2.right * ratio1 + Vector2.up * ratio2;
         topRight = GameManager.Instance.topRight - Vector2.right * ratio1 - Vector2.up * ratio2;
+
+        /*GameManager.Instance.PlayerDeath += SwitchToDead;
+        GameManager.Instance.PlayerReborn += SwitchToAlive;*/
     }
     private void LateUpdate()
     {
@@ -59,6 +62,7 @@ public class CameraManager : MonoBehaviour
         var sr = crosshair.GetComponent<SpriteRenderer>();
         sr.sprite = RevivalScript.Instance.Dead ? crosshair2 : crosshair1;
         sr.color = RevivalScript.Instance.Dead ? color2 : color1;
+        transform.parent.GetChild(1).gameObject.SetActive(RevivalScript.Instance.Dead);
     }
     void Update()
     {

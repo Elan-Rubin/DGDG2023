@@ -37,9 +37,10 @@ public class GunChest : MonoBehaviour
         }
 
         //chestRenderer.sprite = open ? openSprite : closedSprite;
-        nameText.gameObject.SetActive(open);
-        descriptionText.gameObject.SetActive(open);
-        nameText.color = storedGun.GunColor;
+        nameText.transform.parent.gameObject.SetActive(open);
+        /*nameText.gameObject.SetActive(open);
+        descriptionText.gameObject.SetActive(open);*/
+        //nameText.color = storedGun.GunColor;
     }
     public void SwitchGun(GunData newGun) => SwitchGun(newGun, true);
     void SwitchGun(GunData newGun, bool makeSwitch)
@@ -56,11 +57,30 @@ public class GunChest : MonoBehaviour
     }
     private IEnumerator SwitchCoroutine()
     {
+        sr.gameObject.SetActive(true);
+        sr2.gameObject.SetActive(true);
+
         sr.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
         sr2.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
 
         yield return new WaitForSeconds(1.25f);
         sr.gameObject.SetActive(false);
         sr2.maskInteraction = SpriteMaskInteraction.None;
+    }
+    private void SwitchBack()
+    {
+        StartCoroutine(nameof(SwitchBackCoroutine));
+    }
+    private IEnumerator SwitchBackCoroutine()
+    {
+        sr.gameObject.SetActive(true);
+        sr2.gameObject.SetActive(true);
+
+        sr2.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
+        sr.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+
+        yield return new WaitForSeconds(1.25f);
+        sr2.gameObject.SetActive(false);
+        sr.maskInteraction = SpriteMaskInteraction.None;
     }
 }

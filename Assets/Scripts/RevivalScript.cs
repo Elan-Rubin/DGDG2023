@@ -59,16 +59,23 @@ public class RevivalScript : MonoBehaviour
             var campos = CameraManager.Instance.LaggedMousePos;
             ghostLine.SetPosition(0, Vector2.Lerp(ppos, campos, 0.15f));
             ghostLine.SetPosition(1, Vector2.Lerp(ppos, campos, 0.9f));
-        }
 
-        int current = 0;
-        foreach (Slider ghostSlider in ghostSliders)
+            ghostSliders[0].gameObject.SetActive(true);
+
+            int current = 0;
+            foreach (Slider ghostSlider in ghostSliders)
+            {
+                if (current == ghostSliders.Count - 1)
+                    ghostSlider.value = (float)(GhostCounter % GhostThreshold) / GhostThreshold;
+                else
+                    ghostSlider.value = 1;
+                current++;
+            }
+        }
+        else
         {
-            if (current == ghostSliders.Count - 1)
-                ghostSlider.value = (float)(GhostCounter % GhostThreshold) / GhostThreshold;
-            else
-                ghostSlider.value = 1;
-            current++;
+            ghostText.text = "";
+            ghostSliders[0].gameObject.SetActive(false);
         }
     }
 
@@ -94,7 +101,7 @@ public class RevivalScript : MonoBehaviour
               if (newSlider != null) ghostSliders[ghostSliders.Count - 1] = newSlider;
           });
 
-        ghostText.transform.DOPunchScale(Vector2.one * 0.3f, 0.2f);
+        //ghostText.transform.DOPunchScale(Vector2.one * 0.3f, 0.2f);
     }
 
     private void RemoveSliders()
@@ -107,6 +114,7 @@ public class RevivalScript : MonoBehaviour
             count++;
         }
         ghostSliders[0].value = 0;
+        ghostSliders[0].gameObject.SetActive(false);
     }
 
     public Vector2 FirstPosition()
@@ -128,11 +136,13 @@ public class RevivalScript : MonoBehaviour
         ghostCanvas.SetActive(true);
         ghostLine.gameObject.SetActive(true);
         revivalLine.gameObject.SetActive(true);
+
         StartCoroutine(nameof(RewindCoroutine));
     }
 
     public void Reborn()
     {
+        dead = false;
         for (int i = -3; i < GhostCounter; i += 3)
             Health.Instance.AddHealth();
         RemoveSliders();
@@ -154,6 +164,7 @@ public class RevivalScript : MonoBehaviour
 
         PlayerMovement.Instance.SnapPosition(FirstPosition());
         positionsList.RemoveAt(0);
+        revivalLine.transform.GetChild(0).transform.position = positionsList[positionsList.Count - 1];
 
         mask.SetActive(true);
 
@@ -166,6 +177,8 @@ public class RevivalScript : MonoBehaviour
         var sequence = DOTween.Sequence();
         sequence.Append(sr.DOColor(Color.white, .5f)).OnComplete(() => sr.DOColor(new Color(97 / 255f, 224 / 255f, 135 / 255f), .5f));
         //sequence.Append(sr.DOColor(new Color(97, 224, 135), 2f));
+
+        StartCoroutine(nameof(DeathGameplay));
 
         var ps = mask.transform.GetChild(1).GetComponent<ParticleSystem>();
         var sh = ps.shape;
@@ -191,7 +204,6 @@ public class RevivalScript : MonoBehaviour
                 t1tm.maskInteraction = SpriteMaskInteraction.None;
                 t2tm.maskInteraction = SpriteMaskInteraction.None;
                 t2.SetActive(false);
-                StartCoroutine(nameof(DeathGameplay));
             });
         yield return null;
     }
@@ -247,6 +259,7 @@ public class RevivalScript : MonoBehaviour
                 t2tm.maskInteraction = SpriteMaskInteraction.None;
                 t2.SetActive(false);
             });
+
         dead = false;
         GunManager.Instance.SwitchGun(GunManager.Instance.SelectedGun);
         yield return null;
@@ -261,7 +274,7 @@ public class RevivalScript : MonoBehaviour
         }
 
 
-        yield return new WaitForSeconds(0.1f);
+        //yield return new WaitForSeconds(0.1f);
         int iterator = 0;
         while (positionsList.Count > 0)
         {

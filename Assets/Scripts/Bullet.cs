@@ -51,7 +51,7 @@ public class Bullet : MonoBehaviour
                 {
                     DestroyBullet();
                     MakeParticle();
-                    collision.otherCollider.gameObject.GetComponent<PathfinderEnemy>().TakeDamage();
+                    collision.otherCollider.gameObject.GetComponent<PathfinderEnemy>()?.TakeDamage();
                     collision.otherRigidbody.AddForce(Velocity * 100f);
                 }
                 break;
