@@ -114,6 +114,7 @@ public class RevivalScript : MonoBehaviour
             count++;
         }
         ghostSliders[0].value = 0;
+        ghostSliders[0].gameObject.SetActive(false);
     }
 
     public Vector2 FirstPosition()
@@ -255,6 +256,7 @@ public class RevivalScript : MonoBehaviour
                 t2tm.maskInteraction = SpriteMaskInteraction.None;
                 t2.SetActive(false);
             });
+
         dead = false;
         GunManager.Instance.SwitchGun(GunManager.Instance.SelectedGun);
         yield return null;
