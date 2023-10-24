@@ -136,6 +136,7 @@ public class RevivalScript : MonoBehaviour
         ghostCanvas.SetActive(true);
         ghostLine.gameObject.SetActive(true);
         revivalLine.gameObject.SetActive(true);
+
         StartCoroutine(nameof(RewindCoroutine));
     }
 
@@ -163,6 +164,7 @@ public class RevivalScript : MonoBehaviour
 
         PlayerMovement.Instance.SnapPosition(FirstPosition());
         positionsList.RemoveAt(0);
+        revivalLine.transform.GetChild(0).transform.position = positionsList[positionsList.Count - 1];
 
         mask.SetActive(true);
 
