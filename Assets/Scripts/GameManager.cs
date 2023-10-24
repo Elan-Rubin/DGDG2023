@@ -50,5 +50,14 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+    public void NextLevel() => StartCoroutine(nameof(NextLevelCoroutine));
+    private IEnumerator NextLevelCoroutine()
+    {
+        var go = CameraManager.Instance.transform.parent.GetChild(2).GetChild(1).gameObject;
+        go.SetActive(true);
+        go.transform.GetChild(0).gameObject.SetActive(false);
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);//should load different scene
+    }
 
 }

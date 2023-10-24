@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GunName: Boom Puffer
   GunDescription: Puff Boom Fiesta!
-  SoundName: shotgun
+  SoundName: bolt
   BulletColor: {r: 0.8078432, g: 0.14901961, b: 0.5411765, a: 1}
   GunColor: {r: 0.47450984, g: 0.42352945, b: 0.1764706, a: 1}
   ShootForce: 5

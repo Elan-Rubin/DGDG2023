@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GunName: Blackwhale
   GunDescription: Oh whale!
-  SoundName: pistol
+  SoundName: heavy
   BulletColor: {r: 0.8941177, g: 0.3137255, b: 0.8941177, a: 1}
   GunColor: {r: 0.23137257, g: 0.227451, b: 0.6431373, a: 1}
   ShootForce: 10
