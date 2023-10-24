@@ -52,12 +52,14 @@ public class GhostSpawner : MonoBehaviour
         }
 
         // Spawn additional ghosts up to ghostsNeeded (maybe +1)
-        for (int i = ghostsSpawned; i < RevivalScript.Instance.GhostThreshold + 2; i++)
+        for (int i = ghostsSpawned; i < RevivalScript.Instance.GhostThreshold * 2; i++)
         {
+            GameObject newGhost;
             if (i % 2 == 0)
-                Instantiate(slimeGhost, transform);
+                newGhost = Instantiate(slimeGhost, transform);
             else
-                Instantiate(ratGhost, transform);
+                newGhost = Instantiate(ratGhost, transform);
+            newGhost.transform.position = PlayerMovement.Instance.transform.position + new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), 0);
         }
     }
 
