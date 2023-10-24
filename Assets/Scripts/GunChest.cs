@@ -22,6 +22,7 @@ public class GunChest : MonoBehaviour
         sr2 = transform.GetChild(1).GetComponent<SpriteRenderer>();
         SwitchGun(storedGun, false);
         GameManager.Instance.PlayerDeath += Switch;
+        GameManager.Instance.PlayerReborn += SwitchBack;
     }
 
     void Update()
@@ -52,10 +53,12 @@ public class GunChest : MonoBehaviour
         nameText.text = storedGun.GunName;
         descriptionText.text = storedGun.GunDescription;
     }
+
     private void Switch()//ten seconds
     {
         StartCoroutine(nameof(SwitchCoroutine));
     }
+
     private IEnumerator SwitchCoroutine()
     {
         sr.gameObject.SetActive(true);
@@ -72,6 +75,7 @@ public class GunChest : MonoBehaviour
     {
         StartCoroutine(nameof(SwitchBackCoroutine));
     }
+
     private IEnumerator SwitchBackCoroutine()
     {
         sr.gameObject.SetActive(true);

@@ -74,8 +74,8 @@ public class RevivalScript : MonoBehaviour
         }
         else
         {
+            RemoveSliders();
             ghostText.text = "";
-            ghostSliders[0].gameObject.SetActive(false);
         }
     }
 

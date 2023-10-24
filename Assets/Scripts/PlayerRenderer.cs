@@ -66,5 +66,6 @@ public class PlayerRenderer : MonoBehaviour
     {
         transform.GetChild(1).gameObject.SetActive(false);
         transform.GetChild(0).gameObject.SetActive(true);
+        transform.GetChild(4).gameObject.SetActive(false);
     }
 }
