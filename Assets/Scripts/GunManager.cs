@@ -31,6 +31,7 @@ public class GunManager : MonoBehaviour
 
     private float waitTime;
     private bool queuedShoot;
+
     void Start()
     {
         SwitchGun(selectedGun);

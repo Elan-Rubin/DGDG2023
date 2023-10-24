@@ -53,9 +53,6 @@ public class RevivalScript : MonoBehaviour
 
     void Update()
     {
-        //remember to remove this later
-        if (Input.GetKeyDown(KeyCode.Space)) Rewind();
-
         if (dead)
         {
             var ppos = PlayerMovement.Instance.PlayerPosition;
@@ -100,6 +97,18 @@ public class RevivalScript : MonoBehaviour
         ghostText.transform.DOPunchScale(Vector2.one * 0.3f, 0.2f);
     }
 
+    private void RemoveSliders()
+    {
+        int count = 0;
+        foreach (Slider slider in ghostSliders)
+        {
+            if (count != 0)
+                Destroy(slider);
+            count++;
+        }
+        ghostSliders[0].value = 0;
+    }
+
     public Vector2 FirstPosition()
     {
         return positionsList[0];
@@ -124,6 +133,7 @@ public class RevivalScript : MonoBehaviour
 
     public void Reborn()
     {
+        RemoveSliders();
         StartCoroutine(nameof(RebornCoroutine));
     }
 
@@ -235,6 +245,8 @@ public class RevivalScript : MonoBehaviour
                 t2tm.maskInteraction = SpriteMaskInteraction.None;
                 t2.SetActive(false);
             });
+        dead = false;
+        GunManager.Instance.SwitchGun(GunManager.Instance.SelectedGun);
         yield return null;
     }
 

@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
         go.SetActive(true);
         go.transform.GetChild(0).gameObject.SetActive(false);
         yield return new WaitForSeconds(2);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);//should load different scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); // Won't work for Main as it's not in the build settings
     }
 
 }
