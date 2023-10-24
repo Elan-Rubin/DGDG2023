@@ -4,13 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] private GameObject menu;
     [SerializeField] private GameObject comic;
 
     private int clickCounter;
-    private bool comicActive;
+    [SerializeField] private Material baseMat, whiteMat;
 
     private void Update()
     {
@@ -25,7 +27,9 @@ public class MainMenu : MonoBehaviour
             c.SetActive(!c.activeSelf);
             if (c.activeSelf)
             {
-                c.transform.DOPunchScale(Vector2.one * 0.05f, 0.1f);
+                c.GetComponent<Image>().material = whiteMat;
+                //c.transform.DOShakePosition(0.1f);
+                c.transform.DOPunchScale(Vector2.one * 0.05f, 0.1f).OnComplete(()=>c.GetComponent<Image>().material=baseMat);
                 //c.transform.DOShakeRotation(0.1f);
 
             }

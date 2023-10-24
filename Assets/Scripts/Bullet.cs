@@ -47,13 +47,11 @@ public class Bullet : MonoBehaviour
                 break;
             case 9: //enemy
                 if(enemyBullet || GunManager.Instance.SelectedGun.Pierce) Physics2D.IgnoreCollision(collision.collider, collision.otherCollider);
-                else
-                {
-                    DestroyBullet();
-                    MakeParticle();
-                    collision.otherCollider.gameObject.GetComponent<PathfinderEnemy>()?.TakeDamage();
-                    collision.otherRigidbody.AddForce(Velocity * 100f);
-                }
+                if (enemyBullet) return;
+                DestroyBullet();
+                MakeParticle();
+                collision.otherCollider.gameObject.GetComponent<PathfinderEnemy>()?.TakeDamage();
+                collision.otherRigidbody.AddForce(Velocity * 100f);
                 break;
             case 8: //wall
                 if (GunManager.Instance.SelectedGun.PierceWall) Physics2D.IgnoreCollision(collision.collider, collision.otherCollider);
