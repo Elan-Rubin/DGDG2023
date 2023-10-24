@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: startHealth
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7746859248490238361, guid: fb029f375ff118c4f84be2ca53eb16ff, type: 3}
+      propertyPath: desiredDistanceToTarget
+      value: 3.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7781065634370517951, guid: fb029f375ff118c4f84be2ca53eb16ff, type: 3}
       propertyPath: m_IsActive
       value: 1
