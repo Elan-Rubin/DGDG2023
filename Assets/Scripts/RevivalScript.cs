@@ -46,6 +46,7 @@ public class RevivalScript : MonoBehaviour
         GhostThreshold = 3;
         mask.SetActive(false);
         GameManager.Instance.PlayerDeath += Rewind;
+        GameManager.Instance.PlayerReborn += Reborn;
         ghostText = ghostCanvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         ghostSliders.Add(ghostCanvas.transform.GetChild(1).GetComponent<Slider>());
     }
@@ -121,6 +122,11 @@ public class RevivalScript : MonoBehaviour
         StartCoroutine(nameof(RewindCoroutine));
     }
 
+    public void Reborn()
+    {
+        StartCoroutine(nameof(RebornCoroutine));
+    }
+
     private IEnumerator RewindCoroutine()
     {
         var t1 = GameManager.Instance.Lower;
@@ -174,6 +180,60 @@ public class RevivalScript : MonoBehaviour
                 t2tm.maskInteraction = SpriteMaskInteraction.None;
                 t2.SetActive(false);
                 StartCoroutine(nameof(DeathGameplay));
+            });
+        yield return null;
+    }
+
+
+    private IEnumerator RebornCoroutine()
+    {
+        var t1 = GameManager.Instance.Upper;
+        var t2 = GameManager.Instance.Lower;
+
+        t1.SetActive(true);
+
+        var t1tm = t1.transform.GetChild(0).GetComponent<TilemapRenderer>();
+        var t2tm = t2.transform.GetChild(0).GetComponent<TilemapRenderer>();
+
+        t1tm.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+        t2tm.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
+
+        mask.SetActive(true);
+
+        mask.transform.localScale = Vector2.zero;
+
+        mask.transform.DOScale(Vector2.one * 50, 1.25f).SetEase(Ease.InCirc);
+
+        var sr = mask.transform.GetChild(0).GetComponent<SpriteRenderer>();
+        sr.color = Color.clear;
+        var sequence = DOTween.Sequence();
+        sequence.Append(sr.DOColor(Color.white, .5f)).OnComplete(() => sr.DOColor(new Color(97 / 255f, 224 / 255f, 135 / 255f), .5f));
+        //sequence.Append(sr.DOColor(new Color(97, 224, 135), 2f));
+
+        var ps = mask.transform.GetChild(1).GetComponent<ParticleSystem>();
+        var sh = ps.shape;
+        var m = ps.main;
+        var e = ps.emission;
+        var counter = 0f;
+        var alr = false;
+        DOTween.To(() => counter, x => counter = x, 50, 1.25f).SetEase(Ease.InCirc)
+            .OnUpdate(() =>
+            {
+                if (!alr && counter > 1)
+                {
+                    alr = true;
+                    ps.Play();
+                }
+
+                sh.radius = .8f + (counter / 2f);
+                //sh.radiusThickness = counter * 0.2f;
+                m.startSpeed = -(Mathf.Pow(3f, (counter / 25f)));
+                e.rateOverTime = 30 * (int)counter;
+            }).OnComplete(() =>
+            {
+                t1tm.maskInteraction = SpriteMaskInteraction.None;
+                t2tm.maskInteraction = SpriteMaskInteraction.None;
+                t2.SetActive(false);
             });
         yield return null;
     }

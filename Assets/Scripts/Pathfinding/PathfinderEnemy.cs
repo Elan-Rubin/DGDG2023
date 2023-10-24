@@ -18,7 +18,6 @@ public class PathfinderEnemy : MonoBehaviour
     [SerializeField] private float desiredDistanceToTarget = 1f;
     [SerializeField] private float speed = 1f;
     [SerializeField] private int startHealth = 1;
-    // The pathfinder only recalculates the path every X seconds
     [SerializeField] private bool pathfindWhenTargetOutOfSight = true;
     [SerializeField] private bool chargeWhenTargetInSight = false;
     [SerializeField] private GameObject enemyBullet;
@@ -30,6 +29,7 @@ public class PathfinderEnemy : MonoBehaviour
     [Header("Performance")]
     [SerializeField] private int width = 64;
     [SerializeField] private int height = 64;
+    // The pathfinder only recalculates the path every X seconds
     [SerializeField] private float recalculationDelay = 1f;
     [SerializeField] private float raycastDelay = 1f;
 
