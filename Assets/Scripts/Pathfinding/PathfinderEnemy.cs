@@ -193,6 +193,9 @@ public class PathfinderEnemy : MonoBehaviour
 
         lastTargetCell = targetCell;
 
+        if (currentCell == null || targetCell == null)
+            return;
+
         IEnumerator pathRoutine = pathCalculator.FindPath(new Vector2Int(currentCell.x, currentCell.y), new Vector2Int(targetCell.x, targetCell.y));
         StartCoroutine(pathRoutine);
     }
