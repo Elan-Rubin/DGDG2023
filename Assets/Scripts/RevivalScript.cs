@@ -178,6 +178,8 @@ public class RevivalScript : MonoBehaviour
         sequence.Append(sr.DOColor(Color.white, .5f)).OnComplete(() => sr.DOColor(new Color(97 / 255f, 224 / 255f, 135 / 255f), .5f));
         //sequence.Append(sr.DOColor(new Color(97, 224, 135), 2f));
 
+        StartCoroutine(nameof(DeathGameplay));
+
         var ps = mask.transform.GetChild(1).GetComponent<ParticleSystem>();
         var sh = ps.shape;
         var m = ps.main;
@@ -202,7 +204,6 @@ public class RevivalScript : MonoBehaviour
                 t1tm.maskInteraction = SpriteMaskInteraction.None;
                 t2tm.maskInteraction = SpriteMaskInteraction.None;
                 t2.SetActive(false);
-                StartCoroutine(nameof(DeathGameplay));
             });
         yield return null;
     }
@@ -273,7 +274,7 @@ public class RevivalScript : MonoBehaviour
         }
 
 
-        yield return new WaitForSeconds(0.1f);
+        //yield return new WaitForSeconds(0.1f);
         int iterator = 0;
         while (positionsList.Count > 0)
         {

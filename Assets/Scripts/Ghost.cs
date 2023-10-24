@@ -85,7 +85,9 @@ public class Ghost : MonoBehaviour
             caught = false;
         }
     }
+
     private void CatchAnimation() => StartCoroutine(nameof(CatchAnimationCoroutine));
+
     private IEnumerator CatchAnimationCoroutine()
     {
         killed = true;
@@ -104,6 +106,10 @@ public class Ghost : MonoBehaviour
         {
             anim = true;
         });
+
+        GhostSpawner.Instance.CaughtGhost();
+        RevivalScript.Instance.UpdateCatches();
+
         var p = Instantiate(particlePrefab, transform.position, Quaternion.identity).GetComponent<ParticleSystem>();
         var timer4 = 0f;
         while (timer4 < 1f)
@@ -117,7 +123,6 @@ public class Ghost : MonoBehaviour
 
             for (int i = 0; i <= particles.GetUpperBound(0); i++)
             {
-
                 //float ForceToAdd = (particles[i].startLifetime - particles[i].remainingLifetime) * (10 * Vector2.Distance(Target.position, particles[i].position));
 
                 //Debug.DrawRay (particles [i].position, (Target.position - particles [i].position).normalized * (ForceToAdd/10));
@@ -125,15 +130,12 @@ public class Ghost : MonoBehaviour
                 //particles[i].velocity = (PlayerMovement.Instance.PlayerPosition - (Vector2)particles[i].position).normalized * ForceToAdd;
 
                 particles[i].position = Vector3.Slerp(particles[i].position, target, timer4);
-
             }
 
             p.SetParticles(particles, particles.Length);
 
             yield return null;
         }
-        GhostSpawner.Instance.CaughtGhost();
-        RevivalScript.Instance.UpdateCatches();
 
         Destroy(p.gameObject);
         Destroy(gameObject);
