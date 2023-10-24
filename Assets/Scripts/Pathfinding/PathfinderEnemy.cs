@@ -292,6 +292,7 @@ public class PathfinderEnemy : MonoBehaviour
 
     public void TakeDamage(int damage = 1)
     {
+        SoundManager.Instance.PlaySoundEffect("enemydamage");
         health -= damage;
         SelectSpriteForHealth();
         if (health <= 0)

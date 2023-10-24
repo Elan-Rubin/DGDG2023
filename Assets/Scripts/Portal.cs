@@ -15,10 +15,12 @@ public class Portal : MonoBehaviour
         if(!turningOn && !on && Vector2.Distance(PlayerMovement.Instance.PlayerPosition, transform.position) < 2)
         {
             StartCoroutine(nameof(TurnOnPortal));
+            SoundManager.Instance.PlaySoundEffect("portalactivate");
         }
         else if(on && Vector2.Distance(PlayerMovement.Instance.PlayerPosition, transform.position) < 1)
         {
             GameManager.Instance.NextLevel();
+            SoundManager.Instance.PlaySoundEffect("portalenter");
         }
     }
 

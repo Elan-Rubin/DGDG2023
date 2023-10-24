@@ -365,6 +365,38 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 6fbc2e7eb7bade746a3aecc1a7dd58a8, type: 3}
     Volume: 1
     Vary: 0
+  - SoundName: playerdamage
+    Clips:
+    - {fileID: 8300000, guid: 9a9a73ca271634e45a63aea64e67e0f8, type: 3}
+    - {fileID: 8300000, guid: 6cbab03ef505c944e8a07690858c114d, type: 3}
+    - {fileID: 8300000, guid: 5061da19812d4a0498922ad9e410e639, type: 3}
+    Volume: 1
+    Vary: 0
+  - SoundName: enemydamage
+    Clips:
+    - {fileID: 8300000, guid: b1899015c1718bf45a6dcc0a5e8f4d50, type: 3}
+    Volume: 1
+    Vary: 0
+  - SoundName: portalactivate
+    Clips:
+    - {fileID: 8300000, guid: 99d5da2ab237c6f4d98a9d00febb1e0d, type: 3}
+    Volume: 1
+    Vary: 0
+  - SoundName: portalenter
+    Clips:
+    - {fileID: 8300000, guid: 54668838d34103249bdbef062830c68f, type: 3}
+    Volume: 1
+    Vary: 0
+  - SoundName: catchghost
+    Clips:
+    - {fileID: 8300000, guid: 7f5412c72a9f28140b0a4c59702ea544, type: 3}
+    Volume: 1
+    Vary: 0
+  - SoundName: computeron
+    Clips:
+    - {fileID: 8300000, guid: 649348e679e62574191739f281f31921, type: 3}
+    Volume: 1
+    Vary: 0
 --- !u!114 &3629989866018582779
 MonoBehaviour:
   m_ObjectHideFlags: 0

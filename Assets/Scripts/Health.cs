@@ -67,6 +67,8 @@ public class Health : MonoBehaviour
 
     public void Damage(int damage)
     {
+        SoundManager.Instance.PlaySoundEffect("playerdamage");
+
         PlayerRenderer.Instance.FlashWhite();
 
         playerHealth -= damage;

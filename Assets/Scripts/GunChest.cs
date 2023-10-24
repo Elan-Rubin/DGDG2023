@@ -33,6 +33,7 @@ public class GunChest : MonoBehaviour
         if (open != previousOpen)
         {
             animator.SetTrigger("change");
+            SoundManager.Instance.PlaySoundEffect("computeron");
             animator.SetBool("powered", open);
         }
 
