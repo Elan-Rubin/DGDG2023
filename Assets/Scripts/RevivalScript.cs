@@ -94,7 +94,7 @@ public class RevivalScript : MonoBehaviour
               if (newSlider != null) ghostSliders[ghostSliders.Count - 1] = newSlider;
           });
 
-        ghostText.transform.DOPunchScale(Vector2.one * 0.3f, 0.2f);
+        //ghostText.transform.DOPunchScale(Vector2.one * 0.3f, 0.2f);
     }
 
     private void RemoveSliders()
