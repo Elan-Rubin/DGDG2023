@@ -1,9 +1,12 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -39,8 +42,30 @@ public class GameManager : MonoBehaviour
 
     public void Reborn(int newHealth)
     {
+        var mask = RevivalScript.Instance.Mask;
         PlayerReborn?.Invoke();
         GetComponent<Health>().ResetHealth(newHealth);
+
+        var t2 = Lower;
+        var t1 = Upper;
+
+        t1.SetActive(true);
+
+        var t1tm = t1.transform.GetChild(0).GetComponent<TilemapRenderer>();
+        var t2tm = t2.transform.GetChild(0).GetComponent<TilemapRenderer>();
+
+        t1tm.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+        t2tm.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
+
+        mask.SetActive(true);
+        mask.transform.localScale = Vector2.zero;
+
+        mask.transform.DOScale(Vector2.one * 50, 1.25f).SetEase(Ease.InCirc);
+
+        var sr = mask.transform.GetChild(0).GetComponent<SpriteRenderer>();
+        sr.color = Color.clear;
+        var sequence = DOTween.Sequence();
+        sequence.Append(sr.DOColor(Color.white, .5f)).OnComplete(() => sr.DOColor(new Color(97 / 255f, 224 / 255f, 135 / 255f), .5f));
     }
 
     public void GameOver() => StartCoroutine(nameof(GameOverCoroutine));

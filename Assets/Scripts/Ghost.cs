@@ -37,11 +37,11 @@ public class Ghost : MonoBehaviour
         if (Vector2.Distance(transform.position, CameraManager.Instance.LaggedMousePos) < 15)
         {
             transform.GetChild(0).GetComponent<SpriteRenderer>().color =
-                Color.Lerp(baseColor, Color.clear, Vector2.Distance(transform.position, CameraManager.Instance.LaggedMousePos) / 15f + 0.25f);
+                Color.Lerp(baseColor, Color.clear, Vector2.Distance(transform.position, CameraManager.Instance.LaggedMousePos) / 30f);
         }
         else
         {
-            transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.Lerp(Color.clear, Color.white, 0.25f);
+            transform.GetChild(0).GetComponent<SpriteRenderer>().color = Color.Lerp(baseColor, Color.clear, 0.5f);
             return;
         }
 

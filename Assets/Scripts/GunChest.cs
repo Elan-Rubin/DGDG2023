@@ -26,6 +26,7 @@ public class GunChest : MonoBehaviour
 
     void Update()
     {
+        if (RevivalScript.Instance.Dead) return;
         var previousOpen = open;
         open = Vector2.Distance(transform.position, PlayerMovement.Instance.PlayerPosition) < 4;
 

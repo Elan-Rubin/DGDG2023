@@ -16,6 +16,7 @@ public class RevivalScript : MonoBehaviour
     private Vector2 latestPos;
     [SerializeField] private LineRenderer ghostLine;
     [SerializeField] private GameObject mask;
+    [HideInInspector] public GameObject Mask;
     [SerializeField] private LineRenderer revivalLine;
     [SerializeField] private int minimumDistance = 1;
     [HideInInspector] public int MinimumDistance { get { return minimumDistance; } }

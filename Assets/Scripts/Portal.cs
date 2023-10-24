@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class Portal : MonoBehaviour
@@ -9,6 +10,7 @@ public class Portal : MonoBehaviour
 
     void Update()
     {
+        if (RevivalScript.Instance.Dead) return;
         if(!turningOn&&!on&&Vector2.Distance(PlayerMovement.Instance.PlayerPosition, transform.position) < 2)
         {
             StartCoroutine(nameof(TurnOnPortal));
