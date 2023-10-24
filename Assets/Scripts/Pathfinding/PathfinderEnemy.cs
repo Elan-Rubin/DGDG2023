@@ -49,11 +49,13 @@ public class PathfinderEnemy : MonoBehaviour
     private bool flashing;
     private bool stopPathfinding;
     private bool flip;
+    private float targetSightedTime = 0;
+
+    private Vector3 targetPosition;
 
     private bool playerInMeleeRange;
     private float lastMeleeTime;
 
-    // TODO: Implement random walk when can't see player
     private Vector3Int randomPosToWalkTo = Vector3Int.zero;
     private int lastHealth;
     private int health;
@@ -61,6 +63,7 @@ public class PathfinderEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        map = GameObject.FindGameObjectWithTag("MainTileMap").GetComponent<Tilemap>();
         target = PlayerMovement.Instance.gameObject;
 
         bulletCooldown = bulletCooldownBase;
@@ -82,9 +85,6 @@ public class PathfinderEnemy : MonoBehaviour
 
         SetupGridFromTilemap();
         SelectSpriteForHealth();
-
-        map = GameObject.FindGameObjectWithTag("MainTileMap").GetComponent<Tilemap>();
-        target = GameObject.FindGameObjectWithTag("Player");
     }
 
     void Update()
@@ -102,8 +102,14 @@ public class PathfinderEnemy : MonoBehaviour
 
         TryMeleeAttackPlayer();
 
+        if (targetVisible && targetSightedTime == 0)
+            targetSightedTime = Time.time;
+        else if (!targetVisible)
+            targetSightedTime = 0;
 
-        if (shootBullets && targetVisible && !stopPathfinding) bulletCooldown -= Time.deltaTime;
+        if (shootBullets && targetVisible && !stopPathfinding)
+            bulletCooldown -= Time.deltaTime;
+
         if (bulletCooldown <= 0)
         {
             //this is copied code should be simplified later
@@ -118,15 +124,22 @@ public class PathfinderEnemy : MonoBehaviour
             bulletCooldown = bulletCooldownBase;
         }
 
+        if (Vector3.Distance(transform.position, target.transform.position) < 10)
+            targetPosition = target.transform.position;
+        else
+            targetPosition = transform.position + new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), 0);
+
         // If close enough to player
         if (Vector3.Distance(transform.position, target.transform.position) < desiredDistanceToTarget)
-            if (!rb.bodyType.Equals(RigidbodyType2D.Static)) rb.velocity = Vector3.zero;
-        // If we can see the player and we're supposed to charge when we see the player
-        else if (chargeWhenTargetInSight && targetVisible)
         {
-
-            //Debug.Log("Charging");
-            if(!rb.bodyType.Equals(RigidbodyType2D.Static)) rb.velocity = (target.transform.position - transform.position).normalized * speed;
+            if (!rb.bodyType.Equals(RigidbodyType2D.Static))
+                rb.velocity = Vector3.zero;
+        }
+        // If we can see the player and we're supposed to charge when we see the player
+        else if (chargeWhenTargetInSight && targetSightedTime != 0 && Time.time - targetSightedTime > 0.25f)
+        {
+            if (!rb.bodyType.Equals(RigidbodyType2D.Static))
+                rb.velocity = (target.transform.position - transform.position).normalized * speed;
         }
         // Otherwise, pathfind if supposed to
         else if (pathfindWhenTargetOutOfSight)
@@ -167,12 +180,12 @@ public class PathfinderEnemy : MonoBehaviour
         if (stopPathfinding)
             return;
 
-        if ((Vector3.Distance(transform.position, target.transform.position) < desiredDistanceToTarget || (targetVisible && chargeWhenTargetInSight)))
+        if ((Vector3.Distance(transform.position, targetPosition) < desiredDistanceToTarget || (targetVisible && chargeWhenTargetInSight)))
             return;
 
 
         Vector3Int currentCell = map.WorldToCell(transform.position);
-        Vector3Int targetCell = map.WorldToCell(target.transform.position);
+        Vector3Int targetCell = map.WorldToCell(targetPosition);
 
         // If this enemy is on the correct path and the target hasn't changed cells
         if (path != null && path.Count > 0 && (currentCell == lastPathCell || currentCell == path[0].GetMapPosition()) && targetCell == lastTargetCell)

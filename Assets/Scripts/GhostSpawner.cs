@@ -21,11 +21,7 @@ public class GhostSpawner : MonoBehaviour
     void Start()
     {
         GameManager.Instance.PlayerDeath += SpawnGhosts;
-    }
-
-    void Update()
-    {
-        
+        GameManager.Instance.PlayerReborn += DestroyGhosts;
     }
 
     public void SpawnGhosts()
@@ -52,12 +48,22 @@ public class GhostSpawner : MonoBehaviour
         }
 
         // Spawn additional ghosts up to ghostsNeeded (maybe +1)
-        for (int i = ghostsSpawned; i < RevivalScript.Instance.GhostThreshold + 2; i++)
+        for (int i = ghostsSpawned; i < RevivalScript.Instance.GhostThreshold * 2; i++)
         {
+            GameObject newGhost;
             if (i % 2 == 0)
-                Instantiate(slimeGhost, transform);
+                newGhost = Instantiate(slimeGhost, transform);
             else
-                Instantiate(ratGhost, transform);
+                newGhost = Instantiate(ratGhost, transform);
+            newGhost.transform.position = PlayerMovement.Instance.transform.position + new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), 0);
+        }
+    }
+
+    public void DestroyGhosts()
+    {
+        foreach (GameObject ghost in GameObject.FindGameObjectsWithTag("Ghost"))
+        {
+            Destroy(ghost);
         }
     }
 
