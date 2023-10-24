@@ -5925,7 +5925,7 @@ Transform:
   - {fileID: 3783710562372462581}
   - {fileID: 8626064795419072700}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5265811800494199670
 MonoBehaviour:
@@ -5959,6 +5959,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   whiteMaterial: {fileID: 2100000, guid: 31646886384bc65469e23720d59109da, type: 2}
+  playerCorpse: {fileID: 8265652465947531165, guid: d7cf1f62bd6a65e4b94b1aa4bfcbd4c9, type: 3}
 --- !u!114 &4575184681718984242
 MonoBehaviour:
   m_ObjectHideFlags: 0

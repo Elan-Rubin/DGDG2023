@@ -39,6 +39,7 @@ public class CameraManager : MonoBehaviour
     }
     void Start()
     {
+        if(menuCamera) crosshair.SetActive(false);
         Cursor.visible = false;
 
         mainCamera = GetComponent<Camera>();
@@ -60,9 +61,9 @@ public class CameraManager : MonoBehaviour
     {
         Cursor.visible = false;
         var sr = crosshair.GetComponent<SpriteRenderer>();
-        sr.sprite = RevivalScript.Instance.Dead ? crosshair2 : crosshair1;
-        sr.color = RevivalScript.Instance.Dead ? color2 : color1;
-        transform.parent.GetChild(1).gameObject.SetActive(RevivalScript.Instance.Dead);
+        if(!menuCamera) sr.sprite = RevivalScript.Instance.Dead ? crosshair2 : crosshair1;
+        if(!menuCamera) sr.color = RevivalScript.Instance.Dead ? color2 : color1;
+        if(!menuCamera) transform.parent.GetChild(1).gameObject.SetActive(RevivalScript.Instance.Dead);
     }
     void Update()
     {
@@ -72,7 +73,11 @@ public class CameraManager : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (Input.GetMouseButtonDown((int)MouseButton.Left)) Cursor.visible = false;
+        if (Input.GetMouseButtonDown((int)MouseButton.Left))
+        {
+            crosshair.SetActive(true);
+            Cursor.visible = false;
+        }
 
         var size = GetComponent<Camera>().orthographicSize;
 

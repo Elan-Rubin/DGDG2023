@@ -22095,7 +22095,7 @@ PrefabInstance:
     - target: {fileID: 2394127498114167932, guid: cc0b03bf7c8c1594a804e6f055094e28, type: 3}
       propertyPath: storedGun
       value: 
-      objectReference: {fileID: 11400000, guid: 1cbe67f00c3c9f64ea901dcfd15593cc, type: 2}
+      objectReference: {fileID: 11400000, guid: 0fd6f6143867e56479f4f9e5725ca9fb, type: 2}
     - target: {fileID: 4176702006791261641, guid: cc0b03bf7c8c1594a804e6f055094e28, type: 3}
       propertyPath: m_RootOrder
       value: 4

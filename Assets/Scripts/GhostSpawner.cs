@@ -27,24 +27,33 @@ public class GhostSpawner : MonoBehaviour
     public void SpawnGhosts()
     {
         RevivalScript.Instance.GhostCounter = 0;
-        int ghostsSpawned = 0;
-
-        // Loop over enemies, check if dead, spawn ghosts
+        List<GameObject> deadEnemies = new List<GameObject>(); 
         foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
             PathfinderEnemy enemyBrain = enemy.GetComponent<PathfinderEnemy>();
             if (enemyBrain.IsDead())
-            {
-                // Spawn ghost based on enemy type
-                GameObject newGhost;
-                if (enemyBrain.IsSlime())
-                    newGhost = Instantiate(slimeGhost, transform);
-                else
-                    newGhost = Instantiate(ratGhost, transform);
-                newGhost.transform.position = enemy.transform.position;
-                ghosts.Add(newGhost);
-                ghostsSpawned++;
-            }
+                deadEnemies.Add(enemy);
+        }
+        // You have to collect half the enemies you killed, max 8, min 3
+        RevivalScript.Instance.GhostThreshold = Mathf.Min(8, Mathf.Max(3, deadEnemies.Count/2));
+        int ghostsSpawned = 0;
+
+        // Loop over enemies, check if dead, spawn ghosts
+        foreach (GameObject enemy in deadEnemies)
+        {
+            if (ghostsSpawned > RevivalScript.Instance.GhostThreshold * 5)
+                break;
+
+            // Spawn ghost based on enemy type
+            GameObject newGhost;
+            if (enemy.GetComponent<PathfinderEnemy>().IsSlime())
+                newGhost = Instantiate(slimeGhost, transform);
+            else
+                newGhost = Instantiate(ratGhost, transform);
+
+            newGhost.transform.position = enemy.transform.position;
+            ghosts.Add(newGhost);
+            ghostsSpawned++;
         }
 
         // Spawn additional ghosts up to ghostsNeeded (maybe +1)

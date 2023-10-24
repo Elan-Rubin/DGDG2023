@@ -118,7 +118,7 @@ public class PathfinderEnemy : MonoBehaviour
             var bullet = b.GetComponent<Bullet>();
             bullet.StartLifetime(0.5f);
             var dif = ((Vector2)target.transform.position - spawnPos).normalized;
-            bullet.Velocity = dif.normalized;
+            bullet.Velocity = Quaternion.Euler(0, 0, Random.Range(-45,45)) * dif.normalized;
             b.AddForce(500 * dif);
 
             bulletCooldown = bulletCooldownBase;
@@ -139,7 +139,12 @@ public class PathfinderEnemy : MonoBehaviour
         else if (chargeWhenTargetInSight && targetSightedTime != 0 && Time.time - targetSightedTime > 0.25f && dontMove == false)
         {
             if (!rb.bodyType.Equals(RigidbodyType2D.Static))
-                rb.velocity = (target.transform.position - transform.position).normalized * speed;
+            {
+                Vector3 velocityToUse = (target.transform.position - transform.position).normalized;
+                // Potentially miss the player slightly by 10 degrees on either side
+                velocityToUse = Quaternion.Euler(0,0, Random.Range(-10,10)) * velocityToUse;
+                rb.velocity = velocityToUse * speed;
+            }
         }
         // Otherwise, pathfind if supposed to
         else if (pathfindWhenTargetOutOfSight)
@@ -295,6 +300,7 @@ public class PathfinderEnemy : MonoBehaviour
 
     public void TakeDamage(int damage = 1)
     {
+        SoundManager.Instance.PlaySoundEffect("enemydamage");
         health -= damage;
         SelectSpriteForHealth();
         if (health <= 0)

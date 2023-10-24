@@ -136,6 +136,9 @@ public class Ghost : MonoBehaviour
 
             yield return null;
         }
+        GhostSpawner.Instance.CaughtGhost();
+        SoundManager.Instance.PlaySoundEffect("catchghost");
+        RevivalScript.Instance.UpdateCatches();
 
         Destroy(p.gameObject);
         Destroy(gameObject);

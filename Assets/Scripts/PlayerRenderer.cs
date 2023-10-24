@@ -15,6 +15,7 @@ public class PlayerRenderer : MonoBehaviour
 
     private static PlayerRenderer instance;
     public static PlayerRenderer Instance { get { return instance; } }
+    [SerializeField] private GameObject playerCorpse;
     private void Awake()
     {
         if (instance != null && instance != this) Destroy(gameObject);
@@ -66,5 +67,11 @@ public class PlayerRenderer : MonoBehaviour
     {
         transform.GetChild(1).gameObject.SetActive(false);
         transform.GetChild(0).gameObject.SetActive(true);
+        transform.GetChild(4).gameObject.SetActive(false);
+    }
+    public void SpawnCorpse(Vector2 location)
+    {
+        var p = Instantiate(playerCorpse, location, Quaternion.identity).GetComponent<SpriteRenderer>();
+        p.flipX = Random.value > 0.5f;
     }
 }

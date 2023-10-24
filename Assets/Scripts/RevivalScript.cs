@@ -74,8 +74,8 @@ public class RevivalScript : MonoBehaviour
         }
         else
         {
+            RemoveSliders();
             ghostText.text = "";
-            ghostSliders[0].gameObject.SetActive(false);
         }
     }
 
@@ -133,11 +133,16 @@ public class RevivalScript : MonoBehaviour
     public void Rewind()
     {
         dead = true;
-        ghostCanvas.SetActive(true);
-        ghostLine.gameObject.SetActive(true);
-        revivalLine.gameObject.SetActive(true);
+        if (positionsList.Count < 3)
+            GameManager.Instance.GameOver();
+        else
+        {
+            ghostCanvas.SetActive(true);
+            ghostLine.gameObject.SetActive(true);
+            revivalLine.gameObject.SetActive(true);
 
-        StartCoroutine(nameof(RewindCoroutine));
+            StartCoroutine(nameof(RewindCoroutine));
+        }
     }
 
     public void Reborn()
@@ -147,6 +152,19 @@ public class RevivalScript : MonoBehaviour
             Health.Instance.AddHealth();
         RemoveSliders();
         StartCoroutine(nameof(RebornCoroutine));
+
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            if (Vector3.Distance(transform.position, enemy.transform.position) < 5)
+            {
+                Destroy(enemy);
+            }
+            else if (Vector3.Distance(transform.position, enemy.transform.position) < 20)
+            {
+                Vector3 pointingToEnemy = enemy.transform.position - transform.position;
+                enemy.GetComponent<Rigidbody2D>().AddForce(pointingToEnemy * 1000f);
+            }
+        }
     }
 
     private IEnumerator RewindCoroutine()

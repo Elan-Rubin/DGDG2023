@@ -67,6 +67,8 @@ public class Health : MonoBehaviour
 
     public void Damage(int damage)
     {
+        SoundManager.Instance.PlaySoundEffect("playerdamage");
+
         PlayerRenderer.Instance.FlashWhite();
 
         playerHealth -= damage;
@@ -80,6 +82,7 @@ public class Health : MonoBehaviour
         if (playerHealth <= 0)
         {
             GameManager.Instance.Die();
+            PlayerRenderer.Instance.SpawnCorpse(PlayerMovement.Instance.PlayerPosition);
         }
     }
 
@@ -99,4 +102,6 @@ public class Health : MonoBehaviour
         b.transform.SetParent(transform);
         b.GetComponent<Animator>().speed = Random.Range(0.8f, 1.2f);
     }
+
+
 }
