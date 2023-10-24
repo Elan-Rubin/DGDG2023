@@ -47,7 +47,7 @@ public class PathfinderEnemy : MonoBehaviour
 
 
     private bool flashing;
-    private bool stopPathfinding;
+    private bool dontMove;
     private bool flip;
     private float targetSightedTime = 0;
 
@@ -107,7 +107,7 @@ public class PathfinderEnemy : MonoBehaviour
         else if (!targetVisible)
             targetSightedTime = 0;
 
-        if (shootBullets && targetVisible && !stopPathfinding)
+        if (shootBullets && targetVisible && !dontMove)
             bulletCooldown -= Time.deltaTime;
 
         if (bulletCooldown <= 0)
@@ -136,7 +136,7 @@ public class PathfinderEnemy : MonoBehaviour
                 rb.velocity = Vector3.zero;
         }
         // If we can see the player and we're supposed to charge when we see the player
-        else if (chargeWhenTargetInSight && targetSightedTime != 0 && Time.time - targetSightedTime > 0.25f)
+        else if (chargeWhenTargetInSight && targetSightedTime != 0 && Time.time - targetSightedTime > 0.25f && dontMove == false)
         {
             if (!rb.bodyType.Equals(RigidbodyType2D.Static))
                 rb.velocity = (target.transform.position - transform.position).normalized * speed;
@@ -177,7 +177,7 @@ public class PathfinderEnemy : MonoBehaviour
 
     private void CalculatePath()
     {
-        if (stopPathfinding)
+        if (dontMove)
             return;
 
         if ((Vector3.Distance(transform.position, targetPosition) < desiredDistanceToTarget || (targetVisible && chargeWhenTargetInSight)))
@@ -209,7 +209,7 @@ public class PathfinderEnemy : MonoBehaviour
 
     private void FollowPath()
     {
-        if (stopPathfinding)
+        if (dontMove)
             return;
 
         if (path != null && path.Count > 0)
@@ -228,7 +228,7 @@ public class PathfinderEnemy : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Player" && !stopPathfinding)
+        if (collision.gameObject.tag == "Player" && !dontMove)
         {
             playerInMeleeRange = true;
         }
@@ -316,7 +316,7 @@ public class PathfinderEnemy : MonoBehaviour
     {
         coll.enabled = false;
         rb.bodyType = RigidbodyType2D.Static;
-        stopPathfinding = true;
+        dontMove = true;
     }
 
     public void PlayerDeadDisappear()
@@ -332,16 +332,19 @@ public class PathfinderEnemy : MonoBehaviour
             }
         }
         rb.bodyType = RigidbodyType2D.Static;
-        stopPathfinding = true;
+        dontMove = true;
     }
 
     public void PlayerRebornReappear()
     {
         if (IsDead())
             transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = liveDeadSprite;
-        SelectSpriteForHealth();
-        coll.enabled = true;
-        rb.bodyType = RigidbodyType2D.Dynamic;
-        stopPathfinding = false;
+        else
+        {
+            dontMove = false;
+            coll.enabled = true;
+            rb.bodyType = RigidbodyType2D.Dynamic;
+            SelectSpriteForHealth();
+        }
     }
 }
