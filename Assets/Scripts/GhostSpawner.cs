@@ -35,12 +35,16 @@ public class GhostSpawner : MonoBehaviour
             PathfinderEnemy enemyBrain = enemy.GetComponent<PathfinderEnemy>();
             if (enemyBrain.IsDead())
             {
+                if (ghostsSpawned > RevivalScript.Instance.GhostThreshold * 5)
+                    break;
+
                 // Spawn ghost based on enemy type
                 GameObject newGhost;
                 if (enemyBrain.IsSlime())
                     newGhost = Instantiate(slimeGhost, transform);
                 else
                     newGhost = Instantiate(ratGhost, transform);
+
                 newGhost.transform.position = enemy.transform.position;
                 ghosts.Add(newGhost);
                 ghostsSpawned++;
