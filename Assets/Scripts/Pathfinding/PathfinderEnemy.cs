@@ -51,10 +51,11 @@ public class PathfinderEnemy : MonoBehaviour
     private bool flip;
     private float targetSightedTime = 0;
 
+    private Vector3 targetPosition;
+
     private bool playerInMeleeRange;
     private float lastMeleeTime;
 
-    // TODO: Implement random walk when can't see player
     private Vector3Int randomPosToWalkTo = Vector3Int.zero;
     private int lastHealth;
     private int health;
@@ -123,6 +124,11 @@ public class PathfinderEnemy : MonoBehaviour
             bulletCooldown = bulletCooldownBase;
         }
 
+        if (Vector3.Distance(transform.position, target.transform.position) < 10)
+            targetPosition = target.transform.position;
+        else
+            targetPosition = transform.position + new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), 0);
+
         // If close enough to player
         if (Vector3.Distance(transform.position, target.transform.position) < desiredDistanceToTarget)
         {
@@ -174,12 +180,12 @@ public class PathfinderEnemy : MonoBehaviour
         if (stopPathfinding)
             return;
 
-        if ((Vector3.Distance(transform.position, target.transform.position) < desiredDistanceToTarget || (targetVisible && chargeWhenTargetInSight)))
+        if ((Vector3.Distance(transform.position, targetPosition) < desiredDistanceToTarget || (targetVisible && chargeWhenTargetInSight)))
             return;
 
 
         Vector3Int currentCell = map.WorldToCell(transform.position);
-        Vector3Int targetCell = map.WorldToCell(target.transform.position);
+        Vector3Int targetCell = map.WorldToCell(targetPosition);
 
         // If this enemy is on the correct path and the target hasn't changed cells
         if (path != null && path.Count > 0 && (currentCell == lastPathCell || currentCell == path[0].GetMapPosition()) && targetCell == lastTargetCell)
