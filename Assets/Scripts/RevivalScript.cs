@@ -133,11 +133,16 @@ public class RevivalScript : MonoBehaviour
     public void Rewind()
     {
         dead = true;
-        ghostCanvas.SetActive(true);
-        ghostLine.gameObject.SetActive(true);
-        revivalLine.gameObject.SetActive(true);
+        if (positionsList.Count < 3)
+            GameManager.Instance.GameOver();
+        else
+        {
+            ghostCanvas.SetActive(true);
+            ghostLine.gameObject.SetActive(true);
+            revivalLine.gameObject.SetActive(true);
 
-        StartCoroutine(nameof(RewindCoroutine));
+            StartCoroutine(nameof(RewindCoroutine));
+        }
     }
 
     public void Reborn()
