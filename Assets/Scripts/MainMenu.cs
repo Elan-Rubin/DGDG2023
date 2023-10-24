@@ -42,7 +42,7 @@ public class MainMenu : MonoBehaviour
 
     public void QuitGame()
     {
-        Debug.Log("This is for testing the quit function");
+        //Debug.Log("This is for testing the quit function");
         Application.Quit();
     }
 

@@ -63,7 +63,7 @@ public class CameraManager : MonoBehaviour
         var sr = crosshair.GetComponent<SpriteRenderer>();
         if(!menuCamera) sr.sprite = RevivalScript.Instance.Dead ? crosshair2 : crosshair1;
         if(!menuCamera) sr.color = RevivalScript.Instance.Dead ? color2 : color1;
-        transform.parent.GetChild(1).gameObject.SetActive(RevivalScript.Instance.Dead);
+        if(!menuCamera) transform.parent.GetChild(1).gameObject.SetActive(RevivalScript.Instance.Dead);
     }
     void Update()
     {
