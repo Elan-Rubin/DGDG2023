@@ -59,16 +59,23 @@ public class RevivalScript : MonoBehaviour
             var campos = CameraManager.Instance.LaggedMousePos;
             ghostLine.SetPosition(0, Vector2.Lerp(ppos, campos, 0.15f));
             ghostLine.SetPosition(1, Vector2.Lerp(ppos, campos, 0.9f));
-        }
 
-        int current = 0;
-        foreach (Slider ghostSlider in ghostSliders)
+            ghostSliders[0].gameObject.SetActive(true);
+
+            int current = 0;
+            foreach (Slider ghostSlider in ghostSliders)
+            {
+                if (current == ghostSliders.Count - 1)
+                    ghostSlider.value = (float)(GhostCounter % GhostThreshold) / GhostThreshold;
+                else
+                    ghostSlider.value = 1;
+                current++;
+            }
+        }
+        else
         {
-            if (current == ghostSliders.Count - 1)
-                ghostSlider.value = (float)(GhostCounter % GhostThreshold) / GhostThreshold;
-            else
-                ghostSlider.value = 1;
-            current++;
+            ghostText.text = "";
+            ghostSliders[0].gameObject.SetActive(false);
         }
     }
 
