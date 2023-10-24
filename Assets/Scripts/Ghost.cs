@@ -17,8 +17,7 @@ public class Ghost : MonoBehaviour
     bool caught, killed;
     [SerializeField] private Material whiteMaterial;
     Color baseColor;
-
-    float catchTime = 0.75f;
+    [SerializeField] private float catchTime = 0.75f;
 
     [SerializeField] private GameObject particlePrefab;
 
