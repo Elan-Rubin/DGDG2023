@@ -49,6 +49,7 @@ public class PathfinderEnemy : MonoBehaviour
     private bool flashing;
     private bool stopPathfinding;
     private bool flip;
+    private float targetSightedTime = 0;
 
     private bool playerInMeleeRange;
     private float lastMeleeTime;
@@ -100,8 +101,14 @@ public class PathfinderEnemy : MonoBehaviour
 
         TryMeleeAttackPlayer();
 
+        if (targetVisible && targetSightedTime == 0)
+            targetSightedTime = Time.time;
+        else if (!targetVisible)
+            targetSightedTime = 0;
 
-        if (shootBullets && targetVisible && !stopPathfinding) bulletCooldown -= Time.deltaTime;
+        if (shootBullets && targetVisible && !stopPathfinding)
+            bulletCooldown -= Time.deltaTime;
+
         if (bulletCooldown <= 0)
         {
             //this is copied code should be simplified later
@@ -118,17 +125,21 @@ public class PathfinderEnemy : MonoBehaviour
 
         // If close enough to player
         if (Vector3.Distance(transform.position, target.transform.position) < desiredDistanceToTarget)
-            if (!rb.bodyType.Equals(RigidbodyType2D.Static)) rb.velocity = Vector3.zero;
-        // If we can see the player and we're supposed to charge when we see the player
-        else if (chargeWhenTargetInSight && targetVisible)
         {
-
-            //Debug.Log("Charging");
-            if(!rb.bodyType.Equals(RigidbodyType2D.Static)) rb.velocity = (target.transform.position - transform.position).normalized * speed;
+            if (!rb.bodyType.Equals(RigidbodyType2D.Static))
+                rb.velocity = Vector3.zero;
+        }
+        // If we can see the player and we're supposed to charge when we see the player
+        else if (chargeWhenTargetInSight && targetSightedTime != 0 && Time.time - targetSightedTime > 0.25f)
+        {
+            Debug.Log("Charging");
+            if (!rb.bodyType.Equals(RigidbodyType2D.Static))
+                rb.velocity = (target.transform.position - transform.position).normalized * speed;
         }
         // Otherwise, pathfind if supposed to
         else if (pathfindWhenTargetOutOfSight)
         {
+            Debug.Log("Pathfinding to player");
             if (pathCalculator.IsPathReady())
             {
                 List<Waypoint> newPath = pathCalculator.Path();
