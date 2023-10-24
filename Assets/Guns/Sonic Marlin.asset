@@ -18,12 +18,12 @@ MonoBehaviour:
   BulletColor: {r: 0, g: 0.5019608, b: 1, a: 1}
   GunColor: {r: 0, g: 0.5019608, b: 1, a: 1}
   ShootForce: 35
-  ShootKnockback: 20
-  ReloadTime: 1
+  ShootKnockback: 5
+  ReloadTime: 0.4
   Bullet: {fileID: 7544120140449932333, guid: e76d0013d30ff0349bded44c06d5abf7, type: 3}
   Repetitions: 0
   DelayBetween: 0
-  BulletsPerShot: 1
+  BulletsPerShot: 2
   BulletLifeTime: 0.5
   LifetimeVariation: 0
   Inaccuracy: 0

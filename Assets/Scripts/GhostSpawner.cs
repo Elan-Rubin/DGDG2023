@@ -41,7 +41,7 @@ public class GhostSpawner : MonoBehaviour
         // Loop over enemies, check if dead, spawn ghosts
         foreach (GameObject enemy in deadEnemies)
         {
-            if (ghostsSpawned > RevivalScript.Instance.GhostThreshold * 5)
+            if (ghostsSpawned > RevivalScript.Instance.GhostThreshold * 2)
                 break;
 
             // Spawn ghost based on enemy type
@@ -59,7 +59,7 @@ public class GhostSpawner : MonoBehaviour
         // Spawn additional ghosts up to ghostsNeeded (maybe +1)
         var posList = new List<Vector2>();
 
-        for (int i = ghostsSpawned; i < RevivalScript.Instance.GhostThreshold * 3; i++)
+        for (int i = ghostsSpawned; i < RevivalScript.Instance.GhostThreshold; i++)
         {
             GameObject newGhost;
             if (i % 2 == 0)
