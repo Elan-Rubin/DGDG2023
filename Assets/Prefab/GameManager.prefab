@@ -281,6 +281,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ghostLine: {fileID: 0}
   mask: {fileID: 0}
+  Mask: {fileID: 0}
   revivalLine: {fileID: 8585209876013497128}
   minimumDistance: 3
   GhostCounter: 0
@@ -454,8 +455,8 @@ LineRenderer:
   m_SortingLayer: 5
   m_SortingOrder: 0
   m_Positions:
-  - {x: 20, y: 15.62, z: 0}
-  - {x: -18.6, y: -2.65, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.5

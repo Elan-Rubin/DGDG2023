@@ -133,6 +133,7 @@ public class RevivalScript : MonoBehaviour
 
     public void Reborn()
     {
+        dead = false;
         for (int i = -3; i < GhostCounter; i += 3)
             Health.Instance.AddHealth();
         RemoveSliders();

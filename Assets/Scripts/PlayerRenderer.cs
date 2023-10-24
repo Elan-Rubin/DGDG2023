@@ -25,12 +25,17 @@ public class PlayerRenderer : MonoBehaviour
     {
         playerSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+
+        GameManager.Instance.PlayerDeath += SwitchToDead;
+        GameManager.Instance.PlayerReborn += SwitchToAlive;
     }
 
     void Update()
     {
         if (PlayerMovement.Instance.Moving) flip = playerSprite.flipX = PlayerMovement.Instance.PreviousMovment.x < 0;
         else playerSprite.flipX = flip = CameraManager.Instance.MousePos.x < PlayerMovement.Instance.PlayerPosition.x;
+
+        transform.GetChild(1).GetComponent<SpriteRenderer>().flipX = flip;
 
         animator.SetBool("walking", PlayerMovement.Instance.Moving);
     }
@@ -50,5 +55,16 @@ public class PlayerRenderer : MonoBehaviour
             playerSprite.material = mat;
             flashing = false;
         }
+    }
+
+    private void SwitchToDead()
+    {
+        transform.GetChild(0).gameObject.SetActive(false);
+        transform.GetChild(1).gameObject.SetActive(true);
+    }
+    private void SwitchToAlive()
+    {
+        transform.GetChild(1).gameObject.SetActive(false);
+        transform.GetChild(0).gameObject.SetActive(true);
     }
 }

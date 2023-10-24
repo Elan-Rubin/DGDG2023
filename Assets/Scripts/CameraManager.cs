@@ -52,6 +52,9 @@ public class CameraManager : MonoBehaviour
         GetComponent<PostProcessVolume>().isGlobal = true;
         bottomLeft = GameManager.Instance.bottomLeft + Vector2.right * ratio1 + Vector2.up * ratio2;
         topRight = GameManager.Instance.topRight - Vector2.right * ratio1 - Vector2.up * ratio2;
+
+        /*GameManager.Instance.PlayerDeath += SwitchToDead;
+        GameManager.Instance.PlayerReborn += SwitchToAlive;*/
     }
     private void LateUpdate()
     {
