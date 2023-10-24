@@ -147,6 +147,19 @@ public class RevivalScript : MonoBehaviour
             Health.Instance.AddHealth();
         RemoveSliders();
         StartCoroutine(nameof(RebornCoroutine));
+
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            if (Vector3.Distance(transform.position, enemy.transform.position) < 5)
+            {
+                Destroy(enemy);
+            }
+            else if (Vector3.Distance(transform.position, enemy.transform.position) < 20)
+            {
+                Vector3 pointingToEnemy = enemy.transform.position - transform.position;
+                enemy.GetComponent<Rigidbody2D>().AddForce(pointingToEnemy * 1000f);
+            }
+        }
     }
 
     private IEnumerator RewindCoroutine()
