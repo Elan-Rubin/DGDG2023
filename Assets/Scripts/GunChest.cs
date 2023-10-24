@@ -57,6 +57,9 @@ public class GunChest : MonoBehaviour
     }
     private IEnumerator SwitchCoroutine()
     {
+        sr.gameObject.SetActive(true);
+        sr2.gameObject.SetActive(true);
+
         sr.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
         sr2.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
 
@@ -70,6 +73,9 @@ public class GunChest : MonoBehaviour
     }
     private IEnumerator SwitchBackCoroutine()
     {
+        sr.gameObject.SetActive(true);
+        sr2.gameObject.SetActive(true);
+
         sr2.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
         sr.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
 
