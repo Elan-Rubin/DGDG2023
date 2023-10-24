@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1313333472593048241}
   m_Layer: 0
   m_Name: RatGhost
-  m_TagString: Untagged
+  m_TagString: Ghost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

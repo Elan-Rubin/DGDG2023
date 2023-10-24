@@ -21,11 +21,7 @@ public class GhostSpawner : MonoBehaviour
     void Start()
     {
         GameManager.Instance.PlayerDeath += SpawnGhosts;
-    }
-
-    void Update()
-    {
-        
+        GameManager.Instance.PlayerReborn += DestroyGhosts;
     }
 
     public void SpawnGhosts()
@@ -60,6 +56,14 @@ public class GhostSpawner : MonoBehaviour
             else
                 newGhost = Instantiate(ratGhost, transform);
             newGhost.transform.position = PlayerMovement.Instance.transform.position + new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), 0);
+        }
+    }
+
+    public void DestroyGhosts()
+    {
+        foreach (GameObject ghost in GameObject.FindGameObjectsWithTag("Ghost"))
+        {
+            Destroy(ghost);
         }
     }
 
