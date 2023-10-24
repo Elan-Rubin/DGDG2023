@@ -12,6 +12,8 @@ public class PathfinderEnemy : MonoBehaviour
     [SerializeField] private Tilemap map;
     [SerializeField] private GameObject target;
     [SerializeField] private Material whiteMaterial;
+    [SerializeField] private Sprite deadDeadSprite;
+    [SerializeField] private Sprite liveDeadSprite;
     [Header("Enemy")]
     [SerializeField] private float desiredDistanceToTarget = 1f;
     [SerializeField] private float speed = 1f;
@@ -35,6 +37,7 @@ public class PathfinderEnemy : MonoBehaviour
     private Vector3Int lastPathCell;
     private bool targetVisible;
 
+
     private SpriteRenderer spriteRenderer;
     private CircleCollider2D coll;
     private Rigidbody2D rb;
@@ -46,11 +49,13 @@ public class PathfinderEnemy : MonoBehaviour
     private bool flashing;
     private bool stopPathfinding;
     private bool flip;
+    private float targetSightedTime = 0;
+
+    private Vector3 targetPosition;
 
     private bool playerInMeleeRange;
     private float lastMeleeTime;
 
-    // TODO: Implement random walk when can't see player
     private Vector3Int randomPosToWalkTo = Vector3Int.zero;
     private int lastHealth;
     private int health;
@@ -58,6 +63,7 @@ public class PathfinderEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        map = GameObject.FindGameObjectWithTag("MainTileMap").GetComponent<Tilemap>();
         target = PlayerMovement.Instance.gameObject;
 
         bulletCooldown = bulletCooldownBase;
@@ -96,8 +102,14 @@ public class PathfinderEnemy : MonoBehaviour
 
         TryMeleeAttackPlayer();
 
+        if (targetVisible && targetSightedTime == 0)
+            targetSightedTime = Time.time;
+        else if (!targetVisible)
+            targetSightedTime = 0;
 
-        if (shootBullets && targetVisible && !stopPathfinding) bulletCooldown -= Time.deltaTime;
+        if (shootBullets && targetVisible && !stopPathfinding)
+            bulletCooldown -= Time.deltaTime;
+
         if (bulletCooldown <= 0)
         {
             //this is copied code should be simplified later
@@ -112,14 +124,22 @@ public class PathfinderEnemy : MonoBehaviour
             bulletCooldown = bulletCooldownBase;
         }
 
+        if (Vector3.Distance(transform.position, target.transform.position) < 10)
+            targetPosition = target.transform.position;
+        else
+            targetPosition = transform.position + new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), 0);
+
         // If close enough to player
         if (Vector3.Distance(transform.position, target.transform.position) < desiredDistanceToTarget)
-            rb.velocity = Vector3.zero;
-        // If we can see the player and we're supposed to charge when we see the player
-        else if (chargeWhenTargetInSight && targetVisible)
         {
-            //Debug.Log("Charging");
-            rb.velocity = (target.transform.position - transform.position).normalized * speed;
+            if (!rb.bodyType.Equals(RigidbodyType2D.Static))
+                rb.velocity = Vector3.zero;
+        }
+        // If we can see the player and we're supposed to charge when we see the player
+        else if (chargeWhenTargetInSight && targetSightedTime != 0 && Time.time - targetSightedTime > 0.25f)
+        {
+            if (!rb.bodyType.Equals(RigidbodyType2D.Static))
+                rb.velocity = (target.transform.position - transform.position).normalized * speed;
         }
         // Otherwise, pathfind if supposed to
         else if (pathfindWhenTargetOutOfSight)
@@ -160,12 +180,12 @@ public class PathfinderEnemy : MonoBehaviour
         if (stopPathfinding)
             return;
 
-        if ((Vector3.Distance(transform.position, target.transform.position) < desiredDistanceToTarget || (targetVisible && chargeWhenTargetInSight)))
+        if ((Vector3.Distance(transform.position, targetPosition) < desiredDistanceToTarget || (targetVisible && chargeWhenTargetInSight)))
             return;
 
 
         Vector3Int currentCell = map.WorldToCell(transform.position);
-        Vector3Int targetCell = map.WorldToCell(target.transform.position);
+        Vector3Int targetCell = map.WorldToCell(targetPosition);
 
         // If this enemy is on the correct path and the target hasn't changed cells
         if (path != null && path.Count > 0 && (currentCell == lastPathCell || currentCell == path[0].GetMapPosition()) && targetCell == lastTargetCell)
@@ -302,9 +322,14 @@ public class PathfinderEnemy : MonoBehaviour
     public void PlayerDeadDisappear()
     {
         coll.enabled = false;
-        foreach (Transform child in transform)
+        if (IsDead())
+            transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = deadDeadSprite;
+        else
         {
-            child.gameObject.SetActive(false);
+            foreach (Transform child in transform)
+            {
+                child.gameObject.SetActive(false);
+            }
         }
         rb.bodyType = RigidbodyType2D.Static;
         stopPathfinding = true;
@@ -312,6 +337,8 @@ public class PathfinderEnemy : MonoBehaviour
 
     public void PlayerRebornReappear()
     {
+        if (IsDead())
+            transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = liveDeadSprite;
         SelectSpriteForHealth();
         coll.enabled = true;
         rb.bodyType = RigidbodyType2D.Dynamic;

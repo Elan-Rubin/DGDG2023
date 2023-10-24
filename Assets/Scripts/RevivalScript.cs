@@ -29,6 +29,7 @@ public class RevivalScript : MonoBehaviour
     private List<Slider> ghostSliders = new List<Slider>();
 
     bool dead;
+    public bool Dead { get { return dead; } }
 
     private static RevivalScript instance;
     public static RevivalScript Instance { get { return instance; } }
@@ -132,9 +133,8 @@ public class RevivalScript : MonoBehaviour
         t1tm.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
         t2tm.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
 
-
-        PlayerMovement.Instance.PlayerPosition = FirstPosition();
-
+        PlayerMovement.Instance.SnapPosition(FirstPosition());
+        positionsList.RemoveAt(0);
 
         mask.SetActive(true);
 
@@ -194,7 +194,7 @@ public class RevivalScript : MonoBehaviour
             PlayerMovement.Instance.CanMove = false;
 
             positionsList.RemoveAt(0);
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.3f);
 
             /*for (int i = 0; i < iterator; i++)
             {

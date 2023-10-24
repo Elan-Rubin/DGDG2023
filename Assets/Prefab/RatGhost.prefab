@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1313333472593048241}
   m_Layer: 0
   m_Name: RatGhost
-  m_TagString: Untagged
+  m_TagString: Ghost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   whiteMaterial: {fileID: 2100000, guid: 31646886384bc65469e23720d59109da, type: 2}
+  catchTime: 1.25
   particlePrefab: {fileID: 6569956850436613323, guid: c9e47d5955f332940a297af43c16977c, type: 3}
 --- !u!95 &1313333472593048241
 Animator:

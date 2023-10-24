@@ -30,6 +30,8 @@ public class CameraManager : MonoBehaviour
     public static CameraManager Instance { get { return instance; } }
     private Vector2 currentPos, targetPos;
     private Vector2 bottomLeft, topRight;
+    [SerializeField] private Sprite crosshair1, crosshair2;
+    [SerializeField] private Color color1, color2;
     private void Awake()
     {
         if (instance != null && instance != this) Destroy(gameObject);
@@ -51,7 +53,13 @@ public class CameraManager : MonoBehaviour
         bottomLeft = GameManager.Instance.bottomLeft + Vector2.right * ratio1 + Vector2.up * ratio2;
         topRight = GameManager.Instance.topRight - Vector2.right * ratio1 - Vector2.up * ratio2;
     }
-
+    private void LateUpdate()
+    {
+        Cursor.visible = false;
+        var sr = crosshair.GetComponent<SpriteRenderer>();
+        sr.sprite = RevivalScript.Instance.Dead ? crosshair2 : crosshair1;
+        sr.color = RevivalScript.Instance.Dead ? color2 : color1;
+    }
     void Update()
     {
         laggedMousePos = Vector2.Lerp(laggedMousePos, mousePos, Time.deltaTime * mouseLagSpeed);
