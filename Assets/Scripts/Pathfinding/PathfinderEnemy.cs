@@ -61,6 +61,7 @@ public class PathfinderEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        map = GameObject.FindGameObjectWithTag("MainTileMap").GetComponent<Tilemap>();
         target = PlayerMovement.Instance.gameObject;
 
         bulletCooldown = bulletCooldownBase;
@@ -82,9 +83,6 @@ public class PathfinderEnemy : MonoBehaviour
 
         SetupGridFromTilemap();
         SelectSpriteForHealth();
-
-        map = GameObject.FindGameObjectWithTag("MainTileMap").GetComponent<Tilemap>();
-        target = GameObject.FindGameObjectWithTag("Player");
     }
 
     void Update()

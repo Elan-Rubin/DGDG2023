@@ -145,7 +145,7 @@ public class PathCalculator
             for (int y = waypoint.y - 1; y <= waypoint.y + 1; y++)
             {
                 // If the waypoint is not the current waypoint and it's in bounds
-                if (!(x == waypoint.x && y == waypoint.y) && x >= 0 && y >= 0 && x <= grid.GetWidth() && y <= grid.GetHeight()) {
+                if (!(x == waypoint.x && y == waypoint.y) && x >= 0 && y >= 0 && x < grid.GetWidth() && y < grid.GetHeight()) {
                     // If the waypoint is not a horizontal move, make sure the sideways pieces are free too (so the enemy can actually fit
                     if (Vector2Int.Distance(new Vector2Int(waypoint.x, waypoint.y), new Vector2Int(x, y)) < 1 || (grid.GetGridObject(waypoint.x, y).isWalkable && grid.GetGridObject(x, waypoint.y).isWalkable))
                     {
