@@ -71083,7 +71083,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 473862253136659780, guid: c160fc1a3f09cf442883b6226f91b645, type: 3}
       propertyPath: m_text
-      value: 
+      value: ground floor
       objectReference: {fileID: 0}
     - target: {fileID: 640239900557938247, guid: c160fc1a3f09cf442883b6226f91b645, type: 3}
       propertyPath: crosshair
