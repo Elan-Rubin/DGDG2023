@@ -69,6 +69,8 @@ public class Bullet : MonoBehaviour
         if (destroying) return;
         destroying = true;
 
+        if (!enemyBullet) HitStop.Instance.Stop(0.05f, 0.5f);
+
         Destroy(GetComponent<Collider2D>());
         Destroy(GetComponent<Rigidbody2D>());
 

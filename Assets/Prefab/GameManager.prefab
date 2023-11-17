@@ -226,6 +226,7 @@ GameObject:
   - component: {fileID: 6282666892081748838}
   - component: {fileID: 117344643394986328}
   - component: {fileID: 3629989866018582779}
+  - component: {fileID: 4076742974664458723}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -411,6 +412,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ratGhost: {fileID: 199316346728551447, guid: e85c0f3e8108f42a982a18a8ac25ebaf, type: 3}
   slimeGhost: {fileID: 2137027224306704865, guid: b85a282155c0743d89ed2a09dac7e52f, type: 3}
+--- !u!114 &4076742974664458723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3669330402518681871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a326b0627f1de09449d1a5fc335bf6dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4115498775441845695
 GameObject:
   m_ObjectHideFlags: 0
@@ -421,7 +434,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3057057231421852493}
   - component: {fileID: 8585209876013497128}
-  - component: {fileID: 7462715253501906458}
   m_Layer: 0
   m_Name: Revival Line
   m_TagString: Untagged
@@ -549,22 +561,6 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &7462715253501906458
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4115498775441845695}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0a67b6ca178cc94e91358cc07ebbb42, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Line: {fileID: 8585209876013497128}
-  InitialState: []
-  SmoothingLength: 2
-  SmoothingSections: 10
 --- !u!1 &4478529329435818449
 GameObject:
   m_ObjectHideFlags: 0

@@ -2269,7 +2269,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menu: {fileID: 1470265569}
   comic: {fileID: 1479733383}
-  baseMat: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  baseMat: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   whiteMat: {fileID: 2100000, guid: 31646886384bc65469e23720d59109da, type: 2}
 --- !u!224 &1470265571
 RectTransform:

@@ -89,9 +89,9 @@ public class PlayerMovement : MonoBehaviour
             case "Chest":
                 collision.GetComponent<GunChest>().SwitchGun(GunManager.Instance.SelectedGun);
                 break;
-            case "Key":
+            /*case "Key":
                 collision.GetComponent<Key>().Collect();
-                break;
+                break;*/
         }
     }
 

@@ -18,23 +18,27 @@ public class MainMenu : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (clickCounter > comic.transform.childCount - 1)
-            {
-                comic.SetActive(false);
-            }
-
-            var c = comic.transform.GetChild(clickCounter).gameObject;
-            c.SetActive(!c.activeSelf);
-            if (c.activeSelf)
-            {
-                c.GetComponent<Image>().material = whiteMat;
-                //c.transform.DOShakePosition(0.1f);
-                c.transform.DOPunchScale(Vector2.one * 0.05f, 0.1f).OnComplete(()=>c.GetComponent<Image>().material=baseMat);
-                //c.transform.DOShakeRotation(0.1f);
-
-            }
-            clickCounter++;
+            ProgressComic();
         }
+    }
+    private void ProgressComic()
+    {
+        if (clickCounter > comic.transform.childCount - 1)
+        {
+            comic.SetActive(false);
+        }
+
+        var c = comic.transform.GetChild(clickCounter).gameObject;
+        c.SetActive(!c.activeSelf);
+        clickCounter++;
+        if (c.activeSelf)
+        {
+            c.GetComponent<Image>().material = whiteMat;
+            //c.transform.DOShakePosition(0.1f);
+            c.transform.DOPunchScale(Vector2.one * 0.05f, 0.1f).OnComplete(() => c.GetComponent<Image>().material = baseMat);
+            //c.transform.DOShakeRotation(0.1f, new Vector3(0,0,3));
+        }
+        else ProgressComic();
     }
 
     public void PlayGame()
