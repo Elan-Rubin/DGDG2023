@@ -10,6 +10,8 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private DebugMode debug = DebugMode.None;
+    [HideInInspector] public DebugMode Debug { get { return debug; } }
     [SerializeField] private GameObject lower, upper;
     [HideInInspector] public GameObject Lower { get { return lower; } }
     [HideInInspector] public GameObject Upper { get { return upper; } }
@@ -44,7 +46,7 @@ public class GameManager : MonoBehaviour
     {
         var mask = RevivalScript.Instance.Mask;
         PlayerReborn?.Invoke();
-        GetComponent<Health>().ResetHealth(newHealth);
+        GetComponent<PlayerHealth>().ResetHealth(newHealth);
 
         var t2 = Lower;
         var t1 = Upper;
@@ -86,4 +88,10 @@ public class GameManager : MonoBehaviour
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex == 8 ? 0 : SceneManager.GetActiveScene().buildIndex + 1); 
     }
 
+}
+
+public enum DebugMode
+{
+    None,
+    Pathfinding,
 }

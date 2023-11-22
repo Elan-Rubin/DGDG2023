@@ -4,16 +4,16 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class Health : MonoBehaviour
+public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] private int playerHealth = 1;
-    [HideInInspector] public int PlayerHealth { get { return playerHealth; } }
+    [SerializeField] private int health = 1;
+    [HideInInspector] public int Health { get { return health; } }
     private List<GameObject> healthBots = new();
     private List<Vector2> currentPositions = new(), targetPositions = new();
     [SerializeField] private GameObject healthBot;
     float counter;
-    private static Health instance;
-    [HideInInspector] public static Health Instance { get { return instance; } }
+    private static PlayerHealth instance;
+    [HideInInspector] public static PlayerHealth Instance { get { return instance; } }
 
     private int startingHealth;
 
@@ -25,26 +25,26 @@ public class Health : MonoBehaviour
     void Start()
     {
         SetupHealth();
-        startingHealth = playerHealth;
+        startingHealth = health;
         StartCoroutine(nameof(LateStart));
     }
 
     public void ResetHealth() => ResetHealth(startingHealth);
     public void ResetHealth(int newHealth)
     {
-        playerHealth = newHealth;
+        health = newHealth;
         SetupHealth();
     }
 
     private void SetupHealth()
     {
-        for (int i = 0; i < playerHealth; i++) GenerateBot();
+        for (int i = 0; i < health; i++) GenerateBot();
     }
 
     private IEnumerator LateStart()
     {
         yield return null;
-        for (int i = 0; i < playerHealth; i++)
+        for (int i = 0; i < health; i++)
         {
             currentPositions[i] = targetPositions[i];
         }
@@ -71,7 +71,7 @@ public class Health : MonoBehaviour
 
         PlayerRenderer.Instance.FlashWhite();
 
-        playerHealth -= damage;
+        health -= damage;
 
         var lastBot = healthBots[healthBots.Count - 1];
         healthBots.Remove(lastBot);
@@ -79,7 +79,7 @@ public class Health : MonoBehaviour
         currentPositions.RemoveAt(currentPositions.Count - 1);
         targetPositions.RemoveAt(targetPositions.Count - 1);
 
-        if (playerHealth <= 0)
+        if (health <= 0)
         {
             GameManager.Instance.Die();
             PlayerRenderer.Instance.SpawnCorpse(PlayerMovement.Instance.PlayerPosition);
@@ -88,7 +88,7 @@ public class Health : MonoBehaviour
 
     public void AddHealth()
     {
-        playerHealth++;
+        health++;
     }
 
     private void GenerateBot()

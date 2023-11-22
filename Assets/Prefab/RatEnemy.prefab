@@ -252,7 +252,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6659051779756036545}
+  - component: {fileID: -2511159807762643997}
   - component: {fileID: 1148737262660766447}
+  - component: {fileID: 5340282194466738801}
   - component: {fileID: 5725081795388386941}
   - component: {fileID: 3063523777086713742}
   m_Layer: 9
@@ -281,6 +283,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-2511159807762643997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4009823014915981693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f16b5f5a0dcefac4b8717933dc07401a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startHealth: 1
+  enemyBullet: {fileID: 0}
+  shootBullets: 0
+  bulletCooldownBase: 1
+  meleeCooldown: 1
 --- !u!114 &1148737262660766447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,22 +314,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 0}
   target: {fileID: 0}
-  whiteMaterial: {fileID: 2100000, guid: 31646886384bc65469e23720d59109da, type: 2}
-  deadDeadSprite: {fileID: 21300000, guid: ccd0ccdbd8493f247b9829539f600ecf, type: 3}
-  liveDeadSprite: {fileID: 21300000, guid: 4d6c9294bfac3bc4cb5c6c1ac62cb480, type: 3}
   desiredDistanceToTarget: 0.75
   speed: 7
-  startHealth: 1
   pathfindWhenTargetOutOfSight: 1
   chargeWhenTargetInSight: 1
-  enemyBullet: {fileID: 7544120140449932333, guid: 0da94292ceb0ee84f9964e4e53a33b8b, type: 3}
-  shootBullets: 0
-  bulletCooldownBase: 1
-  meleeCooldown: 0.5
   width: 64
   height: 24
   recalculationDelay: 0.1
   raycastDelay: 1
+--- !u!114 &5340282194466738801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4009823014915981693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95b7e1d5b6a6a6141a20feadf25b24b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deadDeadSprite: {fileID: 21300000, guid: 4d6c9294bfac3bc4cb5c6c1ac62cb480, type: 3}
+  liveDeadSprite: {fileID: 21300000, guid: ccd0ccdbd8493f247b9829539f600ecf, type: 3}
+  whiteMaterial: {fileID: 2100000, guid: 31646886384bc65469e23720d59109da, type: 2}
 --- !u!50 &5725081795388386941
 Rigidbody2D:
   serializedVersion: 4

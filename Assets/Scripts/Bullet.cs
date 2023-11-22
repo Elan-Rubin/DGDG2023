@@ -39,7 +39,7 @@ public class Bullet : MonoBehaviour
                 if(!enemyBullet) Physics2D.IgnoreCollision(collision.collider, collision.otherCollider);
                 else
                 {
-                    GameManager.Instance.GetComponent<Health>()?.Damage(1);
+                    GameManager.Instance.GetComponent<PlayerHealth>()?.Damage(1);
                     DestroyBullet();
                     MakeParticle();
                 }
@@ -49,7 +49,7 @@ public class Bullet : MonoBehaviour
                 if (enemyBullet) return;
                 DestroyBullet();
                 MakeParticle();
-                collision.otherCollider.gameObject.GetComponent<PathfinderEnemy>()?.TakeDamage();
+                collision.otherCollider.gameObject.GetComponent<Enemy>()?.TakeDamage();
                 collision.otherRigidbody.AddForce(Velocity * 100f);
                 break;
             case 8: //wall
