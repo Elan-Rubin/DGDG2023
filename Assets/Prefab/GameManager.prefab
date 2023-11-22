@@ -223,7 +223,6 @@ GameObject:
   - component: {fileID: 2668351801297466434}
   - component: {fileID: 8817039724299489963}
   - component: {fileID: 5931264645906315163}
-  - component: {fileID: 6282666892081748838}
   - component: {fileID: 117344643394986328}
   - component: {fileID: 3629989866018582779}
   - component: {fileID: 4076742974664458723}
@@ -264,6 +263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66f34cc7bc83e2b4cabcaff12ebd87a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   lower: {fileID: 0}
   upper: {fileID: 0}
   bottomLeft: {x: 0, y: 0}
@@ -288,20 +288,6 @@ MonoBehaviour:
   GhostCounter: 0
   GhostThreshold: 0
   ghostCanvas: {fileID: 0}
---- !u!114 &6282666892081748838
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3669330402518681871}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b1e35b2a2ec85049b9d137a8e5fb6ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerHealth: 3
-  healthBot: {fileID: 4683771287446048816, guid: 253289b772644f9428bfe7d718b18cea, type: 3}
 --- !u!114 &117344643394986328
 MonoBehaviour:
   m_ObjectHideFlags: 0

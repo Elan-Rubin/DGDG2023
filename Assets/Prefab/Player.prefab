@@ -5895,6 +5895,7 @@ GameObject:
   - component: {fileID: 5265811800494199670}
   - component: {fileID: 5613038090469990800}
   - component: {fileID: 4575184681718984242}
+  - component: {fileID: 4121691561020276003}
   - component: {fileID: 6551878533648437896}
   - component: {fileID: 6927448848029797512}
   - component: {fileID: 2922828731628607383}
@@ -5980,6 +5981,20 @@ MonoBehaviour:
   gunRenderer: {fileID: 2182589175058733720}
   gunRotator: {fileID: 5930135258571647025}
   gunTip: {fileID: 2647118819618830614}
+--- !u!114 &4121691561020276003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6253267888361324963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16e106472d061574691a158984276845, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 3
+  healthBot: {fileID: 4683771287446048816, guid: 253289b772644f9428bfe7d718b18cea, type: 3}
 --- !u!50 &6551878533648437896
 Rigidbody2D:
   serializedVersion: 4

@@ -30,8 +30,9 @@ public class GhostSpawner : MonoBehaviour
         List<GameObject> deadEnemies = new List<GameObject>(); 
         foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
+            //i feel like this could be made a lot simpler
             PathfinderEnemy enemyBrain = enemy.GetComponent<PathfinderEnemy>();
-            if (enemyBrain.IsDead())
+            if (enemyBrain.GetComponent<Enemy>().IsDead())
                 deadEnemies.Add(enemy);
         }
         // You have to collect half the enemies you killed, max 8, min 3
@@ -46,7 +47,7 @@ public class GhostSpawner : MonoBehaviour
 
             // Spawn ghost based on enemy type
             GameObject newGhost;
-            if (enemy.GetComponent<PathfinderEnemy>().IsSlime())
+            if (enemy.GetComponent<Enemy>().IsSlime())
                 newGhost = Instantiate(slimeGhost, transform);
             else
                 newGhost = Instantiate(ratGhost, transform);

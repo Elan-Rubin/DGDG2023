@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
         CanMove = true;
         rigidBody = GetComponent<Rigidbody2D>();
 
-        for (int i = 0; i < Health.Instance.PlayerHealth; i++)
+        for (int i = 0; i < PlayerHealth.Instance.Health; i++)
         {
             previousPositions.Add((Vector2)transform.position - Vector2.right * (i+1));
         }

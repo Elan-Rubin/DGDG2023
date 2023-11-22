@@ -147,7 +147,7 @@ public class RevivalScript : MonoBehaviour
     {
         dead = false;
         for (int i = -3; i < GhostCounter; i += 3)
-            Health.Instance.AddHealth();
+            PlayerHealth.Instance.AddHealth();
         RemoveSliders();
         StartCoroutine(nameof(RebornCoroutine));
 
