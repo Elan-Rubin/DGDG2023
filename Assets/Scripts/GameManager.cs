@@ -42,7 +42,6 @@ public class GameManager : MonoBehaviour
 
     public void Reborn(int newHealth)
     {
-        
         var mask = RevivalScript.Instance.Mask;
         PlayerReborn?.Invoke();
         GetComponent<Health>().ResetHealth(newHealth);
