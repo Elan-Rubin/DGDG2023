@@ -12,25 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d1514134bc4fbd41bb739b1b9a49231, type: 3}
   m_Name: Ground 2
   m_EditorClassIdentifier: 
-  m_DefaultSprite: {fileID: 1756516427, guid: 02599aeb621a2f64c976dd38375eb5a5, type: 3}
+  m_DefaultSprite: {fileID: -1242945423, guid: ca656197bac9d05458054480f4206cca, type: 3}
   m_DefaultGameObject: {fileID: 0}
   m_DefaultColliderType: 0
   m_TilingRules:
   - m_Id: 0
     m_Sprites:
+    - {fileID: 1756516427, guid: 0aa10a6ae1c7c4cde815d54bda0af2d2, type: 3}
+    - {fileID: -98861982, guid: 0aa10a6ae1c7c4cde815d54bda0af2d2, type: 3}
+    - {fileID: -239577839, guid: 0aa10a6ae1c7c4cde815d54bda0af2d2, type: 3}
+    - {fileID: -1521445039, guid: 0aa10a6ae1c7c4cde815d54bda0af2d2, type: 3}
+    - {fileID: 896168618, guid: 34fdf8e6507b94ef18642aa5b8550b7e, type: 3}
+    - {fileID: 1986658918, guid: 34fdf8e6507b94ef18642aa5b8550b7e, type: 3}
+    - {fileID: 1591893794, guid: 34fdf8e6507b94ef18642aa5b8550b7e, type: 3}
+    - {fileID: -737087146, guid: 34fdf8e6507b94ef18642aa5b8550b7e, type: 3}
     - {fileID: -1242945423, guid: ca656197bac9d05458054480f4206cca, type: 3}
     - {fileID: -1006878085, guid: ca656197bac9d05458054480f4206cca, type: 3}
     - {fileID: -1060814402, guid: ca656197bac9d05458054480f4206cca, type: 3}
     - {fileID: -1778344479, guid: ca656197bac9d05458054480f4206cca, type: 3}
     - {fileID: -634690143, guid: ca656197bac9d05458054480f4206cca, type: 3}
     - {fileID: 1134626650, guid: ca656197bac9d05458054480f4206cca, type: 3}
-    - {fileID: 1588968532, guid: 613c9eac9576e754e96ab412ec5473de, type: 3}
-    - {fileID: 2032081933, guid: 613c9eac9576e754e96ab412ec5473de, type: 3}
-    - {fileID: -239828838, guid: 613c9eac9576e754e96ab412ec5473de, type: 3}
-    - {fileID: -1990248010, guid: 613c9eac9576e754e96ab412ec5473de, type: 3}
-    - {fileID: 1190401287, guid: 80a7f1084f6d1994ab7bb561dedc1cc3, type: 3}
-    - {fileID: -420268108, guid: 80a7f1084f6d1994ab7bb561dedc1cc3, type: 3}
-    - {fileID: -1858044951, guid: 80a7f1084f6d1994ab7bb561dedc1cc3, type: 3}
     m_GameObject: {fileID: 0}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
