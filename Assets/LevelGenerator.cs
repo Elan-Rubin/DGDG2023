@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 using Unity.VisualScripting;
+using UnityEditor.TerrainTools;
 
 public class LevelGenerator : MonoBehaviour
 {
@@ -36,27 +37,18 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private List<Sprite> floorBase;
     [SerializeField] private List<Sprite> floorSpecial;
     [SerializeField] private List<BigTile> bigTiles;
+
     List<Vector3Int> regularFloorPos = new();
+
     void Start()
     {
+        
+
         gridParent = transform.GetChild(0).GetComponent<Grid>();
         floorTilemap = gridParent.transform.GetChild(0).GetComponent<Tilemap>();
         wallTilemap = gridParent.transform.GetChild(1).GetComponent<Tilemap>();
 
-        foreach(var b in bigTiles)
-        {
-            foreach (var r in b.RequiredTiles)
-            {
-                var direction = r.Direction;
-                var number = -1;
-                if (direction.Equals(Vector2Int.up)) number = 0;
-                else if (direction.Equals(new Vector2Int(1, 1))) number = 1;
-                else if (direction.Equals(Vector2Int.right)) number = 2;
-                else number = 3;
-                r.Assign(number);
-            }
-        }
-
+        ConfigureTiles();
         Setup();
         CreateFloors();
         CreateWalls();
@@ -69,6 +61,12 @@ public class LevelGenerator : MonoBehaviour
         roomHeight = roomHeightReal = Mathf.RoundToInt(roomSizeWorldUnits.x / worldUnitsInOneGridCell);
         //roomHeight = roomHeightReal + gutter * 2;
         roomWidth = roomWidthReal = Mathf.RoundToInt(roomSizeWorldUnits.y / worldUnitsInOneGridCell);
+
+        var topRight = new Vector2(roomWidth, roomHeight);
+        GameManager.Instance.BottomLeft = topRight * -1f + Vector2.right * 11 + Vector2.up * 10;
+        GameManager.Instance.TopRight = topRight - Vector2.right * 11 - Vector2.up * 10;
+        Debug.Log(topRight);
+
         //roomWidth = roomWidthReal + gutter * 2;
 
         //var gHRatio = (float)roomHeightReal / roomHeight;
@@ -116,6 +114,7 @@ public class LevelGenerator : MonoBehaviour
                 //only if its not the only one, and at a low chance
                 if (Random.value < chanceWalkerDestoy && walkers.Count > 1)
                 {
+                    //PlayerMovement.Instance.TeleportPlayer(walkers[i].pos * 2f);
                     walkers.RemoveAt(i);
                     break; //only destroy one per iteration
                 }
@@ -156,8 +155,8 @@ public class LevelGenerator : MonoBehaviour
             {
                 Walker thisWalker = walkers[i];
                 //clamp x,y to leave a 1 space boarder: leave room for walls
-                thisWalker.pos.x = Mathf.Clamp(thisWalker.pos.x, 1, roomWidth - 2);
-                thisWalker.pos.y = Mathf.Clamp(thisWalker.pos.y, 1, roomHeight - 2);
+                thisWalker.pos.x = Mathf.Clamp(thisWalker.pos.x, 2, roomWidth - 3);
+                thisWalker.pos.y = Mathf.Clamp(thisWalker.pos.y, 2, roomHeight - 3);
                 walkers[i] = thisWalker;
             }
             //check to exit loop
@@ -263,10 +262,29 @@ public class LevelGenerator : MonoBehaviour
             }
         }
     }
+
+    void ConfigureTiles()
+    {
+        foreach (var b in bigTiles)
+        {
+            foreach (var r in b.RequiredTiles)
+            {
+                var direction = r.Direction;
+                var number = -1;
+                if (direction.Equals(Vector2Int.up)) number = 0;
+                else if (direction.Equals(new Vector2Int(1, 1))) number = 1;
+                else if (direction.Equals(Vector2Int.right)) number = 2;
+                else number = 3;
+                r.Assign(number);
+            }
+        }
+    }
+
     Vector2 RandomDirection()
     {
         //pick random int between 0 and 3
         int choice = Mathf.FloorToInt(Random.value * 3.99f);
+        //int choice = Random.Range(0, 3);
         //use that int to chose a direction
         switch (choice)
         {
@@ -311,7 +329,7 @@ public class LevelGenerator : MonoBehaviour
         //spawn object
         if (type.Equals(GridSpace.Wall))
         {
-            foreach(var p in spawnPosList)
+            foreach (var p in spawnPosList)
             {
                 wallTilemap.SetTile(p, wallTile);
             }
@@ -319,7 +337,7 @@ public class LevelGenerator : MonoBehaviour
         else
         {
             var val = Random.Range(0, 1f);
-            if(val < portionSpecial)
+            if (val < portionSpecial)
             {
                 var chosen = bigTiles[Random.Range(0, bigTiles.Count)];
                 for (int i = 0; i < 4; i++)
@@ -339,7 +357,7 @@ public class LevelGenerator : MonoBehaviour
                 foreach (var p in spawnPosList)
                 {
                     SetFloorTile(p);
-                    
+
                     //SetTile(p, floorBase[Random.Range(0, floorBase.Count)]);
                 }
             }
@@ -406,15 +424,6 @@ public class LevelGenerator : MonoBehaviour
             Direction = dir;
             TileSprite = sprite;
             Number = -1;
-        }
-        public void Configure()
-        {
-            Debug.Log("hey!");
-            if (Direction.Equals(Vector2Int.up)) Number = 0;
-            else if (Direction.Equals(new Vector2Int(1, 1))) Number = 1;
-            else if (Direction.Equals(Vector2Int.right)) Number = 2;
-            else Number = 3;
-            Debug.Log(Number);
         }
         public void Assign(int number)
         {

@@ -16,9 +16,8 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public GameObject Lower { get { return lower; } }
     [HideInInspector] public GameObject Upper { get { return upper; } }
 
-    public event Action PlayerDeath;
-    public event Action PlayerReborn;
-    public Vector2 bottomLeft, topRight;
+    [HideInInspector] public event Action PlayerDeath, PlayerReborn;
+    [HideInInspector] public Vector2 BottomLeft, TopRight;
 
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
@@ -29,7 +28,7 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        lower.SetActive(false);
+        if (lower != null) lower.SetActive(false);
     }
 
     void Update()
@@ -94,4 +93,5 @@ public enum DebugMode
 {
     None,
     Pathfinding,
+    CameraMovement,
 }
