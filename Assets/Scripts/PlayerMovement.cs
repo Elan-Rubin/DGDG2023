@@ -100,4 +100,8 @@ public class PlayerMovement : MonoBehaviour
         //transform.DOMove(newPosition, 0.5f, true);
         targetPos = newPosition;
     }
+    public void TeleportPlayer(Vector2 newPosition)
+    {
+        transform.position = newPosition;
+    }
 }

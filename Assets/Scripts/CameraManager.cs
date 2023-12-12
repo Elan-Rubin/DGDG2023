@@ -27,7 +27,7 @@ public class CameraManager : MonoBehaviour
     [HideInInspector] public Vector2 LaggedMousePos { get { return laggedMousePos; } }
     public static CameraManager Instance { get { return instance; } }
     private Vector2 currentPos, targetPos;
-    private Vector2 bottomLeft, topRight;
+    private Vector2 camBottomLeft, camTopRight;
     [SerializeField] private Sprite crosshair1, crosshair2;
     [SerializeField] private Color color1, color2;
     private void Awake()
@@ -44,16 +44,27 @@ public class CameraManager : MonoBehaviour
         currentPos = targetPos = transform.position;
         cameraContainer = transform.parent;
 
-        var pp = GetComponent<PixelPerfectCamera>();
-        var ratio1 = pp.refResolutionX / pp.refResolutionY;
-        var ratio2 = pp.refResolutionY / pp.refResolutionX;
         if (menuCamera) return;
         GetComponent<PostProcessVolume>().isGlobal = true;
-        bottomLeft = GameManager.Instance.bottomLeft + Vector2.right * ratio1 + Vector2.up * ratio2;
-        topRight = GameManager.Instance.topRight - Vector2.right * ratio1 - Vector2.up * ratio2;
 
         /*GameManager.Instance.PlayerDeath += SwitchToDead;
         GameManager.Instance.PlayerReborn += SwitchToAlive;*/
+        StartCoroutine(nameof(LateStartCoroutine));
+    }
+    private IEnumerator LateStartCoroutine()
+    {
+        yield return null;
+        LateStart();
+    }
+    private void LateStart()
+    {
+        var pp = GetComponent<PixelPerfectCamera>();
+        var ratio1 = pp.refResolutionX / pp.refResolutionY;
+        var ratio2 = pp.refResolutionY / pp.refResolutionX;
+        camBottomLeft = GameManager.Instance.BottomLeft;
+        camTopRight = GameManager.Instance.TopRight;
+        //camBottomLeft = GameManager.Instance.BottomLeft + Vector2.right * ratio1 + Vector2.up * ratio2;
+        //camTopRight = GameManager.Instance.TopRight - Vector2.right * ratio1 - Vector2.up * ratio2;
     }
     private void LateUpdate()
     {
@@ -87,10 +98,15 @@ public class CameraManager : MonoBehaviour
 
         if (!menuCamera)
         {
-            if (targetPos.x < bottomLeft.x + size) targetPos.x = bottomLeft.x + (size / ratio);
-            else if (targetPos.x > topRight.x - size) targetPos.x = topRight.x - (size / ratio);
-            if (targetPos.y < bottomLeft.y + size) targetPos.y = bottomLeft.y + size;
-            else if (targetPos.y > topRight.y - size) targetPos.y = topRight.y - size;
+            if (GameManager.Instance.Debug.Equals(DebugMode.CameraMovement)) Debug.Log(camBottomLeft + "," + camTopRight);
+            if (targetPos.x < camBottomLeft.x) targetPos.x = camBottomLeft.x;
+            else if (targetPos.x > camTopRight.x) targetPos.x = camTopRight.x;
+            if (targetPos.y < camBottomLeft.y) targetPos.y = camBottomLeft.y;
+            else if (targetPos.y > camTopRight.y) targetPos.y = camTopRight.y;
+            /*if (targetPos.x < camBottomLeft.x + size) targetPos.x = camBottomLeft.x + (size / ratio);
+            else if (targetPos.x > camTopRight.x - size) targetPos.x = camTopRight.x - (size / ratio);
+            if (targetPos.y < camBottomLeft.y + size) targetPos.y = camBottomLeft.y + size;
+            else if (targetPos.y > camTopRight.y - size) targetPos.y = camTopRight.y - size;*/
         }
 
         currentPos = Vector2.Lerp(currentPos, targetPos, 0.01f * movementSpeed);
