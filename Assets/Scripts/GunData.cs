@@ -32,6 +32,9 @@ public class GunData : ScriptableObject
     public bool LifetimeVariation;
     [Range(0,90)]
     public float Inaccuracy;
+    [Header("Ammo")]
+    [HideInInspector] public int Ammo = 100;
+    [HideInInspector] public int MaxAmmo = 100;
     [Header("Abilities")]
     public bool Laser;
     public bool Machinegun;

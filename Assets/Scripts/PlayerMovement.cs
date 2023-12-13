@@ -42,6 +42,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void AddPreviousPosition()
+    {
+        previousPositions.Add(previousPositions[previousPositions.Count - 1]);
+    }
+
     void Update()
     {
         counter += Time.deltaTime;

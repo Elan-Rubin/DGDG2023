@@ -17,7 +17,6 @@ public class PlayerHealth : MonoBehaviour
     [HideInInspector] public static PlayerHealth Instance { get { return instance; } }
 
     private int highestHealth;
-
     private int startingHealth;
     [SerializeField] private Slider healthSlider;
     [SerializeField] private TextMeshProUGUI healthText;
@@ -35,7 +34,6 @@ public class PlayerHealth : MonoBehaviour
     }
     private void Update()
     {
-        //this should not be in the update
         UIManager.Instance.HealthSlider.value = health;
         UIManager.Instance.HealthSlider.maxValue = highestHealth;
         UIManager.Instance.HealthText.text = $"{health} of {highestHealth}";
@@ -100,6 +98,13 @@ public class PlayerHealth : MonoBehaviour
     public void AddHealth()
     {
         health++;
+        if(health > highestHealth) highestHealth = health;
+        if (PlayerMovement.Instance.PreviousPositions.Count < health) PlayerMovement.Instance.AddPreviousPosition();
+
+        if (health > healthBots.Count)
+        {
+            GenerateBot();
+        }
     }
 
     private void GenerateBot()

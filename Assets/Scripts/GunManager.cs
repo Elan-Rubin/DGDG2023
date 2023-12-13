@@ -32,11 +32,8 @@ public class GunManager : MonoBehaviour
     private float waitTime;
     private bool queuedShoot;
 
-    private int ammo, ammoMax;
-
     void Start()
     {
-        ammo = ammoMax = 100;
         SwitchGun(selectedGun);
     }
 
@@ -77,16 +74,26 @@ public class GunManager : MonoBehaviour
         if (waitTime >= 0) waitTime -= Time.deltaTime;
         if (Input.GetMouseButtonDown(0) || queuedShoot || (selectedGun.Machinegun && Input.GetMouseButton(0)))
         {
+            if (selectedGun.Ammo <= 0) return;
             if (waitTime <= 0) StartCoroutine(nameof(ShootGun));
             else queuedShoot = true;
         }
     }
-
+    public void AddAmmo() => AddAmmo(20);
+    public void AddAmmo(int amount)
+    {
+        //play sound effect!
+        selectedGun.Ammo = Mathf.Clamp(selectedGun.Ammo + 20, 0, selectedGun.MaxAmmo);
+        UpdateAmmo();
+    }
+    private void UpdateAmmo()
+    {
+        UIManager.Instance.GunSlider.value = (float)selectedGun.Ammo / selectedGun.MaxAmmo;
+    }
     private IEnumerator ShootGun()
     {
-        ammo -= (selectedGun.Repetitions + 1) * (selectedGun.BulletsPerShot);
-        UIManager.Instance.GunSlider.value = (float)ammo / ammoMax;
-
+        selectedGun.Ammo -= (selectedGun.Repetitions + 1) * (selectedGun.BulletsPerShot);
+        UpdateAmmo();
         if (!playingAnim)
         {
             playingAnim = true;
@@ -141,7 +148,9 @@ public class GunManager : MonoBehaviour
         var ui = UIManager.Instance;
         ui.GunImage.sprite = newGun.GunSprite;
         ui.GunImage.SetAllDirty();
-        ui.GunImage.OnRebuildRequested();
+        ui.GunImage.gameObject.SetActive(false);
+        ui.GunImage.gameObject.SetActive(true);
         ui.GunNameText.text = newGun.GunName;
+        UpdateAmmo();
     }
 }
