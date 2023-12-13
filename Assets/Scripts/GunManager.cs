@@ -15,6 +15,8 @@ public class GunManager : MonoBehaviour
         if (instance != null && instance != this) Destroy(gameObject);
         else instance = this;
     }
+    [SerializeField] private Color bulletColor;
+    public Color BulletColor { get { return bulletColor; } }
     [SerializeField] private GunData selectedGun;
     [HideInInspector] public GunData SelectedGun { get { return selectedGun; } }
     private Vector2 gunPosition;
@@ -82,7 +84,6 @@ public class GunManager : MonoBehaviour
     public void AddAmmo() => AddAmmo(20);
     public void AddAmmo(int amount)
     {
-        //play sound effect!
         selectedGun.Ammo = Mathf.Clamp(selectedGun.Ammo + 20, 0, selectedGun.MaxAmmo);
         UpdateAmmo();
     }
@@ -151,6 +152,7 @@ public class GunManager : MonoBehaviour
         ui.GunImage.gameObject.SetActive(false);
         ui.GunImage.gameObject.SetActive(true);
         ui.GunNameText.text = newGun.GunName;
+        ui.UpdateGunSprite();
         UpdateAmmo();
     }
 }

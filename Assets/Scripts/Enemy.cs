@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     private bool playerInMeleeRange;
     private float lastMeleeTime;
     private int lastHealth;
+    [SerializeField] private GameObject armorParticle, bloodParticle; 
     [SerializeField] private GameObject enemyBullet;
     [SerializeField] private bool shootBullets = false;
     [SerializeField] private float bulletCooldownBase = 1f;
@@ -25,6 +26,7 @@ public class Enemy : MonoBehaviour
     private bool dontMove;
     public bool DontMove { get { return dontMove; } set { dontMove = value; } }
     EnemyRenderer enemyRenderer;
+    bool ragdoll;
 
     void Start()
     {
@@ -86,7 +88,11 @@ public class Enemy : MonoBehaviour
             Death();
         }
         else
+        {
             StartCoroutine(enemyRenderer.FlashWhiteCoroutine());
+            var p = Instantiate(armorParticle, transform.position, Quaternion.identity);
+            Destroy(p, 1f);
+        }
     }
 
     public bool IsSlime()
@@ -101,9 +107,20 @@ public class Enemy : MonoBehaviour
 
     private void Death()
     {
+        var p = Instantiate(bloodParticle, transform.position, Quaternion.identity);
+        //Destroy(p, 20f);
+
+        var dir = (Vector2)transform.position - PlayerMovement.Instance.PlayerPosition;
+        rb.AddForce(dir.normalized * 50);
+        ragdoll = true;
+        dontMove = true;
+        StartCoroutine(nameof(RestBody));
+    }
+    IEnumerator RestBody()
+    {
+        yield return new WaitForSeconds(0.25f);
         coll.enabled = false;
         rb.bodyType = RigidbodyType2D.Static;
-        dontMove = true;
     }
 
     public void PlayerDeadDisappear()
@@ -137,6 +154,8 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player" && !dontMove)
         {
+            if (ragdoll) Physics2D.IgnoreCollision(collision.collider, collision.otherCollider);
+
             playerInMeleeRange = true;
         }
     }
@@ -145,6 +164,8 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            if (ragdoll) Physics2D.IgnoreCollision(collision.collider, collision.otherCollider);
+
             playerInMeleeRange = false;
         }
     }

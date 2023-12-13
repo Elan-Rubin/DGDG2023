@@ -296,6 +296,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startHealth: 1
+  armorParticle: {fileID: 9058937434446088495, guid: f4e9e85f0a0e4244ba57f80013383cc9, type: 3}
+  bloodParticle: {fileID: 8381900141459252455, guid: c38d4b3c7d1b9fc4ea508640abdc0e7f, type: 3}
   enemyBullet: {fileID: 0}
   shootBullets: 0
   bulletCooldownBase: 1

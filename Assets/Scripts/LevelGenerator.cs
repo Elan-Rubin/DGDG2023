@@ -10,6 +10,7 @@ using UnityEditor.TerrainTools;
 
 public class LevelGenerator : MonoBehaviour
 {
+    [SerializeField] private GameObject portal, chest; 
     enum GridSpace { Empty, Floor, Wall };
     GridSpace[,] grid;
     int roomHeight, roomWidth;
@@ -38,8 +39,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private List<Sprite> floorSpecial;
     [SerializeField] private List<BigTile> bigTiles;
 
-    List<Vector3Int> regularFloorPos = new();
-
+    List<Vector2> tails = new();
     void Start()
     {
         
@@ -54,6 +54,7 @@ public class LevelGenerator : MonoBehaviour
         CreateWalls();
         RemoveSingleWalls();
         SpawnLevel();
+        SpawnAdditional();
     }
     void Setup()
     {
@@ -114,6 +115,7 @@ public class LevelGenerator : MonoBehaviour
                 //only if its not the only one, and at a low chance
                 if (Random.value < chanceWalkerDestoy && walkers.Count > 1)
                 {
+                    tails.Add(walkers[i].pos);
                     //PlayerMovement.Instance.TeleportPlayer(walkers[i].pos * 2f);
                     walkers.RemoveAt(i);
                     break; //only destroy one per iteration
@@ -199,6 +201,12 @@ public class LevelGenerator : MonoBehaviour
             }
         }
     }
+
+    void SpawnAdditional()
+    {
+
+    }
+
     void RemoveSingleWalls()
     {
         //loop though every grid space

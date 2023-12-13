@@ -32,4 +32,8 @@ public class UIManager : MonoBehaviour
     {
         
     }
+    public void UpdateGunSprite()
+    {
+        gunImage.SetAllDirty();
+    }
 }
