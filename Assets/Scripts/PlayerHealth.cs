@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -15,7 +16,11 @@ public class PlayerHealth : MonoBehaviour
     private static PlayerHealth instance;
     [HideInInspector] public static PlayerHealth Instance { get { return instance; } }
 
+    private int highestHealth;
+
     private int startingHealth;
+    [SerializeField] private Slider healthSlider;
+    [SerializeField] private TextMeshProUGUI healthText;
 
     private void Awake()
     {
@@ -25,10 +30,16 @@ public class PlayerHealth : MonoBehaviour
     void Start()
     {
         SetupHealth();
-        startingHealth = health;
+        highestHealth = startingHealth = health;
         StartCoroutine(nameof(LateStart));
     }
-
+    private void Update()
+    {
+        //this should not be in the update
+        UIManager.Instance.HealthSlider.value = health;
+        UIManager.Instance.HealthSlider.maxValue = highestHealth;
+        UIManager.Instance.HealthText.text = $"{health} of {highestHealth}";
+    }
     public void ResetHealth() => ResetHealth(startingHealth);
     public void ResetHealth(int newHealth)
     {

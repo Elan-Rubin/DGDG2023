@@ -32,8 +32,11 @@ public class GunManager : MonoBehaviour
     private float waitTime;
     private bool queuedShoot;
 
+    private int ammo, ammoMax;
+
     void Start()
     {
+        ammo = ammoMax = 100;
         SwitchGun(selectedGun);
     }
 
@@ -81,6 +84,9 @@ public class GunManager : MonoBehaviour
 
     private IEnumerator ShootGun()
     {
+        ammo -= (selectedGun.Repetitions + 1) * (selectedGun.BulletsPerShot);
+        UIManager.Instance.GunSlider.value = (float)ammo / ammoMax;
+
         if (!playingAnim)
         {
             playingAnim = true;
@@ -131,5 +137,9 @@ public class GunManager : MonoBehaviour
         gunRenderer.transform.localPosition = selectedGun.GunOffset;
         gunRenderer.transform.GetChild(0).localPosition = selectedGun.TipOffset;
         waitTime = selectedGun.ReloadTime;
+
+        var ui = UIManager.Instance;
+        ui.GunImage.sprite = newGun.GunSprite;
+        ui.GunNameText.text = newGun.GunName;
     }
 }
