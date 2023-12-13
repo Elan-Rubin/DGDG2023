@@ -24,6 +24,10 @@ public class HitStop : MonoBehaviour
     {
         Stop(duration, 0.0f);
     }
+    public void Stop()
+    {
+        Stop(0.1f);
+    }
     IEnumerator Wait(float duration)
     {
         waiting = true;

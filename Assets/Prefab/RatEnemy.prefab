@@ -317,7 +317,7 @@ MonoBehaviour:
   map: {fileID: 0}
   target: {fileID: 0}
   desiredDistanceToTarget: 0.75
-  speed: 7
+  speed: 5
   pathfindWhenTargetOutOfSight: 1
   chargeWhenTargetInSight: 1
   width: 64

@@ -7,10 +7,10 @@ using UnityEngine.Tilemaps;
 using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 using Unity.VisualScripting;
 using UnityEditor.TerrainTools;
+using UnityEngine.Rendering;
 
 public class LevelGenerator : MonoBehaviour
 {
-    [SerializeField] private GameObject portal, chest; 
     enum GridSpace { Empty, Floor, Wall };
     GridSpace[,] grid;
     int roomHeight, roomWidth;
@@ -24,6 +24,10 @@ public class LevelGenerator : MonoBehaviour
         public Vector2 dir;
         public Vector2 pos;
     }
+    [SerializeField] private int enemyCount = 15;
+    [SerializeField] private int chestCount = 2;
+    [SerializeField] private GameObject chest, portal;
+
     List<Walker> walkers;
     [SerializeField] float chanceWalkerChangeDir = 0.5f, chanceWalkerSpawn = 0.05f;
     [SerializeField] float chanceWalkerDestoy = 0.05f;
@@ -40,6 +44,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private List<BigTile> bigTiles;
 
     List<Vector2> tails = new();
+    List<Vector2> regulars = new();
     void Start()
     {
         
@@ -151,8 +156,9 @@ public class LevelGenerator : MonoBehaviour
                 Walker thisWalker = walkers[i];
                 thisWalker.pos += thisWalker.dir;
                 walkers[i] = thisWalker;
+
             }
-            //avoid boarder of grid
+            //avoid border of grid
             for (int i = 0; i < walkers.Count; i++)
             {
                 Walker thisWalker = walkers[i];
@@ -160,6 +166,7 @@ public class LevelGenerator : MonoBehaviour
                 thisWalker.pos.x = Mathf.Clamp(thisWalker.pos.x, 2, roomWidth - 3);
                 thisWalker.pos.y = Mathf.Clamp(thisWalker.pos.y, 2, roomHeight - 3);
                 walkers[i] = thisWalker;
+                regulars.Add(thisWalker.pos);
             }
             //check to exit loop
             if ((float)NumberOfFloors() / (float)grid.Length > percentToFill)
@@ -204,7 +211,23 @@ public class LevelGenerator : MonoBehaviour
 
     void SpawnAdditional()
     {
+        regulars = regulars.OrderBy(x => Random.value).ToList();
+        tails = tails.OrderBy(x => Random.value).ToList();
 
+        while (tails.Count < chestCount + 2)
+        {
+            var t = regulars[0];
+            regulars.RemoveAt(0);
+            tails.Add(t);
+        }
+
+        PlayerMovement.Instance.TeleportPlayer(tails[0] * 2f);
+        var p = Instantiate(portal, tails[1] * 2f, Quaternion.identity);
+        PlayerRenderer.Instance.AssignTarget(p.transform.position);
+        for (int i = 0; i < chestCount; i++)
+        {
+            Instantiate(chest, tails[i + 2] * 2f, Quaternion.identity);
+        }
     }
 
     void RemoveSingleWalls()

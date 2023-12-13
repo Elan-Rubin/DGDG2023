@@ -1,20 +1,14 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
-//using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 
 public class GunManager : MonoBehaviour
 {
-    private static GunManager instance;
-    public static GunManager Instance { get { return instance; } }
-    private void Awake()
-    {
-        if (instance != null && instance != this) Destroy(gameObject);
-        else instance = this;
-    }
+    
+
     [SerializeField] private Color bulletColor;
     public Color BulletColor { get { return bulletColor; } }
     [SerializeField] private GunData selectedGun;
@@ -34,6 +28,13 @@ public class GunManager : MonoBehaviour
     private float waitTime;
     private bool queuedShoot;
 
+    private static GunManager instance;
+    public static GunManager Instance { get { return instance; } }
+    private void Awake()
+    {
+        if (instance != null && instance != this) Destroy(gameObject);
+        else instance = this;
+    }
     void Start()
     {
         SwitchGun(selectedGun);
@@ -147,12 +148,12 @@ public class GunManager : MonoBehaviour
         waitTime = selectedGun.ReloadTime;
 
         var ui = UIManager.Instance;
+        var prevMat = ui.GunImage.material;
+        ui.GunImage.material = null;
         ui.GunImage.sprite = newGun.GunSprite;
         ui.GunImage.SetAllDirty();
-        ui.GunImage.gameObject.SetActive(false);
-        ui.GunImage.gameObject.SetActive(true);
+        ui.GunImage.material = prevMat;
         ui.GunNameText.text = newGun.GunName;
-        ui.UpdateGunSprite();
         UpdateAmmo();
     }
 }

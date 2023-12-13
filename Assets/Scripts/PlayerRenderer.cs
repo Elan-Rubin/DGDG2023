@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class PlayerRenderer : MonoBehaviour
 {
@@ -16,6 +17,9 @@ public class PlayerRenderer : MonoBehaviour
     private static PlayerRenderer instance;
     public static PlayerRenderer Instance { get { return instance; } }
     [SerializeField] private GameObject playerCorpse;
+    [SerializeField] private Transform compass;
+    private Vector2 compassTarget;
+
     private void Awake()
     {
         if (instance != null && instance != this) Destroy(gameObject);
@@ -39,6 +43,15 @@ public class PlayerRenderer : MonoBehaviour
         transform.GetChild(1).GetComponent<SpriteRenderer>().flipX = flip;
 
         animator.SetBool("walking", PlayerMovement.Instance.Moving);
+
+        compass.LookAt((Vector3)compassTarget);
+        compass.right = compassTarget - (Vector2)compass.position;
+        var dist = Vector2.Distance(compass.position, compassTarget);
+        if (dist < 15)
+        {
+            compass.GetChild(0).GetComponent<SpriteRenderer>().color = Color.Lerp(Color.clear, Color.white, dist / 15f);
+        }
+        else compass.GetChild(0).GetComponent<SpriteRenderer>().color = Color.white;
     }
 
     public void FlashWhite()
@@ -73,5 +86,10 @@ public class PlayerRenderer : MonoBehaviour
     {
         var p = Instantiate(playerCorpse, location, Quaternion.identity).GetComponent<SpriteRenderer>();
         p.flipX = Random.value > 0.5f;
+    }
+
+    public void AssignTarget(Vector2 targetPos)
+    {
+        compassTarget = targetPos;
     }
 }
