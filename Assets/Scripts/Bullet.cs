@@ -27,7 +27,7 @@ public class Bullet : MonoBehaviour
         if (rb == null) return;
         var v = rb.velocity;
         var angle = Mathf.Atan2(v.y, v.x) * Mathf.Rad2Deg;
-        bulletRenderer.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -84,7 +84,9 @@ public class Bullet : MonoBehaviour
     private void MakeParticle()
     {
         var p = Instantiate(particle, transform.position, Quaternion.identity).gameObject;
-        //Destroy(p, 1f);
+        p.transform.rotation = transform.rotation;
+        p.transform.Rotate(0, 0, 90);
+        Destroy(p, 1f);
     }
 
     public void StartLifetime(float time) => StartCoroutine(nameof(StartLifetimeCoroutine), time);

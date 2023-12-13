@@ -140,6 +140,8 @@ public class GunManager : MonoBehaviour
 
         var ui = UIManager.Instance;
         ui.GunImage.sprite = newGun.GunSprite;
+        ui.GunImage.SetAllDirty();
+        ui.GunImage.OnRebuildRequested();
         ui.GunNameText.text = newGun.GunName;
     }
 }
