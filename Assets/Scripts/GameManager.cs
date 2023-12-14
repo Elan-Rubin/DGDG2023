@@ -19,6 +19,11 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public event Action PlayerDeath, PlayerReborn;
     [HideInInspector] public Vector2 BottomLeft, TopRight;
 
+    private int enemiesRemaining;
+    [SerializeField] private GameObject health, ammo;
+    public GameObject Health { get { return health; } }
+    public GameObject Ammo { get { return ammo; } }
+
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
     private void Awake()

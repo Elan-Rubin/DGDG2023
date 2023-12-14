@@ -110,6 +110,15 @@ public class Enemy : MonoBehaviour
         var p = Instantiate(bloodParticle, transform.position, Quaternion.identity);
         //Destroy(p, 20f);
 
+        if(Random.value > 0.9f)
+        {
+            Instantiate(GameManager.Instance.Health, transform.position, Quaternion.identity);
+        }
+        else if(Random.value > 0.75f)
+        {
+            Instantiate(GameManager.Instance.Ammo, transform.position, Quaternion.identity);
+        }
+
         var dir = (Vector2)transform.position - PlayerMovement.Instance.PlayerPosition;
         rb.AddForce(dir.normalized * 50);
         ragdoll = true;

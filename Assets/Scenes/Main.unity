@@ -7620,7 +7620,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1560, y: 0}
+  m_AnchoredPosition: {x: 1560, y: -630}
   m_SizeDelta: {x: 500, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &125947699
@@ -8161,15 +8161,45 @@ Tilemap:
   m_Enabled: 1
   m_Tiles: {}
   m_AnimatedTiles: {}
-  m_TileAssetArray: []
-  m_TileSpriteArray: []
-  m_TileMatrixArray: []
-  m_TileColorArray: []
+  m_TileAssetArray:
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  m_TileSpriteArray:
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  m_TileMatrixArray:
+  - m_RefCount: 0
+    m_Data:
+      e00: 0
+      e01: 0
+      e02: 2.439459e-19
+      e03: 2.439459e-19
+      e10: 0
+      e11: 0
+      e12: 5.23e-43
+      e13: 5.23e-43
+      e20: 363599
+      e21: -1.4545945e+10
+      e22: -8.972489e-29
+      e23: -6.3098593e-10
+      e30: 4.5905e-41
+      e31: 5.25e-43
+      e32: 5.23e-43
+      e33: 5.25e-43
+  m_TileColorArray:
+  - m_RefCount: 0
+    m_Data: {r: 3.6666e-41, g: 3.6666e-41, b: 3.6666e-41, a: 3.6666e-41}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: 0, y: 0, z: 0}
-  m_Size: {x: 0, y: 0, z: 1}
+  m_Origin: {x: -6, y: 0, z: 0}
+  m_Size: {x: 6, y: 5, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -8377,7 +8407,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 360, y: 0}
+  m_AnchoredPosition: {x: 360, y: -630}
   m_SizeDelta: {x: 500, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &545771966
@@ -8756,7 +8786,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: upgrade
+  m_text: name
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 22ff3af235f032b4a80d23ef0aff44ba, type: 2}
   m_sharedMaterial: {fileID: -6373841219787626374, guid: 22ff3af235f032b4a80d23ef0aff44ba, type: 2}
@@ -18383,7 +18413,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 960, y: 0}
+  m_AnchoredPosition: {x: 960, y: -630}
   m_SizeDelta: {x: 500, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1068653476
@@ -24097,7 +24127,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eb018a1f9a20b94983b69ebdac364c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugSprite: {fileID: 21300000, guid: f06792567c4e98b43bdec91c6cc011ab, type: 3}
   roomSizeWorldUnits: {x: 25, y: 25}
+  enemies:
+  - Tier: 1
+    Enemies:
+    - {fileID: 4009823014915981693, guid: 094e1e3f8c94d7e4c9a50d9379038232, type: 3}
+    - {fileID: 1564615499394487868, guid: fb029f375ff118c4f84be2ca53eb16ff, type: 3}
+  - Tier: 2
+    Enemies:
+    - {fileID: 8455346567205216988, guid: 0f4ded6884dd933499d70b2640031ede, type: 3}
+    - {fileID: 3921686678725566640, guid: 489a6be75e56bab46aea3aa854fcfed9, type: 3}
   enemyCount: 15
   chestCount: 2
   chest: {fileID: 630234631729106993, guid: cc0b03bf7c8c1594a804e6f055094e28, type: 3}
@@ -29930,6 +29970,8 @@ MonoBehaviour:
   upper: {fileID: 1101364}
   BottomLeft: {x: 0, y: 0}
   TopRight: {x: 0, y: 0}
+  health: {fileID: 3603782945657478819, guid: 944530b463f6d974991b316226062d39, type: 3}
+  ammo: {fileID: 3578790111634137817, guid: 08f811395a955c449900df8228b2890e, type: 3}
 --- !u!222 &1495526384073320692
 CanvasRenderer:
   m_ObjectHideFlags: 0

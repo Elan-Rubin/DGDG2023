@@ -17,6 +17,7 @@ public class LevelGenerator : MonoBehaviour
     int roomHeightReal, roomWidthReal;
     //float gutterRatio;
     //[SerializeField] private int gutter = 10;
+    [SerializeField] private Sprite debugSprite;
     [SerializeField] Vector2Int roomSizeWorldUnits = new Vector2Int(30, 30);
     float worldUnitsInOneGridCell = 1;
     struct Walker
@@ -24,6 +25,7 @@ public class LevelGenerator : MonoBehaviour
         public Vector2 dir;
         public Vector2 pos;
     }
+    [SerializeField] private List<EnemyTier> enemies;
     [SerializeField] private int enemyCount = 15;
     [SerializeField] private int chestCount = 2;
     [SerializeField] private GameObject chest, portal;
@@ -47,7 +49,7 @@ public class LevelGenerator : MonoBehaviour
     List<Vector2> regulars = new();
     void Start()
     {
-        
+
 
         gridParent = transform.GetChild(0).GetComponent<Grid>();
         floorTilemap = gridParent.transform.GetChild(0).GetComponent<Tilemap>();
@@ -57,7 +59,7 @@ public class LevelGenerator : MonoBehaviour
         Setup();
         CreateFloors();
         CreateWalls();
-        RemoveSingleWalls();
+        //RemoveSingleWalls();
         SpawnLevel();
         SpawnAdditional();
     }
@@ -209,24 +211,50 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
+    Vector2 ConvertPos(Vector2 gridPos)
+    {
+        return new Vector2(gridPos.x * 2 - roomSizeWorldUnits.x + 2.5f, gridPos.y * 2 - roomSizeWorldUnits.y + 2.5f);
+    }
+
     void SpawnAdditional()
     {
+        /*Debug.Log(tails.Count);
+        foreach(var d in tails)
+        {
+            var a = Instantiate(new GameObject("a"), new Vector2(d.x * 2 - roomSizeWorldUnits.x + 2, d.y * 2 - roomSizeWorldUnits.y + 2),Quaternion.identity);
+            var s = a.AddComponent<SpriteRenderer>();
+            s.sprite = debugSprite;
+            
+            //SetTile(new Vector3Int((int)d.x * 2 - roomSizeWorldUnits.x, (int)d.y * 2 - roomSizeWorldUnits.y), debugSprite);
+        }
+        return;*/
+
         regulars = regulars.OrderBy(x => Random.value).ToList();
         tails = tails.OrderBy(x => Random.value).ToList();
+        var index = 0;
 
         while (tails.Count < chestCount + 2)
         {
-            var t = regulars[0];
-            regulars.RemoveAt(0);
+            var t = regulars[++index];
             tails.Add(t);
         }
-
-        PlayerMovement.Instance.TeleportPlayer(tails[0] * 2f);
-        var p = Instantiate(portal, tails[1] * 2f, Quaternion.identity);
+        var playerPos = tails[0];
+        PlayerMovement.Instance.TeleportPlayer(ConvertPos(playerPos));
+        var p = Instantiate(portal, ConvertPos(tails[1]), Quaternion.identity);
         PlayerRenderer.Instance.AssignTarget(p.transform.position);
         for (int i = 0; i < chestCount; i++)
         {
-            Instantiate(chest, tails[i + 2] * 2f, Quaternion.identity);
+            Instantiate(chest, ConvertPos(tails[i + 2]) / 2f, Quaternion.identity);
+        }
+        for (int i = 0; i < enemyCount; i++)
+        {
+            var spawnPos = playerPos;
+            do
+            {
+                spawnPos = regulars[++index];
+            }
+            while (Vector2.Distance(spawnPos, playerPos) < 15f);
+            Instantiate(enemies[0].Enemies[Random.Range(0, 1)], ConvertPos(spawnPos), Quaternion.identity);
         }
     }
 
@@ -460,5 +488,11 @@ public class LevelGenerator : MonoBehaviour
         {
             Number = number;
         }
+    }
+    [System.Serializable]
+    public struct EnemyTier
+    {
+        public int Tier;
+        public List<GameObject> Enemies;
     }
 }
