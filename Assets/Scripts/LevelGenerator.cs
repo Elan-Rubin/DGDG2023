@@ -213,7 +213,11 @@ public class LevelGenerator : MonoBehaviour
 
     Vector2 ConvertPos(Vector2 gridPos)
     {
-        return new Vector2(gridPos.x * 2 - roomSizeWorldUnits.x + 2.5f, gridPos.y * 2 - roomSizeWorldUnits.y + 2.5f);
+        //depends on positive or negative!!
+        var offsetX = roomSizeWorldUnits.x > 0 ? (2.5f * Mathf.Sign(roomSizeWorldUnits.x)) : 0;
+        var offsetY = roomSizeWorldUnits.x > 0 ? (2.5f * Mathf.Sign(roomSizeWorldUnits.x)) : 0;
+
+        return new Vector2(gridPos.x * 2 - roomSizeWorldUnits.x + offsetX, gridPos.y * 2 - roomSizeWorldUnits.y + offsetY);
     }
 
     void SpawnAdditional()
@@ -244,7 +248,7 @@ public class LevelGenerator : MonoBehaviour
         PlayerRenderer.Instance.AssignTarget(p.transform.position);
         for (int i = 0; i < chestCount; i++)
         {
-            Instantiate(chest, ConvertPos(tails[i + 2]) / 2f, Quaternion.identity);
+            Instantiate(chest, ConvertPos(tails[i + 2]), Quaternion.identity);
         }
         for (int i = 0; i < enemyCount; i++)
         {
@@ -253,7 +257,7 @@ public class LevelGenerator : MonoBehaviour
             {
                 spawnPos = regulars[++index];
             }
-            while (Vector2.Distance(spawnPos, playerPos) < 15f);
+            while (Vector2.Distance(spawnPos, playerPos) < 6f);
             Instantiate(enemies[0].Enemies[Random.Range(0, 1)], ConvertPos(spawnPos), Quaternion.identity);
         }
     }

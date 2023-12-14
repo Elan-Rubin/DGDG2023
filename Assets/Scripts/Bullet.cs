@@ -65,13 +65,13 @@ public class Bullet : MonoBehaviour
                 break;
         }
     }
-
-    private void DestroyBullet()
+    private void DestroyBullet() => DestroyBullet(true);
+    private void DestroyBullet(bool hitStop)
     {
         if (destroying) return;
         destroying = true;
 
-        if (!enemyBullet) HitStop.Instance.Stop();
+        if (!enemyBullet && hitStop) HitStop.Instance.Stop();
 
         Destroy(GetComponent<Collider2D>());
         Destroy(GetComponent<Rigidbody2D>());
@@ -95,6 +95,6 @@ public class Bullet : MonoBehaviour
     private IEnumerator StartLifetimeCoroutine(float time)
     {
         yield return new WaitForSeconds(time);
-        DestroyBullet();
+        DestroyBullet(false);
     }
 }

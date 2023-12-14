@@ -49,7 +49,7 @@ public class PlayerRenderer : MonoBehaviour
         var dist = Vector2.Distance(compass.position, compassTarget);
         if (dist < 15)
         {
-            compass.GetChild(0).GetComponent<SpriteRenderer>().color = Color.Lerp(Color.clear, Color.white, dist / 15f);
+            compass.GetChild(0).GetComponent<SpriteRenderer>().color = Color.Lerp(Color.clear, Color.white, (dist-10f*Mathf.Lerp(0,1,dist/15f)) / 15f);
         }
         else compass.GetChild(0).GetComponent<SpriteRenderer>().color = Color.white;
     }
