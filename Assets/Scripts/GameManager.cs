@@ -99,4 +99,5 @@ public enum DebugMode
     None,
     Pathfinding,
     CameraMovement,
+    Invincible,
 }

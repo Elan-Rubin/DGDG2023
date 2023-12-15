@@ -94,7 +94,9 @@ public class GunManager : MonoBehaviour
     }
     private IEnumerator ShootGun()
     {
-        selectedGun.Ammo -= (selectedGun.Repetitions + 1) * (selectedGun.BulletsPerShot);
+        if (!GameManager.Instance.Debug.Equals(DebugMode.Invincible))
+            selectedGun.Ammo -= (selectedGun.Repetitions + 1) * (selectedGun.BulletsPerShot);
+
         UpdateAmmo();
         if (!playingAnim)
         {
@@ -148,11 +150,11 @@ public class GunManager : MonoBehaviour
         waitTime = selectedGun.ReloadTime;
 
         var ui = UIManager.Instance;
-        var prevMat = ui.GunImage.material;
-        ui.GunImage.material = null;
+        //var prevMat = ui.GunImage.material;
+        //ui.GunImage.material = null;
         ui.GunImage.sprite = newGun.GunSprite;
-        ui.GunImage.SetAllDirty();
-        ui.GunImage.material = prevMat;
+        //ui.GunImage.SetAllDirty();
+        //ui.GunImage.material = prevMat;
         ui.GunNameText.text = newGun.GunName;
         UpdateAmmo();
     }

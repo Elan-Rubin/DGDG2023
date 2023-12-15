@@ -34,9 +34,11 @@ public class PlayerHealth : MonoBehaviour
     }
     private void Update()
     {
-        UIManager.Instance.HealthSlider.value = health;
-        UIManager.Instance.HealthSlider.maxValue = highestHealth;
-        UIManager.Instance.HealthText.text = $"{health} of {highestHealth}";
+        //this shouldnt be in the update
+        var ui = UIManager.Instance;
+        ui.HealthSlider.value = health;
+        ui.HealthSlider.maxValue = highestHealth;
+        ui.HealthText.text = $"{health} of {highestHealth}";
     }
     public void ResetHealth() => ResetHealth(startingHealth);
     public void ResetHealth(int newHealth)
@@ -76,6 +78,8 @@ public class PlayerHealth : MonoBehaviour
 
     public void Damage(int damage)
     {
+        if (GameManager.Instance.Debug.Equals(DebugMode.Invincible)) return;
+
         SoundManager.Instance.PlaySoundEffect("playerdamage");
 
         PlayerRenderer.Instance.FlashWhite();
