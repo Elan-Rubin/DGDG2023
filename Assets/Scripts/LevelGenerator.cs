@@ -214,8 +214,8 @@ public class LevelGenerator : MonoBehaviour
     Vector2 ConvertPos(Vector2 gridPos)
     {
         //depends on positive or negative!!
-        var offsetX = roomSizeWorldUnits.x > 0 ? (2.5f * Mathf.Sign(roomSizeWorldUnits.x)) : 0;
-        var offsetY = roomSizeWorldUnits.x > 0 ? (2.5f * Mathf.Sign(roomSizeWorldUnits.x)) : 0;
+        var offsetX = roomSizeWorldUnits.x > 0 ? (2f * Mathf.Sign(roomSizeWorldUnits.x)) : 0;
+        var offsetY = roomSizeWorldUnits.x > 0 ? (2f * Mathf.Sign(roomSizeWorldUnits.x)) : 0;
 
         return new Vector2(gridPos.x * 2 - roomSizeWorldUnits.x + offsetX, gridPos.y * 2 - roomSizeWorldUnits.y + offsetY);
     }
