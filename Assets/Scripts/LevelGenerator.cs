@@ -250,6 +250,7 @@ public class LevelGenerator : MonoBehaviour
         {
             Instantiate(chest, ConvertPos(tails[i + 2]), Quaternion.identity);
         }
+
         for (int i = 0; i < enemyCount; i++)
         {
             var spawnPos = playerPos;
@@ -258,7 +259,8 @@ public class LevelGenerator : MonoBehaviour
                 spawnPos = regulars[++index];
             }
             while (Vector2.Distance(spawnPos, playerPos) < 6f);
-            Instantiate(enemies[0].Enemies[Random.Range(0, 1)], ConvertPos(spawnPos), Quaternion.identity);
+            var tier = Random.value > 0.25f ? 1 : 0;
+            Instantiate(enemies[tier].Enemies[Random.Range(0, enemies[tier].Enemies.Count())], ConvertPos(spawnPos), Quaternion.identity); ;
         }
     }
 

@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 using static UnityEngine.GraphicsBuffer;
 
 public class Enemy : MonoBehaviour
@@ -13,8 +15,10 @@ public class Enemy : MonoBehaviour
     private bool playerInMeleeRange;
     private float lastMeleeTime;
     private int lastHealth;
-    [SerializeField] private GameObject armorParticle, bloodParticle; 
+    [SerializeField] private GameObject armorParticle, bloodParticle;
     [SerializeField] private GameObject enemyBullet;
+    [SerializeField] private LayerMask ignore;
+
     [SerializeField] private bool shootBullets = false;
     [SerializeField] private float bulletCooldownBase = 1f;
     [SerializeField] private float meleeCooldown = 1f;
@@ -24,22 +28,27 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D rb;
     public Rigidbody2D Rb { get { return rb; } }
     private bool dontMove;
+    private bool targetVisible = false;
     public bool DontMove { get { return dontMove; } set { dontMove = value; } }
     EnemyRenderer enemyRenderer;
     bool ragdoll;
 
     void Start()
     {
+
         enemyRenderer = GetComponent<EnemyRenderer>();
         rb = GetComponent<Rigidbody2D>();
         coll = GetComponent<CircleCollider2D>();
         bulletCooldown = bulletCooldownBase;
         bulletPos = transform.GetChild(1);
         health = startHealth;
+        bulletCooldown = Random.Range(bulletCooldownBase * 0.5f, bulletCooldownBase * 2f);
+
         GameManager.Instance.PlayerDeath += PlayerDeadDisappear;
         GameManager.Instance.PlayerReborn += PlayerRebornReappear;
         enemyRenderer.SelectSpriteForHealth();
 
+        InvokeRepeating(nameof(UpdateTargetVisible), 0f, 1f);
     }
 
     void Update()
@@ -56,25 +65,41 @@ public class Enemy : MonoBehaviour
             lastMeleeTime = Time.time;
         }
     }
+    private void UpdateTargetVisible()
+    {
+        targetVisible = UpdateTargetVisible(true);
+    }
+    private bool UpdateTargetVisible(bool a)
+    {
+        var player = PlayerMovement.Instance.PlayerPosition;
+        var self = transform.position;
 
+        enemyRenderer.Flip = player.x < self.x;
+
+        var dist = Vector2.Distance(self, player);
+        if (dist > 10f) return false;
+        if (dist < 3f) return false;
+
+        var pointer = ((Vector2)self - player).normalized;
+        var hit = Physics2D.Raycast(self, -pointer, 10, ~ignore);
+        return hit.collider.gameObject.CompareTag("Player");
+    }
     private void TryRangedAttackPlayer()
     {
-        var p = GetComponent<PathfinderEnemy>();
-        if (shootBullets && p.TargetVisible && !dontMove)
+        if (shootBullets && targetVisible && !dontMove)
             bulletCooldown -= Time.deltaTime;
 
         if (bulletCooldown <= 0)
         {
+            bulletCooldown = bulletCooldownBase;
             //this is copied code should be simplified later
             var spawnPos = (Vector2)transform.position + new Vector2(bulletPos.localPosition.x * (enemyRenderer.Flip ? 1 : -1), bulletPos.localPosition.y);
             var b = Instantiate(enemyBullet, spawnPos, Quaternion.identity).GetComponent<Rigidbody2D>();
             var bullet = b.GetComponent<Bullet>();
-            bullet.StartLifetime(0.5f);
-            var dif = ((Vector2)GetComponent<PathfinderEnemy>().Target.transform.position - spawnPos).normalized;
+            bullet.StartLifetime(1f);
+            var dif = (PlayerMovement.Instance.PlayerPosition - spawnPos).normalized;
             bullet.Velocity = Quaternion.Euler(0, 0, Random.Range(-45, 45)) * dif.normalized;
-            b.AddForce(500 * dif);
-
-            bulletCooldown = bulletCooldownBase;
+            b.AddForce(275 * dif);
         }
     }
 
@@ -110,11 +135,11 @@ public class Enemy : MonoBehaviour
         var p = Instantiate(bloodParticle, transform.position, Quaternion.identity);
         //Destroy(p, 20f);
 
-        if(Random.value > 0.9f)
+        if (Random.value > 0.9f)
         {
             Instantiate(GameManager.Instance.Health, transform.position, Quaternion.identity);
         }
-        else if(Random.value > 0.75f)
+        else if (Random.value > 0.75f)
         {
             Instantiate(GameManager.Instance.Ammo, transform.position, Quaternion.identity);
         }

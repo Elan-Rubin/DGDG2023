@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Pathfinding;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -91,7 +92,6 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex == 8 ? 0 : SceneManager.GetActiveScene().buildIndex + 1); 
     }
-
 }
 
 public enum DebugMode
