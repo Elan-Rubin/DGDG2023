@@ -9,29 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: 8e7a7cf1f5033e645baaf85d6605f359
   - enabled: 1
-    path: Assets/Scenes/Level 1.unity
-    guid: a97f6229d59f3c04b90d6ae06b6e72f8
-  - enabled: 1
-    path: Assets/Scenes/Level 2.unity
-    guid: 4bd80cad2eed3c348ba9513e73f6f737
-  - enabled: 1
-    path: Assets/Scenes/Level 3.unity
-    guid: 2012266f60271364a85fae4fdba6f510
-  - enabled: 1
-    path: Assets/Scenes/Level 4.unity
-    guid: d181f6dd36c788d4cac990e70f5c3bae
-  - enabled: 1
-    path: Assets/Scenes/Level 5.unity
-    guid: 13706b34d6149c942b5ddd5fd092992a
-  - enabled: 1
-    path: Assets/Scenes/Level 6.unity
-    guid: 85f6f28fa1c8e0f40ab520c44123ee07
-  - enabled: 1
-    path: Assets/Scenes/Level 7.unity
-    guid: 6afd4cfbc91bde74b97f81b8d4a9a78c
-  - enabled: 1
-    path: Assets/Scenes/Level 8.unity
-    guid: d5dbead81c3624ce680a0c04432134e1
+    path: Assets/Scenes/Main.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/SnakeGame/Scenes/SnakeMain.unity
     guid: 1aeda4726619049caa93b1c2ad51a04b
