@@ -80,12 +80,12 @@ public class Enemy : MonoBehaviour
         enemyRenderer.Flip = player.x < self.x;
 
         var dist = Vector2.Distance(self, player);
-        if (dist > 10f) return false;
-        if (dist < 3f) return false;
+        if (dist > 20f) return false;
+        if (dist < 2f) return false;
 
         var pointer = ((Vector2)self - player).normalized;
         var hit = Physics2D.Raycast(self, -pointer, 10, ~ignore);
-        return hit.collider.gameObject.CompareTag("Player");
+        return hit.collider == null || hit.collider.gameObject.CompareTag("Player");
     }
     private void TryRangedAttackPlayer()
     {
@@ -99,10 +99,10 @@ public class Enemy : MonoBehaviour
             var spawnPos = (Vector2)transform.position + new Vector2(bulletPos.localPosition.x * (enemyRenderer.Flip ? 1 : -1), bulletPos.localPosition.y);
             var b = Instantiate(enemyBullet, spawnPos, Quaternion.identity).GetComponent<Rigidbody2D>();
             var bullet = b.GetComponent<Bullet>();
-            bullet.StartLifetime(1f);
+            bullet.StartLifetime(1.5f);
             var dif = (PlayerMovement.Instance.PlayerPosition - spawnPos).normalized;
             bullet.Velocity = Quaternion.Euler(0, 0, Random.Range(-45, 45)) * dif.normalized;
-            b.AddForce(275 * dif);
+            b.AddForce(325 * dif);
         }
     }
 

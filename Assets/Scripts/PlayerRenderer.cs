@@ -7,6 +7,7 @@ using static UnityEngine.GraphicsBuffer;
 public class PlayerRenderer : MonoBehaviour
 {
     private SpriteRenderer playerSprite;
+    [HideInInspector] public SpriteRenderer PlayerSprite { get { return playerSprite; } }
     private Animator animator;
     private bool flip;
     public bool Flip { get { return flip; } }
@@ -49,7 +50,7 @@ public class PlayerRenderer : MonoBehaviour
         var dist = Vector2.Distance(compass.position, compassTarget);
         if (dist < 15)
         {
-            compass.GetChild(0).GetComponent<SpriteRenderer>().color = Color.Lerp(Color.clear, Color.white, 0.0067f * Mathf.Pow(dist,2));
+            compass.GetChild(0).GetComponent<SpriteRenderer>().color = Color.Lerp(Color.clear, Color.white, 0.0067f * Mathf.Pow(dist, 2));
         }
         else compass.GetChild(0).GetComponent<SpriteRenderer>().color = Color.white;
     }
@@ -68,6 +69,7 @@ public class PlayerRenderer : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             playerSprite.material = mat;
             flashing = false;
+            PlayerHealth.Instance.CoolingDown = true;
         }
     }
 

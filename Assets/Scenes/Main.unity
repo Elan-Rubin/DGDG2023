@@ -8859,7 +8859,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 619991047}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e77f0eb37dd8ef542acd15ee26ba262c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5994295f976508f4bb36255fd2eeb994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   grid: {fileID: 619991048}
@@ -30531,7 +30531,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66f34cc7bc83e2b4cabcaff12ebd87a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug: 3
+  debug: 0
   lower: {fileID: 0}
   upper: {fileID: 1101364}
   BottomLeft: {x: 0, y: 0}
@@ -36271,6 +36271,16 @@ MonoBehaviour:
   gunRenderer: {fileID: 2034054143955442605}
   gunRotator: {fileID: 5781608879698979076}
   gunTip: {fileID: 2795610256753604643}
+  gunList:
+  - {fileID: 11400000, guid: 1cbe67f00c3c9f64ea901dcfd15593cc, type: 2}
+  - {fileID: 11400000, guid: 3644b33bca76fef44bb8500063bb19f1, type: 2}
+  - {fileID: 11400000, guid: d0829391d326f7149b93f4a01ecd6eb1, type: 2}
+  - {fileID: 11400000, guid: 8309bf2a8d765b746b2179919f61b8d1, type: 2}
+  - {fileID: 11400000, guid: c55e1d613b30d9241a548e87a5b4288e, type: 2}
+  - {fileID: 11400000, guid: 6349084001807fe47b426b34fec4d5dc, type: 2}
+  - {fileID: 11400000, guid: 43e16fcc23465254ebc4e4a21f02101b, type: 2}
+  - {fileID: 11400000, guid: 5b5c6f6d72ab8c34d8603289802f466b, type: 2}
+  - {fileID: 11400000, guid: 0fd6f6143867e56479f4f9e5725ca9fb, type: 2}
 --- !u!1 &4465015638217725804
 GameObject:
   m_ObjectHideFlags: 0

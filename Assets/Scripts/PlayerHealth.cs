@@ -20,6 +20,10 @@ public class PlayerHealth : MonoBehaviour
     private int startingHealth;
     [SerializeField] private Slider healthSlider;
     [SerializeField] private TextMeshProUGUI healthText;
+    private float damageCooldown;
+    private bool coolingDown;
+    public bool CoolingDown { set { coolingDown = value; }  }
+    private SpriteRenderer spriteRenderer;
 
     private void Awake()
     {
@@ -28,12 +32,19 @@ public class PlayerHealth : MonoBehaviour
     }
     void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         SetupHealth();
         highestHealth = startingHealth = health;
         StartCoroutine(nameof(LateStart));
     }
     private void Update()
     {
+        if (damageCooldown > 0 && coolingDown)
+        {
+            damageCooldown -= Time.deltaTime;
+            PlayerRenderer.Instance.PlayerSprite.color = Color.Lerp(Color.white, Color.clear, damageCooldown);
+        }
+        else coolingDown = false;
         //this shouldnt be in the update
         var ui = UIManager.Instance;
         ui.HealthSlider.value = health;
@@ -45,6 +56,7 @@ public class PlayerHealth : MonoBehaviour
     {
         health = newHealth;
         SetupHealth();
+        damageCooldown = 1;
     }
 
     private void SetupHealth()
@@ -79,6 +91,8 @@ public class PlayerHealth : MonoBehaviour
     public void Damage(int damage)
     {
         if (GameManager.Instance.Debug.Equals(DebugMode.Invincible)) return;
+        else if (damageCooldown > 0) return;
+        damageCooldown = 1f;
 
         SoundManager.Instance.PlaySoundEffect("playerdamage");
 

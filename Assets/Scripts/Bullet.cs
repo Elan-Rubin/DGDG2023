@@ -85,7 +85,8 @@ public class Bullet : MonoBehaviour
     }
     private void MakeParticle()
     {
-        var p = Instantiate(particle, transform.position, Quaternion.identity).gameObject;
+        if (particle == null) return;
+        var p = Instantiate(particle, transform.position, Quaternion.identity);
         p.transform.rotation = transform.rotation;
         p.transform.Rotate(0, 0, 90);
         Destroy(p, 1f);

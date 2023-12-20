@@ -6,7 +6,7 @@ using UnityEngine;
 public class GunChest : MonoBehaviour
 {
     [SerializeField] private GunData storedGun;
-    [HideInInspector] public GunData StoredGun { get { return storedGun; } }
+    [HideInInspector] public GunData StoredGun { get { return storedGun; } set { storedGun = value; } }
     private SpriteRenderer sr, sr2;
     [SerializeField] private TextMeshProUGUI nameText, descriptionText;
     private GunData previousStoredGun;

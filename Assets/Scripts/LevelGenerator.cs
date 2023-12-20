@@ -246,9 +246,17 @@ public class LevelGenerator : MonoBehaviour
         PlayerMovement.Instance.TeleportPlayer(ConvertPos(playerPos));
         var p = Instantiate(portal, ConvertPos(tails[1]), Quaternion.identity);
         PlayerRenderer.Instance.AssignTarget(p.transform.position);
+        List<int> usedIndices = new();
+        var gunList = GunManager.Instance.GunList;
         for (int i = 0; i < chestCount; i++)
         {
-            Instantiate(chest, ConvertPos(tails[i + 2]), Quaternion.identity);
+            //THIS CAUSES A STACK OVERFLOW FUCK
+            var c = Instantiate(chest, ConvertPos(tails[i + 2]), Quaternion.identity).GetComponent<GunChest>();
+            int newIndex;
+            do {
+                newIndex = Random.Range(0, gunList.Count);
+            } while (usedIndices.Contains(newIndex));
+            c.StoredGun = gunList[newIndex];
         }
 
         for (int i = 0; i < enemyCount; i++)

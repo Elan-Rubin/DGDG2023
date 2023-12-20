@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
@@ -23,6 +24,8 @@ public class GunManager : MonoBehaviour
     [HideInInspector] public Transform GunTip { get { return gunTip; } }
 
     [HideInInspector] public SpriteRenderer GunRenderer { get { return gunRenderer; } }
+    [SerializeField] private List<GunData> gunList;
+    public List<GunData> GunList { get { return gunList; } }
     private bool playingAnim;
 
     private float waitTime;
