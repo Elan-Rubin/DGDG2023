@@ -1,3 +1,4 @@
+using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -46,6 +47,8 @@ public class Enemy : MonoBehaviour
     {
         TryRangedAttackPlayer();
         TryMeleeAttackPlayer();
+
+        GetComponent<AIPath>().enabled = !dontMove;
     }
 
     private void TryMeleeAttackPlayer()

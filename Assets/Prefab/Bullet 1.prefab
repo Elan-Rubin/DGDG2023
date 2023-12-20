@@ -134,7 +134,7 @@ MonoBehaviour:
   bulletRenderer: {fileID: 5537208846155247171}
   Velocity: {x: 0, y: 0}
   enemyBullet: 1
-  particle: {fileID: 9057508599104705040, guid: 35e2bf9cdab07944f8355ca1f079035d, type: 3}
+  particle: {fileID: 0}
   whiteMat: {fileID: 2100000, guid: 31646886384bc65469e23720d59109da, type: 2}
 --- !u!58 &6672955051861698873
 CircleCollider2D:
