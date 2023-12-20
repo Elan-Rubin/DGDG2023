@@ -11,7 +11,7 @@ public class AIManager : MonoBehaviour
     void Start()
     {
         StartCoroutine(nameof(DoubleLateStartCoroutine));
-        InvokeRepeating(nameof(UpdateTargets), 0f, 0.25f);
+        InvokeRepeating(nameof(UpdateTargets), 0.25f, 1f);
     }
     private IEnumerator DoubleLateStartCoroutine()
     {
@@ -33,6 +33,6 @@ public class AIManager : MonoBehaviour
     void UpdateTargets()
     {
         foreach (var p in pathfinders)
-            p.destination = player.position + new Vector3(Random.Range(-1f,1),Random.Range(-1f,1));
+            p.destination = player.position + new Vector3(Random.Range(-2.5f,2.5f),Random.Range(-2.5f,2.5f));
     }
 }

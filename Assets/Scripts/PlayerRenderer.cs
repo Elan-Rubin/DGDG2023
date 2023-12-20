@@ -48,11 +48,17 @@ public class PlayerRenderer : MonoBehaviour
         compass.LookAt((Vector3)compassTarget);
         compass.right = compassTarget - (Vector2)compass.position;
         var dist = Vector2.Distance(compass.position, compassTarget);
-        if (dist < 15)
+        var targetColor = Color.white;
+        if (LevelGenerator.Instance.AllEnemiesDead())
         {
-            compass.GetChild(0).GetComponent<SpriteRenderer>().color = Color.Lerp(Color.clear, Color.white, 0.0067f * Mathf.Pow(dist, 2));
+            targetColor = Color.clear;
         }
-        else compass.GetChild(0).GetComponent<SpriteRenderer>().color = Color.white;
+        else if (dist < 15)
+        {
+            targetColor = Color.Lerp(Color.clear, Color.white, 0.0067f * Mathf.Pow(dist, 2));
+        }
+        //else white
+        compass.GetChild(0).GetComponent<SpriteRenderer>().color = targetColor;
     }
 
     public void FlashWhite()

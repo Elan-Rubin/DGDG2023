@@ -2,13 +2,14 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 
 public class GunManager : MonoBehaviour
 {
-    
+    [SerializeField] private GameObject bulletCasing;
 
     [SerializeField] private Color bulletColor;
     public Color BulletColor { get { return bulletColor; } }
@@ -133,6 +134,9 @@ public class GunManager : MonoBehaviour
                 PlayerMovement.Instance.GetComponent<Rigidbody2D>().AddForce(-100 * selectedGun.ShootKnockback * dif);
 
                 CameraManager.Instance.ShakeCamera();
+
+                var c = Instantiate(bulletCasing, gunTip.position + (PlayerRenderer.Instance.Flip ? 1 : -1f) * new Vector3(Random.Range(0f,1), Random.Range(-1f,1)), Quaternion.identity).transform;
+                c.Rotate(0, 0, Random.Range(-60, 60));
             }
             yield return new WaitForSeconds(selectedGun.DelayBetween);
 
@@ -160,5 +164,11 @@ public class GunManager : MonoBehaviour
         //ui.GunImage.material = prevMat;
         ui.GunNameText.text = newGun.GunName;
         UpdateAmmo();
+    }
+    //this will cause problems later
+    public void RefillGuns()
+    {
+        foreach (var g in gunList)
+            g.Ammo = g.MaxAmmo;
     }
 }

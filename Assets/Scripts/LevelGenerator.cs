@@ -8,6 +8,7 @@ using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCou
 using Unity.VisualScripting;
 using UnityEditor.TerrainTools;
 using UnityEngine.Rendering;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 public class LevelGenerator : MonoBehaviour
 {
@@ -47,6 +48,14 @@ public class LevelGenerator : MonoBehaviour
 
     List<Vector2> tails = new();
     List<Vector2> regulars = new();
+    List<Enemy> levelEnemies = new();
+    private static LevelGenerator instance;
+    public static LevelGenerator Instance { get { return instance; } }
+    private void Awake()
+    {
+        if (instance != this && instance != null) Destroy(this);
+        else instance = this;
+    }
     void Start()
     {
 
@@ -247,10 +256,10 @@ public class LevelGenerator : MonoBehaviour
         var p = Instantiate(portal, ConvertPos(tails[1]), Quaternion.identity);
         PlayerRenderer.Instance.AssignTarget(p.transform.position);
         List<int> usedIndices = new();
+        GunManager.Instance.RefillGuns();
         var gunList = GunManager.Instance.GunList;
         for (int i = 0; i < chestCount; i++)
         {
-            //THIS CAUSES A STACK OVERFLOW FUCK
             var c = Instantiate(chest, ConvertPos(tails[i + 2]), Quaternion.identity).GetComponent<GunChest>();
             int newIndex;
             do {
@@ -267,8 +276,9 @@ public class LevelGenerator : MonoBehaviour
                 spawnPos = regulars[++index];
             }
             while (Vector2.Distance(spawnPos, playerPos) < 6f);
-            var tier = Random.value > 0.25f ? 1 : 0;
-            Instantiate(enemies[tier].Enemies[Random.Range(0, enemies[tier].Enemies.Count())], ConvertPos(spawnPos), Quaternion.identity); ;
+            var tier = Random.value > 0.2f ? 1 : 0;
+            var e = Instantiate(enemies[tier].Enemies[Random.Range(0, enemies[tier].Enemies.Count())], ConvertPos(spawnPos), Quaternion.identity).GetComponent<Enemy>();
+            levelEnemies.Add(e);
         }
     }
 
@@ -479,6 +489,9 @@ public class LevelGenerator : MonoBehaviour
             SetTile(pos, floorSpecial[Random.Range(0, floorSpecial.Count)]);
         }
     }
+
+    public bool AllEnemiesDead() => levelEnemies.Where(e => !e.IsDead()).Count() > 0;
+
     [System.Serializable]
     private struct BigTile
     {
