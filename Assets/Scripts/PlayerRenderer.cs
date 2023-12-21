@@ -49,7 +49,7 @@ public class PlayerRenderer : MonoBehaviour
         compass.right = compassTarget - (Vector2)compass.position;
         var dist = Vector2.Distance(compass.position, compassTarget);
         var targetColor = Color.white;
-        if (LevelGenerator.Instance.AllEnemiesDead())
+        if (!LevelGenerator.Instance.AllEnemiesDead())
         {
             targetColor = Color.clear;
         }

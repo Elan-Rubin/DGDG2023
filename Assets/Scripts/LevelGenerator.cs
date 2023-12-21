@@ -490,7 +490,9 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    public bool AllEnemiesDead() => levelEnemies.Where(e => !e.IsDead()).Count() > 0;
+    public bool AllEnemiesDead() => EnemyCount == DeadEnemyCount;
+    public int EnemyCount => levelEnemies.Count;
+    public int DeadEnemyCount => levelEnemies.Where(e => e.IsDead()).Count();
 
     [System.Serializable]
     private struct BigTile
