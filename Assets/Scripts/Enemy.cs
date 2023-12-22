@@ -1,49 +1,50 @@
 using Pathfinding;
 using System.Collections;
-using System.Collections.Generic;
-using System.Reflection;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
-using static UnityEngine.GraphicsBuffer;
 
 public class Enemy : MonoBehaviour
 {
-    private int health;
+    [Header("Health")]
     [SerializeField] private int startHealth = 1;
+    private int health;
+    [HideInInspector] public int Health { get { return health; } }
+    private int lastHealth;
+    //
+    [Header("Movement")]
     [SerializeField] private int regularSpeed = 3;
     [HideInInspector] public int RegularSpeed { get { return regularSpeed; } }
     [SerializeField] private int chargeSpeed = 6;
     [HideInInspector] public int ChargeSpeed { get { return chargeSpeed; } }
-    [Range(0,5)]
+    [Range(0, 5)]
     [SerializeField] private int distraction = 2;
     private int baseDistraction;
     [HideInInspector] public int Distraction { get { return distraction; } }
-    public int Health { get { return health; } }
-    private bool playerInMeleeRange;
-    private float lastMeleeTime;
-    private int lastHealth;
-    [SerializeField] private GameObject armorParticle, bloodParticle;
-    [SerializeField] private GameObject enemyBullet;
-    [SerializeField] private LayerMask ignore;
-
+    //
+    [Header("Behavior")]
     [SerializeField] private bool shootBullets = false;
     [SerializeField] private float bulletCooldownBase = 1f;
-    [SerializeField] private float meleeCooldown = 1f;
     private Transform bulletPos;
     private float bulletCooldown;
+
+    private bool playerInMeleeRange;
+    private float lastMeleeTime;
+    [SerializeField] private float meleeCooldown = 1f;
+    [SerializeField] private LayerMask ignore;
+    private bool ragdoll, chargingUp, dontMove, targetVisible = false;
+    public bool DontMove { get { return dontMove; } set { dontMove = value; } }
+    private EnemyBehavior eb = EnemyBehavior.Follow;
+    public EnemyBehavior Behavior { get { return eb; } }
+    //
+    [Header("Prefabs")]
+    [SerializeField] private GameObject enemyBullet;
+    [SerializeField] private GameObject armorParticle, bloodParticle;
+    //
+    //references
+    EnemyRenderer enemyRenderer;
     private CircleCollider2D coll;
     private Rigidbody2D rb;
     public Rigidbody2D Rb { get { return rb; } }
-    private bool dontMove;
-    private bool targetVisible = false;
-    public bool DontMove { get { return dontMove; } set { dontMove = value; } }
-    EnemyRenderer enemyRenderer;
-    bool ragdoll;
-    bool chargingUp;
-
-    private EnemyBehavior eb = EnemyBehavior.Follow;
-    public EnemyBehavior Behavior { get { return eb; } }
 
     void Start()
     {
@@ -158,15 +159,20 @@ public class Enemy : MonoBehaviour
         health -= damage;
         enemyRenderer.SelectSpriteForHealth();
         if (health <= 0)
-        {
             Death();
-        }
         else
         {
             StartCoroutine(enemyRenderer.FlashWhiteCoroutine());
-            var p = Instantiate(armorParticle, transform.position, Quaternion.identity);
-            Destroy(p, 1f);
+            ArmorParticles();
         }
+    }
+
+    private void ArmorParticles() => StartCoroutine(nameof(ArmorParticlesCoroutine));
+    private IEnumerable ArmorParticlesCoroutine()
+    {
+        var p = Instantiate(armorParticle, transform.position, Quaternion.identity);
+        Destroy(p, 1f);
+        yield return new WaitForSeconds(0.1f);
     }
 
     public bool IsSlime()

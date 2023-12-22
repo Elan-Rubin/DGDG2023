@@ -36,15 +36,19 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] float chanceWalkerDestoy = 0.05f;
     [SerializeField] int maxWalkers = 10;
     [SerializeField] float percentToFill = 0.2f;
-    [SerializeField] GameObject wallObj, floorObj;
-    [SerializeField] RuleTile wallTile, floorTile;
+    [SerializeField] private RuleTile wallTile, floorTile;
+    [SerializeField] private RuleTile lowerWallTile, lowerFloorTile;
     private Grid gridParent;
     private Tilemap floorTilemap, wallTilemap;
+    private Tilemap lowerFloorTilemap, lowerWallTilemap;
     [Header("Flooring")]
     [SerializeField] private float portionSpecial;
     [SerializeField] private List<Sprite> floorBase;
+    [SerializeField] private List<Sprite> lowerFloorBase;
     [SerializeField] private List<Sprite> floorSpecial;
+    [SerializeField] private List<Sprite> lowerFloorspecial;
     [SerializeField] private List<BigTile> bigTiles;
+    [SerializeField] private List<BigTile> lowerBigTiles;
 
     List<Vector2> tails = new();
     List<Vector2> regulars = new();
@@ -61,8 +65,11 @@ public class LevelGenerator : MonoBehaviour
 
 
         gridParent = transform.GetChild(0).GetComponent<Grid>();
+        var gridParent2 = transform.GetChild(1).GetComponent<Grid>();
         floorTilemap = gridParent.transform.GetChild(0).GetComponent<Tilemap>();
         wallTilemap = gridParent.transform.GetChild(1).GetComponent<Tilemap>();
+        lowerFloorTilemap = gridParent2.transform.GetChild(0).GetComponent<Tilemap>();
+        lowerWallTilemap = gridParent2.transform.GetChild(1).GetComponent<Tilemap>();
 
         ConfigureTiles();
         Setup();
@@ -254,7 +261,8 @@ public class LevelGenerator : MonoBehaviour
         {
             var c = Instantiate(chest, ConvertPos(tails[i + 2]), Quaternion.identity).GetComponent<GunChest>();
             int newIndex;
-            do {
+            do
+            {
                 newIndex = Random.Range(0, gunList.Count);
             } while (usedIndices.Contains(newIndex) || GunManager.Instance.SelectedGun.Equals(gunList[newIndex]));
             c.StoredGun = gunList[newIndex];
@@ -407,6 +415,7 @@ public class LevelGenerator : MonoBehaviour
             foreach (var p in spawnPosList)
             {
                 wallTilemap.SetTile(p, wallTile);
+                lowerWallTilemap.SetTile(p, lowerWallTile);
             }
         }
         else
@@ -414,12 +423,15 @@ public class LevelGenerator : MonoBehaviour
             var val = Random.Range(0, 1f);
             if (val < portionSpecial)
             {
-                var chosen = bigTiles[Random.Range(0, bigTiles.Count)];
+                var chosenIndex = Random.Range(0, bigTiles.Count);
+                var chosen = bigTiles[chosenIndex];
+                var chosenLower = lowerBigTiles[chosenIndex];
                 for (int i = 0; i < 4; i++)
                 {
                     if (chosen.RequiredTiles.Where(t => t.Number == i).Count() > 0)
                     {
                         SetTile(spawnPosList[i], chosen.RequiredTiles.Where(t => t.Number == i).ToArray()[0].TileSprite);
+                        SetLowerTile(spawnPosList[i], chosenLower.RequiredTiles.Where(t => t.Number == i).ToArray()[0].TileSprite);
                     }
                     else
                     {
@@ -470,15 +482,24 @@ public class LevelGenerator : MonoBehaviour
         tempTile.sprite = sprite;
         floorTilemap.SetTile(pos, tempTile);
     }
+    private void SetLowerTile(Vector3Int pos, Sprite sprite)
+    {
+        Tile tempTile = ScriptableObject.CreateInstance(typeof(Tile)) as Tile;
+        tempTile.sprite= sprite;
+        lowerFloorTilemap.SetTile(pos, tempTile);
+    }
     private void SetFloorTile(Vector3Int pos)
     {
         if (Random.Range(0, 1f) > portionSpecial)
         {
             floorTilemap.SetTile(pos, floorTile);
+            lowerFloorTilemap.SetTile(pos, lowerFloorTile);
         }
         else
         {
-            SetTile(pos, floorSpecial[Random.Range(0, floorSpecial.Count)]);
+            var r = Random.Range(0, floorSpecial.Count);
+            SetTile(pos, floorSpecial[r]);
+            SetLowerTile(pos, lowerFloorspecial[r]);
         }
     }
 

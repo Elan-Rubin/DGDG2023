@@ -18,14 +18,6 @@ MonoBehaviour:
   m_TilingRules:
   - m_Id: 0
     m_Sprites:
-    - {fileID: 1756516427, guid: 0aa10a6ae1c7c4cde815d54bda0af2d2, type: 3}
-    - {fileID: -98861982, guid: 0aa10a6ae1c7c4cde815d54bda0af2d2, type: 3}
-    - {fileID: -239577839, guid: 0aa10a6ae1c7c4cde815d54bda0af2d2, type: 3}
-    - {fileID: -1521445039, guid: 0aa10a6ae1c7c4cde815d54bda0af2d2, type: 3}
-    - {fileID: 896168618, guid: 34fdf8e6507b94ef18642aa5b8550b7e, type: 3}
-    - {fileID: 1986658918, guid: 34fdf8e6507b94ef18642aa5b8550b7e, type: 3}
-    - {fileID: 1591893794, guid: 34fdf8e6507b94ef18642aa5b8550b7e, type: 3}
-    - {fileID: -737087146, guid: 34fdf8e6507b94ef18642aa5b8550b7e, type: 3}
     - {fileID: -1242945423, guid: ca656197bac9d05458054480f4206cca, type: 3}
     - {fileID: -1006878085, guid: ca656197bac9d05458054480f4206cca, type: 3}
     - {fileID: -1060814402, guid: ca656197bac9d05458054480f4206cca, type: 3}
