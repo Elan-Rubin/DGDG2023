@@ -12,7 +12,7 @@ public class Portal : MonoBehaviour
     {
         if (RevivalScript.Instance.Dead) return;
 
-        if (!turningOn && !on && Vector2.Distance(PlayerMovement.Instance.PlayerPosition, transform.position) < 2)
+        if (!turningOn && !on && Vector2.Distance(PlayerMovement.Instance.PlayerPosition, transform.position) < 7.5f)
         {
             StartCoroutine(nameof(TurnOnPortal));
         }

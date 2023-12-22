@@ -63,7 +63,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -116,6 +116,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startHealth: 1
+  regularSpeed: 2
+  chargeSpeed: 0
+  distraction: 2
   armorParticle: {fileID: 9058937434446088495, guid: f4e9e85f0a0e4244ba57f80013383cc9, type: 3}
   bloodParticle: {fileID: 7486734880075007796, guid: c3256043e827d5745aab33d1ad4f8df6, type: 3}
   enemyBullet: {fileID: 7544120140449932333, guid: 0da94292ceb0ee84f9964e4e53a33b8b, type: 3}
@@ -184,7 +187,7 @@ MonoBehaviour:
   radius: 0.5
   height: 2
   canMove: 1
-  maxSpeed: 1
+  maxSpeed: 45.31
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2

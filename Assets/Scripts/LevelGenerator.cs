@@ -79,9 +79,12 @@ public class LevelGenerator : MonoBehaviour
         //roomHeight = roomHeightReal + gutter * 2;
         roomWidth = roomWidthReal = Mathf.RoundToInt(roomSizeWorldUnits.y / worldUnitsInOneGridCell);
 
+        //right=good, bottom=one higher
+        //left=one right top=down one(or two?)
+
         var topRight = new Vector2(roomWidth, roomHeight);
-        GameManager.Instance.BottomLeft = topRight * -1f + Vector2.right * 11 + Vector2.up * 10;
-        GameManager.Instance.TopRight = topRight - Vector2.right * 11 - Vector2.up * 10;
+        GameManager.Instance.BottomLeft = topRight * -1f + Vector2.right * 12 + Vector2.up * 11;
+        GameManager.Instance.TopRight = topRight - Vector2.right * 11 - Vector2.up * 9;
         //Debug.Log(topRight);
 
         //roomWidth = roomWidthReal + gutter * 2;
@@ -231,17 +234,6 @@ public class LevelGenerator : MonoBehaviour
 
     void SpawnAdditional()
     {
-        /*Debug.Log(tails.Count);
-        foreach(var d in tails)
-        {
-            var a = Instantiate(new GameObject("a"), new Vector2(d.x * 2 - roomSizeWorldUnits.x + 2, d.y * 2 - roomSizeWorldUnits.y + 2),Quaternion.identity);
-            var s = a.AddComponent<SpriteRenderer>();
-            s.sprite = debugSprite;
-            
-            //SetTile(new Vector3Int((int)d.x * 2 - roomSizeWorldUnits.x, (int)d.y * 2 - roomSizeWorldUnits.y), debugSprite);
-        }
-        return;*/
-
         regulars = regulars.OrderBy(x => Random.value).ToList();
         tails = tails.OrderBy(x => Random.value).ToList();
         var index = 0;
@@ -264,7 +256,7 @@ public class LevelGenerator : MonoBehaviour
             int newIndex;
             do {
                 newIndex = Random.Range(0, gunList.Count);
-            } while (usedIndices.Contains(newIndex));
+            } while (usedIndices.Contains(newIndex) || GunManager.Instance.SelectedGun.Equals(gunList[newIndex]));
             c.StoredGun = gunList[newIndex];
         }
 

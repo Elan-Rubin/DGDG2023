@@ -11,7 +11,14 @@ public class Enemy : MonoBehaviour
 {
     private int health;
     [SerializeField] private int startHealth = 1;
-
+    [SerializeField] private int regularSpeed = 3;
+    [HideInInspector] public int RegularSpeed { get { return regularSpeed; } }
+    [SerializeField] private int chargeSpeed = 6;
+    [HideInInspector] public int ChargeSpeed { get { return chargeSpeed; } }
+    [Range(0,5)]
+    [SerializeField] private int distraction = 2;
+    private int baseDistraction;
+    [HideInInspector] public int Distraction { get { return distraction; } }
     public int Health { get { return health; } }
     private bool playerInMeleeRange;
     private float lastMeleeTime;
@@ -33,10 +40,14 @@ public class Enemy : MonoBehaviour
     public bool DontMove { get { return dontMove; } set { dontMove = value; } }
     EnemyRenderer enemyRenderer;
     bool ragdoll;
+    bool chargingUp;
+
+    private EnemyBehavior eb = EnemyBehavior.Follow;
+    public EnemyBehavior Behavior { get { return eb; } }
 
     void Start()
     {
-
+        baseDistraction = distraction;
         enemyRenderer = GetComponent<EnemyRenderer>();
         rb = GetComponent<Rigidbody2D>();
         coll = GetComponent<CircleCollider2D>();
@@ -50,6 +61,8 @@ public class Enemy : MonoBehaviour
         enemyRenderer.SelectSpriteForHealth();
 
         InvokeRepeating(nameof(UpdateTargetVisible), 0f, 1f);
+
+        SetSpeed(regularSpeed);
     }
 
     void Update()
@@ -59,7 +72,34 @@ public class Enemy : MonoBehaviour
 
         GetComponent<AIPath>().enabled = !dontMove;
     }
-
+    IEnumerator ChargingUpCoroutine()
+    {
+        chargingUp = true;
+        yield return new WaitForSeconds(1f);
+        if (targetVisible)
+        {
+            StartCoroutine(nameof(ActivateCharge));
+        }
+        chargingUp = false;
+    }
+    IEnumerator ActivateCharge()
+    {
+        distraction = 0;
+        eb = EnemyBehavior.Charge;
+        SetSpeed(0);
+        yield return new WaitForSeconds(0.25f);
+        SetSpeed(chargeSpeed);
+        //animation for charge!
+        yield return new WaitForSeconds(2f);
+        distraction = baseDistraction;
+        SetSpeed(regularSpeed);
+        yield return new WaitForSeconds(0.25f);
+        eb = EnemyBehavior.Follow;
+    }
+    private void SetSpeed(int speed)
+    {
+        GetComponent<AIPath>().maxSpeed = speed;
+    }
     private void TryMeleeAttackPlayer()
     {
         if (playerInMeleeRange && Time.time - lastMeleeTime > meleeCooldown)
@@ -71,11 +111,17 @@ public class Enemy : MonoBehaviour
     private void UpdateTargetVisible()
     {
         targetVisible = UpdateTargetVisible(true);
+        if (targetVisible && !chargingUp && IsRat()) StartCoroutine(nameof(ChargingUpCoroutine));
     }
     private bool UpdateTargetVisible(bool a)
     {
         var player = PlayerMovement.Instance.PlayerPosition;
         var self = transform.position;
+
+        if (Vector2.Distance(player, self) > 17f)
+            eb = EnemyBehavior.Wander;
+        else if (!eb.Equals(EnemyBehavior.Charge))
+            eb = EnemyBehavior.Follow;
 
         enemyRenderer.Flip = player.x < self.x;
 
@@ -126,6 +172,10 @@ public class Enemy : MonoBehaviour
     public bool IsSlime()
     {
         return shootBullets;
+    }
+    public bool IsRat()
+    {
+        return !shootBullets;
     }
 
     public bool IsDead()
@@ -206,4 +256,12 @@ public class Enemy : MonoBehaviour
             playerInMeleeRange = false;
         }
     }
+}
+
+public enum EnemyBehavior
+{
+    Still,
+    Wander,
+    Follow,
+    Charge
 }

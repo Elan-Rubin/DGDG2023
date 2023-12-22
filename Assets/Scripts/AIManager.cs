@@ -33,6 +33,30 @@ public class AIManager : MonoBehaviour
     void UpdateTargets()
     {
         foreach (var p in pathfinders)
-            p.destination = player.position + new Vector3(Random.Range(-2.5f,2.5f),Random.Range(-2.5f,2.5f));
+        {
+            var newDest = Vector2.zero;
+            var e = p.GetComponent<Enemy>();
+
+            switch (e.Behavior)
+            {
+                case EnemyBehavior.Still:
+                    newDest = p.transform.position;
+                    break;
+                case EnemyBehavior.Wander:
+                    newDest = p.transform.position + DistractionVector(e.Distraction);
+                    break;
+                case EnemyBehavior.Follow:
+                    newDest = player.position + DistractionVector(e.Distraction);
+                    break;
+                case EnemyBehavior.Charge:
+                    newDest = player.position;
+                    break;
+            }
+            p.destination = newDest;
+        }
+    }
+    private Vector3 DistractionVector(int amount)
+    {
+        return new Vector2(Random.Range((float)-amount, amount), Random.Range((float)-amount, amount));
     }
 }
