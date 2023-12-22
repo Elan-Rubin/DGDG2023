@@ -1,14 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
-using Unity.VisualScripting;
-using UnityEditor.TerrainTools;
-using UnityEngine.Rendering;
-using System.Runtime.InteropServices.WindowsRuntime;
 
 public class LevelGenerator : MonoBehaviour
 {
@@ -90,7 +83,7 @@ public class LevelGenerator : MonoBehaviour
         //left=one right top=down one(or two?)
 
         var topRight = new Vector2(roomWidth, roomHeight);
-        GameManager.Instance.BottomLeft = topRight * -1f + Vector2.right * 12 + Vector2.up * 11;
+        GameManager.Instance.BottomLeft = topRight * -1f + Vector2.right * 12 + Vector2.up * 12;
         GameManager.Instance.TopRight = topRight - Vector2.right * 11 - Vector2.up * 9;
         //Debug.Log(topRight);
 

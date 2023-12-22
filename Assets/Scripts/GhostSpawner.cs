@@ -30,9 +30,11 @@ public class GhostSpawner : MonoBehaviour
         List<GameObject> deadEnemies = new List<GameObject>(); 
         foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
+            //REDO THIS LATER USING THE LEVELGEN ENEMY LIST!!
+
             //i feel like this could be made a lot simpler
-            PathfinderEnemy enemyBrain = enemy.GetComponent<PathfinderEnemy>();
-            if (enemyBrain.GetComponent<Enemy>().IsDead())
+            //PathfinderEnemy enemyBrain = enemy.GetComponent<PathfinderEnemy>();
+            if (enemy.GetComponent<Enemy>().IsDead())
                 deadEnemies.Add(enemy);
         }
         // You have to collect half the enemies you killed, max 8, min 3
