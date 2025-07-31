@@ -83,7 +83,7 @@ public class LevelGenerator : MonoBehaviour
         //left=one right top=down one(or two?)
 
         var topRight = new Vector2(roomWidth, roomHeight);
-        GameManager.Instance.BottomLeft = topRight * -1f + Vector2.right * 12 + Vector2.up * 12;
+        GameManager.Instance.BottomLeft = topRight * -1f + Vector2.right * 13 + Vector2.up * 11;
         GameManager.Instance.TopRight = topRight - Vector2.right * 11 - Vector2.up * 9;
         //Debug.Log(topRight);
 
